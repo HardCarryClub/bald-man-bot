@@ -1,8 +1,5 @@
-```
-npm install
-npm run dev
-```
+# Bald Man Bot
 
-```
-open http://localhost:3000
-```
+We want custom commands, so the Bald Man runs custom commands.
+
+It's hella scuffed and not intended to be built upon.
