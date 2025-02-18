@@ -8,7 +8,7 @@ export async function sendRequestToDiscord(
     headers: {
       Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
       "Content-Type": "application/json",
-      "User-Agent": "DiscordBot (baldman.hardcarry.club, 1.0.0)",
+      "User-Agent": "DiscordBot (hardcarry.club, 1.0.0)",
     },
     body: JSON.stringify(body) ?? undefined,
   });
