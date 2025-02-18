@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@hono/node-server':
-        specifier: ^1.13.8
+        specifier: 1.13.8
         version: 1.13.8(hono@4.7.1)
       date-fns:
         specifier: 4.1.0
@@ -18,17 +18,17 @@ importers:
         specifier: 0.37.119
         version: 0.37.119
       hono:
-        specifier: ^4.7.1
+        specifier: 4.7.1
         version: 4.7.1
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
         version: 1.9.4
       '@types/node':
-        specifier: ^22.0.0
+        specifier: 22.13.4
         version: 22.13.4
       tsx:
-        specifier: ^4.7.1
+        specifier: 4.19.2
         version: 4.19.2
 
 packages:

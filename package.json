@@ -8,14 +8,14 @@
     "start": "tsx src/app.ts"
   },
   "dependencies": {
-    "@hono/node-server": "^1.13.8",
+    "@hono/node-server": "1.13.8",
     "date-fns": "4.1.0",
     "discord-api-types": "0.37.119",
-    "hono": "^4.7.1"
+    "hono": "4.7.1"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@types/node": "^22.0.0",
-    "tsx": "^4.7.1"
+    "@types/node": "22.13.4",
+    "tsx": "4.19.2"
   }
 }
