@@ -20,6 +20,7 @@ import {
 import { commandMap } from "./utilities/commands";
 import { sendRequestToDiscord } from "./utilities/discord";
 import pugManage from "./commands/pugManage";
+import pugMsg from "./commands/pugMsg";
 
 const app = new Hono();
 
@@ -64,6 +65,7 @@ app.all("/interaction", async (c) => {
   if (interaction.type === InteractionType.ApplicationCommand) {
     const {
       data: { name, options },
+      channel,
       guild,
       token,
     } = interaction as APIChatInputApplicationCommandGuildInteraction;
@@ -164,6 +166,28 @@ app.all("/interaction", async (c) => {
           type: InteractionResponseType.DeferredChannelMessageWithSource,
           data: {
             // flags: MessageFlags.Ephemeral,
+          },
+        });
+      }
+
+      case "pug-msg": {
+        pugMsg(token, name, channel.id, options).catch((e) => {
+          console.error(e);
+
+          return sendRequestToDiscord(
+            `/webhooks/${APP_ID}/${token}/messages/@original`,
+            "PATCH",
+            {
+              content: `❌ An error occurred: ${e.message}`,
+              flags: MessageFlags.Ephemeral,
+            },
+          );
+        });
+
+        return c.json({
+          type: InteractionResponseType.DeferredChannelMessageWithSource,
+          data: {
+            flags: MessageFlags.Ephemeral,
           },
         });
       }

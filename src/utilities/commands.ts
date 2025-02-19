@@ -60,4 +60,38 @@ export const commandMap: { [key: string]: BaldCommand } = {
       },
     ],
   },
+
+  "pug-msg": {
+    description: "Send a message from a bucket to the current channel.",
+    contexts: [1],
+    default_member_permissions: 0x8,
+    options: [
+      {
+        name: "tag",
+        description: "The tag of the bucket to send the message from.",
+        type: ApplicationCommandOptionType.String,
+        choices: [
+          {
+            name: "Define (What is PUGs?)",
+            value: "define",
+          },
+          {
+            name: "Room (Is there room?)",
+            value: "is-there-room",
+          },
+          {
+            name: "How Join (How do I join?)",
+            value: "how-join",
+          },
+        ],
+        required: true,
+      },
+      {
+        name: "user",
+        description: "The user to mention.",
+        type: ApplicationCommandOptionType.User,
+        required: false,
+      },
+    ],
+  },
 };
