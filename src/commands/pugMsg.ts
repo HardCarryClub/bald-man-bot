@@ -10,7 +10,7 @@ import {
   type RESTGetAPIGuildChannelsResult,
 } from "discord-api-types/v10";
 import { sendRequestToDiscord } from "../utilities/discord";
-import { APP_ID, GUILD_ID } from "../utilities/env";
+import { APP_ID, GUILD_ID, PUG_ANNOUNCEMENTS_ID } from "../utilities/env";
 import { format, parse, addDays, addHours } from "date-fns";
 
 export default async function (
@@ -75,10 +75,10 @@ export default async function (
 
       timestamps = timestamps.map(t => Math.round(t/1000));
 
-      let pug_announcementsID = "1309656594388226199";
+
 
       message = 
-        `**This week's PUGs' schedule:**\n\n**EU Lobbies:**\nOverwatch:\n<t:${timestamps[0]}:F>, <t:${timestamps[0]}:R>\n<t:${timestamps[1]}:F>, <t:${timestamps[1]}:R>\n\nMarvel Rivals:\n<t:${timestamps[2]}:F>, <t:${timestamps[2]}:R>\n\n**NA Lobbies:**\nOverwatch:\n<t:${timestamps[3]}:F>, <t:${timestamps[3]}:R>\n<t:${timestamps[4]}:F>, <t:${timestamps[4]}:R>\n\nMarvel Rivals:\n<t:${timestamps[5]}:F>, <t:${timestamps[5]}:R>\n\nLobbies, EU Rivals Lobbies in particular, may shift regions depending on present PUGgers' regions.\nKeep your eyes peeled for Lobby announcements in <#${pug_announcementsID}> and feel free to come PUG!🙂`;
+        `**This week's PUGs' schedule:**\n\n**EU Lobbies:**\nOverwatch:\n<t:${timestamps[0]}:F>, <t:${timestamps[0]}:R>\n<t:${timestamps[1]}:F>, <t:${timestamps[1]}:R>\n\nMarvel Rivals:\n<t:${timestamps[2]}:F>, <t:${timestamps[2]}:R>\n\n**NA Lobbies:**\nOverwatch:\n<t:${timestamps[3]}:F>, <t:${timestamps[3]}:R>\n<t:${timestamps[4]}:F>, <t:${timestamps[4]}:R>\n\nMarvel Rivals:\n<t:${timestamps[5]}:F>, <t:${timestamps[5]}:R>\n\nLobbies, EU Rivals Lobbies in particular, may shift regions depending on present PUGgers' regions.\nKeep your eyes peeled for Lobby announcements in <#${PUG_ANNOUNCEMENTS_ID}> and feel free to come PUG!🙂`;
 
 
       break;
