@@ -10,7 +10,8 @@ import {
   type RESTGetAPIGuildChannelsResult,
 } from "discord-api-types/v10";
 import { sendRequestToDiscord } from "../utilities/discord";
-import { APP_ID, GUILD_ID } from "../utilities/env";
+import { APP_ID, GUILD_ID, PUG_ANNOUNCEMENTS_ID } from "../utilities/env";
+import { format, parse, addDays, addHours } from "date-fns";
 
 export default async function (
   token: string,
@@ -58,22 +59,28 @@ export default async function (
       break;
 
     case "schedule":
-      const d = new Date();
-      d.setUTCDate(d.getDate() + (5 - d.getDay()));
-      d.setUTCHours(20);
-      d.setUTCMinutes(30);
-      d.setUTCSeconds(0);
+      // date of this week's friday
+      let friday = addDays(new Date(), 4 - (new Date().getDay() + 6) % 7);
+      let timestamps = [];
 
-      const timestamps = [];
-      // discard millis
-      const time = Math.floor(d.getTime() / 1000);
-      timestamps.push(time);
-      // 24 hours later
-      timestamps.push(time + 24 * 3600);
-      // another 23 hours later
-      timestamps.push(time + 47 * 3600);
+      let fridayPugTimeEU = forceTimeInTimezoneForDate(friday, 'Europe/Berlin', '21:30:00');
+      timestamps.push(fridayPugTimeEU.getTime());
+      timestamps.push(addDays(fridayPugTimeEU, 1).getTime());
+      timestamps.push(forceTimeInTimezoneForDate(addDays(friday, 2), 'Europe/Berlin', '20:30:00').getTime());
 
-      message = `**This week's PUGs' schedule:**\n\n**Overwatch:**\n<t:${timestamps[0]}:F>, <t:${timestamps[0]}:R>\n<t:${timestamps[1]}:F>, <t:${timestamps[1]}:R>\n\n**Rivals:**\n<t:${timestamps[2]}:F>, <t:${timestamps[2]}:R>\n\nThis may change at some point but for now, this is the schedule 🙂`;
+      let fridayPugTimeNA = forceTimeInTimezoneForDate(friday, 'America/New_York', '20:00:00');
+      timestamps.push(fridayPugTimeNA.getTime());
+      timestamps.push(addDays(fridayPugTimeNA, 1).getTime());
+      timestamps.push(forceTimeInTimezoneForDate(addDays(friday, 2), 'America/New_York', '18:30:00').getTime());
+
+      timestamps = timestamps.map(t => Math.round(t/1000));
+
+
+
+      message = 
+        `**This week's PUGs' schedule:**\n\n**EU Lobbies:**\nOverwatch:\n<t:${timestamps[0]}:F>, <t:${timestamps[0]}:R>\n<t:${timestamps[1]}:F>, <t:${timestamps[1]}:R>\n\nMarvel Rivals:\n<t:${timestamps[2]}:F>, <t:${timestamps[2]}:R>\n\n**NA Lobbies:**\nOverwatch:\n<t:${timestamps[3]}:F>, <t:${timestamps[3]}:R>\n<t:${timestamps[4]}:F>, <t:${timestamps[4]}:R>\n\nMarvel Rivals:\n<t:${timestamps[5]}:F>, <t:${timestamps[5]}:R>\n\nLobbies, EU Rivals Lobbies in particular, may shift regions depending on present PUGgers' regions.\nKeep your eyes peeled for Lobby announcements in <#${PUG_ANNOUNCEMENTS_ID}> and feel free to come PUG!🙂`;
+
+
       break;
 
     default: {
@@ -125,3 +132,27 @@ export default async function (
     throw err;
   }
 }
+
+// returns a date containing the day of donor date fixed to a specific time for a certain timezone
+function forceTimeInTimezoneForDate(dayDonor: Date, timezone: string, time: string) {
+  
+  return zonedToUtc(
+    parse(
+      `${format(dayDonor, "yyyy-MM-dd")} ${time}`,
+      "yyyy-MM-dd HH:mm:ss",
+      dayDonor
+    ),
+    timezone
+  );
+
+}
+
+function zonedToUtc(zonedTime: Date, timezone: string) {
+  // evil calculation of negative timezone offset
+  let offset = Math.round(
+    (new Date().getTime() - new Date(new Date().toLocaleString('en-US', {timeZone:timezone})).getTime())/3600/1000
+  );
+
+  return addHours(zonedTime, offset);
+}
+
