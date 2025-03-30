@@ -1,12 +1,12 @@
 import {
-  ChannelType,
-  MessageFlags,
   type APIApplicationCommandInteractionDataBasicOption,
   type APIApplicationCommandInteractionDataOption,
   type APIApplicationCommandInteractionDataStringOption,
   type APIApplicationCommandInteractionDataSubcommandOption,
   type APIApplicationCommandInteractionDataUserOption,
   type APIGuildChannel,
+  ChannelType,
+  MessageFlags,
   type RESTGetAPIGuildChannelsResult,
 } from "discord-api-types/v10";
 import { sendRequestToDiscord } from "../utilities/discord";
@@ -57,24 +57,23 @@ export default async function (
         "**How do I join?**\nYou can participate by joining the Lobby VC, adding the current host of the lobby and joining the custom game through them by going to your friends tap > Right click > Join Game.\nTo check the lobby leader go to <#1309656594388226199>, where you can see the current host and / or the rank lobby split and which channel you should go to.";
       break;
 
-case "schedule":
-      let d = new Date();
-      d.setUTCDate(d.getDate()+(5-d.getDay()));
+    case "schedule":
+      const d = new Date();
+      d.setUTCDate(d.getDate() + (5 - d.getDay()));
       d.setUTCHours(20);
       d.setUTCMinutes(30);
       d.setUTCSeconds(0);
-      
-      let timestamps = [];
+
+      const timestamps = [];
       // discard millis
-      let time = Math.floor(d.getTime()/1000);
+      const time = Math.floor(d.getTime() / 1000);
       timestamps.push(time);
       // 24 hours later
-      timestamps.push(time + 24*3600);
+      timestamps.push(time + 24 * 3600);
       // another 23 hours later
-      timestamps.push(time + 47*3600);
-      
-      message = 
-        `**This week's PUGs' schedule:**\n\n**Overwatch:**\n<t:${timestamps[0]}:F>, <t:${timestamps[0]}:R>\n<t:${timestamps[1]}:F>, <t:${timestamps[1]}:R>\n\n**Rivals:**\n<t:${timestamps[2]}:F>, <t:${timestamps[2]}:R>\n\nThis may change at some point but for now, this is the schedule 🙂`;
+      timestamps.push(time + 47 * 3600);
+
+      message = `**This week's PUGs' schedule:**\n\n**Overwatch:**\n<t:${timestamps[0]}:F>, <t:${timestamps[0]}:R>\n<t:${timestamps[1]}:F>, <t:${timestamps[1]}:R>\n\n**Rivals:**\n<t:${timestamps[2]}:F>, <t:${timestamps[2]}:R>\n\nThis may change at some point but for now, this is the schedule 🙂`;
       break;
 
     default: {
