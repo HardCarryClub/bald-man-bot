@@ -1,12 +1,12 @@
 import {
-  ChannelType,
-  MessageFlags,
   type APIApplicationCommandInteractionDataBasicOption,
   type APIApplicationCommandInteractionDataOption,
   type APIApplicationCommandInteractionDataStringOption,
   type APIApplicationCommandInteractionDataSubcommandOption,
   type APIApplicationCommandInteractionDataUserOption,
   type APIGuildChannel,
+  ChannelType,
+  MessageFlags,
   type RESTGetAPIGuildChannelsResult,
 } from "discord-api-types/v10";
 import { sendRequestToDiscord } from "../utilities/discord";
@@ -59,7 +59,7 @@ export default async function (
       break;
 
     case "schedule":
-    // date of this week's friday
+      // date of this week's friday
       let friday = addDays(new Date(), 4 - (new Date().getDay() + 6) % 7);
       let timestamps = [];
 
@@ -79,6 +79,8 @@ export default async function (
 
       message = 
         `**This week's PUGs' schedule:**\n\n**EU Lobbies:**\nOverwatch:\n<t:${timestamps[0]}:F>, <t:${timestamps[0]}:R>\n<t:${timestamps[1]}:F>, <t:${timestamps[1]}:R>\n\nMarvel Rivals:\n<t:${timestamps[2]}:F>, <t:${timestamps[2]}:R>\n\n**NA Lobbies:**\nOverwatch:\n<t:${timestamps[3]}:F>, <t:${timestamps[3]}:R>\n<t:${timestamps[4]}:F>, <t:${timestamps[4]}:R>\n\nMarvel Rivals:\n<t:${timestamps[5]}:F>, <t:${timestamps[5]}:R>\n\nLobbies, EU Rivals Lobbies in particular, may shift regions depending on present PUGgers' regions.\nKeep your eyes peeled for Lobby announcements in <#${pug_announcementsID}> and feel free to come PUG!🙂`;
+
+
       break;
 
     default: {
