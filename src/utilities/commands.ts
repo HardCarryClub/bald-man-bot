@@ -83,6 +83,10 @@ export const commandMap: { [key: string]: BaldCommand } = {
             name: "How Join (How do I join?)",
             value: "how-join",
           },
+          {
+            name: "Schedule (When is PUGs?)",
+            value: "schedule",
+          },
         ],
         required: true,
       },
