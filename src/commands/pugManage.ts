@@ -1,8 +1,8 @@
 import {
-  ChannelType,
-  MessageFlags,
   type APIApplicationCommandInteractionDataSubcommandOption,
   type APIGuildChannel,
+  ChannelType,
+  MessageFlags,
   type RESTGetAPIGuildChannelsResult,
 } from "discord-api-types/v10";
 import { sendRequestToDiscord } from "../utilities/discord";
@@ -33,7 +33,7 @@ export default async function (
         `/guilds/${GUILD_ID}/channels`,
         "POST",
         {
-          name: `${letter.value} Lobby`,
+          name: `${letter.value} Lobby${letter.value.toString().toLowerCase() === "b" ? " (Best Lobby)" : ""}`,
           type: ChannelType.GuildCategory,
           position: 18,
           permission_overwrites: [
@@ -142,14 +142,16 @@ export default async function (
 
       if (
         !categoryChannel.name?.includes("Lobby") ||
-        categoryChannel.name?.toLowerCase().length !== 7
+        (!categoryChannel.name.includes("(Best Lobby)") &&
+          categoryChannel.name?.toLowerCase().length !== 7) ||
+        (categoryChannel.name.includes("(Best Lobby)") &&
+          categoryChannel.name?.toLowerCase().length !== 20)
       ) {
         await sendRequestToDiscord(
           `/webhooks/${APP_ID}/${token}/messages/@original`,
           "PATCH",
           {
             content: `Invalid category ${categoryChannel.name}!`,
-            // flags: MessageFlags.Ephemeral,
           },
         );
 
