@@ -10,7 +10,7 @@
   "dependencies": {
     "@hono/node-server": "1.14.0",
     "date-fns": "4.1.0",
-    "discord-api-types": "0.37.119",
+    "discord-api-types": "0.37.120",
     "hono": "4.7.5"
   },
   "devDependencies": {
