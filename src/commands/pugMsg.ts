@@ -58,6 +58,12 @@ export default async function (
         "**How do I join?**\nYou can participate by joining the Lobby VC, adding the current host of the lobby and joining the custom game through them by going to your friends tap > Right click > Join Game.\nTo check the lobby leader go to <#1309656594388226199>, where you can see the current host and / or the rank lobby split and which channel you should go to.";
       break;
 
+      case "role":
+          const Attachment = ('./Rimage.png')
+          message =
+              Attachment
+       break;
+
     case "schedule":
       // date of this week's friday
       let friday = addDays(new Date(), 4 - (new Date().getDay() + 6) % 7);
