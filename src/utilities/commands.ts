@@ -86,7 +86,11 @@ export const commandMap: { [key: string]: BaldCommand } = {
           {
             name: "Schedule (When is PUGs?)",
             value: "schedule",
-          },
+           },
+           {
+            name: "Roles (Displays Role Icons)",
+            value: "roles",
+           },
         ],
         required: true,
       },
