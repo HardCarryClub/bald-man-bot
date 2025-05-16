@@ -58,6 +58,12 @@ export default async function (
         "**How do I join?**\nYou can participate by joining the Lobby VC, adding the current host of the lobby and joining the custom game through them by going to your friends tap > Right click > Join Game.\nTo check the lobby leader go to <#1309656594388226199>, where you can see the current host and / or the rank lobby split and which channel you should go to.";
       break;
 
+      case "role":
+          const Attachment = ('./Rimage.png')
+          message =
+              Attachment
+       break;
+
     case "schedule":
       // date of this week's friday
       let friday = addDays(new Date(), 4 - (new Date().getDay() + 6) % 7);
@@ -78,7 +84,7 @@ export default async function (
 
 
       message = 
-        `**This week's PUGs' schedule:**\n\n**EU Lobbies:**\nOverwatch:\n<t:${timestamps[0]}:F>, <t:${timestamps[0]}:R>\n<t:${timestamps[1]}:F>, <t:${timestamps[1]}:R>\n\nMarvel Rivals:\n<t:${timestamps[2]}:F>, <t:${timestamps[2]}:R>\n\n**NA Lobbies:**\nOverwatch:\n<t:${timestamps[3]}:F>, <t:${timestamps[3]}:R>\n<t:${timestamps[4]}:F>, <t:${timestamps[4]}:R>\n\nMarvel Rivals:\n<t:${timestamps[5]}:F>, <t:${timestamps[5]}:R>\n\nLobbies, EU Rivals Lobbies in particular, may shift regions depending on present PUGgers' regions.\nKeep your eyes peeled for Lobby announcements in <#${PUG_ANNOUNCEMENTS_ID}> and feel free to come PUG!🙂`;
+          `**This week's PUGs' schedule:**\n\n**EU Lobbies:**\nOverwatch:\n<t:${timestamps[0]}:F>, <t:${timestamps[0]}:R> \n\nMarvel Rivals:\n <t:${timestamps[1]}:F>, <t:${timestamps[1]}:R>\n<t:${timestamps[2]}:F>, <t:${timestamps[2]}:R>\n\n**NA Lobbies:**\nOverwatch:\n<t:${timestamps[3]}:F>, <t:${timestamps[3]}:R>\n<t:${timestamps[4]}:F>,\nMarvel Rivals:\n <t:${timestamps[4]}:R>\n<t:${timestamps[5]}:F>, <t:${timestamps[5]}:R>\n\nLobbies, EU Rivals Lobbies in particular, may shift regions depending on present PUGgers' regions.\nKeep your eyes peeled for Lobby announcements in <#${PUG_ANNOUNCEMENTS_ID}> and feel free to come PUG!🙂`;
 
 
       break;
