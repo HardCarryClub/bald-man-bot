@@ -63,23 +63,37 @@ export default async function (
       let friday = addDays(new Date(), 4 - (new Date().getDay() + 6) % 7);
       let timestamps = [];
 
-      let fridayPugTimeEU = forceTimeInTimezoneForDate(friday, 'Europe/Berlin', '21:30:00');
-      timestamps.push(fridayPugTimeEU.getTime());
-      timestamps.push(addDays(fridayPugTimeEU, 1).getTime());
+      timestamps.push(forceTimeInTimezoneForDate(friday, 'Europe/Berlin', '21:30:00').getTime());
+      timestamps.push(forceTimeInTimezoneForDate(addDays(friday, 1), 'Europe/Berlin', '21:30:00').getTime());
       timestamps.push(forceTimeInTimezoneForDate(addDays(friday, 2), 'Europe/Berlin', '20:30:00').getTime());
 
-      let fridayPugTimeNA = forceTimeInTimezoneForDate(friday, 'America/New_York', '20:00:00');
-      timestamps.push(fridayPugTimeNA.getTime());
-      timestamps.push(addDays(fridayPugTimeNA, 1).getTime());
+      timestamps.push(forceTimeInTimezoneForDate(friday, 'America/New_York', '20:00:00').getTime());
+      timestamps.push(forceTimeInTimezoneForDate(addDays(friday, 1), 'America/New_York', '20:00:00').getTime());
       timestamps.push(forceTimeInTimezoneForDate(addDays(friday, 2), 'America/New_York', '18:30:00').getTime());
 
       timestamps = timestamps.map(t => Math.round(t/1000));
 
-
-
       message = 
-        `**This week's PUGs' schedule:**\n\n**EU Lobbies:**\nOverwatch:\n<t:${timestamps[0]}:F>, <t:${timestamps[0]}:R>\n<t:${timestamps[1]}:F>, <t:${timestamps[1]}:R>\n\nMarvel Rivals:\n<t:${timestamps[2]}:F>, <t:${timestamps[2]}:R>\n\n**NA Lobbies:**\nOverwatch:\n<t:${timestamps[3]}:F>, <t:${timestamps[3]}:R>\n<t:${timestamps[4]}:F>, <t:${timestamps[4]}:R>\n\nMarvel Rivals:\n<t:${timestamps[5]}:F>, <t:${timestamps[5]}:R>\n\nLobbies, EU Rivals Lobbies in particular, may shift regions depending on present PUGgers' regions.\nKeep your eyes peeled for Lobby announcements in <#${PUG_ANNOUNCEMENTS_ID}> and feel free to come PUG!🙂`;
+        `**This week's PUGs' schedule:**
+        
+        **EU Lobbies:**
+        Overwatch:
+        <t:${timestamps[0]}:F>, <t:${timestamps[0]}:R>
 
+        Marvel Rivals:
+        <t:${timestamps[1]}:F>, <t:${timestamps[1]}:R>
+        <t:${timestamps[2]}:F>, <t:${timestamps[2]}:R>
+
+        **NA Lobbies:**
+        Overwatch:
+        <t:${timestamps[3]}:F>, <t:${timestamps[3]}:R>
+
+        Marvel Rivals:
+        <t:${timestamps[4]}:F>, <t:${timestamps[4]}:R>
+        <t:${timestamps[5]}:F>, <t:${timestamps[5]}:R>
+
+        Lobbies, EU Rivals Lobbies in particular, may shift regions depending on present PUGgers' regions.
+        Keep your eyes peeled for Lobby announcements in <#${PUG_ANNOUNCEMENTS_ID}> and feel free to come PUG!🙂`;
 
       break;
 
