@@ -15,8 +15,8 @@ importers:
         specifier: 4.1.0
         version: 4.1.0
       discord-api-types:
-        specifier: 0.37.120
-        version: 0.37.120
+        specifier: 0.38.16
+        version: 0.38.16
       hono:
         specifier: 4.7.6
         version: 4.7.6
@@ -248,8 +248,8 @@ packages:
   date-fns@4.1.0:
     resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
 
-  discord-api-types@0.37.120:
-    resolution: {integrity: sha512-7xpNK0EiWjjDFp2nAhHXezE4OUWm7s1zhc/UXXN6hnFFU8dfoPHgV0Hx0RPiCa3ILRpdeh152icc68DGCyXYIw==}
+  discord-api-types@0.38.16:
+    resolution: {integrity: sha512-Cz42dC5WqJD17Yk0bRy7YLTJmh3NKo4FGpxZuA8MHqT0RPxKSrll5YhlODZ2z5DiEV/gpHMeTSrTFTWpSXjT1Q==}
 
   esbuild@0.25.0:
     resolution: {integrity: sha512-BXq5mqc8ltbaN34cDqWuYKyNhX8D/Z0J1xdtdQ8UcIIIyJyz+ZMKUt58tF3SrZ85jcfN/PZYhjR5uDQAYNVbuw==}
@@ -401,7 +401,7 @@ snapshots:
 
   date-fns@4.1.0: {}
 
-  discord-api-types@0.37.120: {}
+  discord-api-types@0.38.16: {}
 
   esbuild@0.25.0:
     optionalDependencies:
