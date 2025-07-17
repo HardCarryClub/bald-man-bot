@@ -14,7 +14,7 @@
     "hono": "4.7.6"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@biomejs/biome": "2.1.2",
     "@types/node": "22.14.1",
     "tsx": "4.19.3"
   },
