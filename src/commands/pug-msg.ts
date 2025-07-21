@@ -1,5 +1,5 @@
 import type { RESTPostAPIChannelMessageJSONBody } from "discord-api-types/v10";
-import { h2, subtext, user } from "discord-fmt";
+import { channel, h2, subtext, user } from "discord-fmt";
 import {
   type CommandConfig,
   type CommandInteraction,
@@ -37,8 +37,10 @@ const messages: {
     content: () => ({
       components: [
         Container(
-          TextDisplay(h2("Is there room?")),
-          TextDisplay("This message is not yet implemented."),
+          TextDisplay(h2("Is there still room for one more? / Can I join?")),
+          TextDisplay(
+            "Certainly! If you see people in the lobby VCs PUGs are most likely running and you can join and leave whenever you feel like it.",
+          ),
         ),
       ],
     }),
@@ -52,7 +54,12 @@ const messages: {
       components: [
         Container(
           TextDisplay(h2("How do I join?")),
-          TextDisplay("This message is not yet implemented."),
+          TextDisplay(
+            "You can participate by joining the Lobby VC, adding the current host of the lobby and joining the custom game through them by going to your friends tap > Right click > Join Game.",
+          ),
+          TextDisplay(
+            `To check the lobby leader go to ${channel("1309656594388226199")}, where you can see the current host and / or the rank lobby split and which channel you should go to.`,
+          ),
         ),
       ],
     }),
@@ -62,20 +69,13 @@ const messages: {
   {
     name: "schedule",
     description: "Schedule (When is PUGs?)",
-    content: () => ({
-      components: [
-        Container(
-          TextDisplay(h2("When is PUGs?")),
-          TextDisplay("This message is not yet implemented."),
-        ),
-      ],
-    }),
+    // this is highly dynamic, so we don't hardcode the content here.
+    content: () => ({}),
   },
 ];
 
 export const config: CommandConfig = {
   description: "Send a message from a bucket to the current channel.",
-  // contexts: [],
   default_member_permissions: "0",
   options: [
     CommandOption({
@@ -87,24 +87,6 @@ export const config: CommandConfig = {
         name: msg.name,
         value: msg.name,
       })),
-      // choices: [
-      //   {
-      //     name: "Define (What is PUGs?)",
-      //     value: "define",
-      //   },
-      //   {
-      //     name: "Room (Is there room?)",
-      //     value: "is-there-room",
-      //   },
-      //   {
-      //     name: "How Join (How do I join?)",
-      //     value: "how-join",
-      //   },
-      //   {
-      //     name: "Schedule (When is PUGs?)",
-      //     value: "schedule",
-      //   },
-      // ],
     }),
     CommandOption({
       name: "user",
