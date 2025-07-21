@@ -20,5 +20,6 @@
         "meganrogge.template-string-converter"
       ]
     }
-  }
+  },
+  "postStartCommand": "./setup.sh"
 }

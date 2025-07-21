@@ -6,7 +6,7 @@ check_env() {
   local env_file=".env"
   
   local keys=(
-    "DISCORD_BOT_TOKEN"
+    "DISCORD_TOKEN"
     "DISCORD_APP_ID"
     "DISCORD_PUBLIC_KEY"
   )
@@ -58,3 +58,9 @@ check_data_dir() {
 
 check_env
 check_data_dir
+
+echo "Installing dependencies..."
+bun install
+
+echo "Installing Lefthook..."
+bun run lefthook install

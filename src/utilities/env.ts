@@ -1,4 +1,4 @@
-export const BOT_TOKEN = process.env.DISCORD_BOT_TOKEN;
+export const BOT_TOKEN = process.env.DISCORD_TOKEN;
 export const APP_ID = process.env.DISCORD_APP_ID;
 export const PUBLIC_KEY = process.env.DISCORD_PUBLIC_KEY;
 export const IS_IN_DEV = process.env.NODE_ENV !== "production";
