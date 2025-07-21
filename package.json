@@ -3,9 +3,9 @@
   "private": true,
   "scripts": {
     "dev": "pnpm build && pnpm start",
-    "register": "pnpm build -r && pnpm start",
+    "register": "pnpm build -r && pnpm start:dev",
     "build": "dressed build -i",
-    "start": "pnpx tsx ./bot.gen.ts"
+    "start:dev": "node .dressed/index.mjs"
   },
   "packageManager": "pnpm@10.13.1",
   "dependencies": {
@@ -16,6 +16,7 @@
   "devDependencies": {
     "@biomejs/biome": "^2.1.2",
     "@types/node": "^24.0.15",
+    "dressed": "^1.8.1",
     "lefthook": "^1.12.2",
     "tsx": "^4.20.3"
   }
