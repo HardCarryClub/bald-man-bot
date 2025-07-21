@@ -9,9 +9,9 @@
   },
   "packageManager": "pnpm@10.13.1",
   "dependencies": {
+    "@dressed/dressed": "jsr:1.9.0-rc.1",
     "discord-api-types": "^0.38.16",
-    "discord-fmt": "^1.0.0",
-    "dressed": "^1.8.1"
+    "discord-fmt": "^1.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.1.2",

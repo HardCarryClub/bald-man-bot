@@ -5,3 +5,4 @@ logs/
 *.log
 pnpm-debug.log*
 bot.gen.ts
+.dressed/

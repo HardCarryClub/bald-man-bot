@@ -29,8 +29,20 @@ The best resource, in my opinion, is the [examples repo](https://github.com/Inbe
 ### Assets
 If you want to include images, it's highly recommended to upload them to something like [Imgur](https://imgur.com/), if you worry about it disappearing then contact me in Discord and I'll throw it on the HCC CDN.
 
+### Formatting
+I created a new package called [`discord-fmt`](https://www.npmjs.com/package/discord-fmt) for formatting.
+
+As an example of how to use it:
+```typescript
+import { bold, h1 } from "discord-fmt"
+
+sendMessage(bold("this is bold")) // **this is bold**
+sendMessage(h1("Header")) // # Header
+sendMessage(bold("sh*t")) // **sh\*t**
+```
+
 ### Components V2
-They're spicy and fun to use. You can use [this site](https://discord.builders/dressed-typescript-code-generator) to get an idea, but the import is wrong. Instead of `@dressed/dressed` you should use `dressed` as the import.
+They're spicy and fun to use. You can use [this site](https://discord.builders/dressed-typescript-code-generator) to get an idea.
 
 ### Formatting & Linting
 We use Biome and Lefthook should automatically run the formatters and linters on commit. It should also run all the actions as you save.
