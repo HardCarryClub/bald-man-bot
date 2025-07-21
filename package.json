@@ -8,6 +8,8 @@
     "start:dev": "node .dressed/index.mjs"
   },
   "dependencies": {
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
     "discord-api-types": "^0.38.16",
     "discord-fmt": "^1.0.1",
     "dressed": "1.9.0-rc.1"

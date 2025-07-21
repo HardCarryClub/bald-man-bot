@@ -1,17 +1,39 @@
 import {
+  getUnixTime,
+  nextFriday,
+  nextSaturday,
+  nextSunday,
+  setHours,
+  setMinutes,
+  setSeconds,
+  startOfDay,
+} from "date-fns";
+import { fromZonedTime, toZonedTime } from "date-fns-tz";
+import {
   MessageFlags,
   type RESTPostAPIChannelMessageJSONBody,
 } from "discord-api-types/v10";
-import { channel, h2, subtext, user } from "discord-fmt";
+import {
+  bold,
+  channel,
+  h1,
+  h2,
+  subtext,
+  TimestampStyle,
+  timestamp,
+  user,
+} from "discord-fmt";
 import {
   type CommandConfig,
   type CommandInteraction,
   CommandOption,
   Container,
   createMessage,
+  Separator,
   TextDisplay,
 } from "dressed";
 import { PUG_ANNOUNCEMENTS_CHANNEL_ID } from "../utilities/env";
+import { getNextEpoch } from "../utilities/time";
 
 const messages: {
   name: string;
@@ -74,7 +96,64 @@ const messages: {
     name: "schedule",
     description: "Schedule (When is PUGs?)",
     content: () => {
-      return {};
+      const euZone = "Europe/Berlin";
+      const naZone = "America/New_York";
+
+      const owFridayEu = getNextEpoch(nextFriday, euZone, 21, 30);
+      const owFridayNa = getNextEpoch(nextFriday, naZone, 20, 0);
+
+      const mrSaturdayEu = getNextEpoch(nextSaturday, euZone, 21, 30);
+      const mrSaturdayNa = getNextEpoch(nextSaturday, naZone, 20, 0);
+
+      const mrSundayEu = getNextEpoch(nextSunday, euZone, 20, 30);
+      const mrSundayNa = getNextEpoch(nextSunday, naZone, 18, 30);
+
+      return {
+        components: [
+          TextDisplay(bold("Here is this week's PUG schedule")),
+
+          // Overwatch Schedule
+          Container(
+            TextDisplay(h1("Overwatch Schedule")),
+            Separator(),
+            TextDisplay(h2("Friday")),
+            TextDisplay(
+              `${timestamp(owFridayEu, TimestampStyle.LongDateTime)}, ${timestamp(owFridayEu, TimestampStyle.RelativeTime)}`,
+            ),
+            TextDisplay(
+              `${timestamp(owFridayNa, TimestampStyle.LongDateTime)}, ${timestamp(owFridayNa, TimestampStyle.RelativeTime)}`,
+            ),
+          ),
+
+          // Marvel Rivals Schedule
+          Container(
+            TextDisplay(h1("Marvel Rivals Schedule")),
+            Separator(),
+            TextDisplay(h2("Saturday")),
+            TextDisplay(
+              `${timestamp(mrSaturdayEu, TimestampStyle.LongDateTime)}, ${timestamp(mrSaturdayEu, TimestampStyle.RelativeTime)}`,
+            ),
+            TextDisplay(
+              `${timestamp(mrSaturdayNa, TimestampStyle.LongDateTime)}, ${timestamp(mrSaturdayNa, TimestampStyle.RelativeTime)}`,
+            ),
+            TextDisplay(h2("Sunday")),
+            TextDisplay(
+              `${timestamp(mrSundayEu, TimestampStyle.LongDateTime)}, ${timestamp(mrSundayEu, TimestampStyle.RelativeTime)}`,
+            ),
+            TextDisplay(
+              `${timestamp(mrSundayNa, TimestampStyle.LongDateTime)}, ${timestamp(mrSundayNa, TimestampStyle.RelativeTime)}`,
+            ),
+          ),
+
+          Separator(),
+          TextDisplay(
+            "Lobbies, EU Rivals Lobbies in particular, may shift regions depending on present PUGgers' regions.",
+          ),
+          TextDisplay(
+            `Keep your eyes peeled for Lobby announcements in ${channel(PUG_ANNOUNCEMENTS_CHANNEL_ID)} and feel free to come PUG! 🙂`,
+          ),
+        ],
+      };
     },
   },
 ];
