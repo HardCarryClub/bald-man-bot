@@ -12,6 +12,15 @@ DevContainer should automatically install the dependencies and lefthook, but if 
 pnpm install --frozen-lockfile && pnpm lefthook install
 ```
 
+It's also recommended to run the following command to ensure everything is setup correctly:
+
+```bash
+./setup.sh
+```
+
+### Running the Bot
+It's highly recommended to test in your own server with just you and the bot. You should setup your own Discord application as well.
+
 ### Dressed
 To keep things simple, I migrated from using a custom server to using [Dressed](https://github.com/Inbestigator/dressed). You can see the [Dressed documentation](https://dressed.builders) for more information on how to use it.
 
