@@ -1,10 +1,11 @@
 {
   "recommendations": [
+    "github.copilot",
+    "github.copilot-chat",
+    "usernamehw.errorlens",
     "biomejs.biome",
     "damms005.devdb",
-    "mikestead.dotenv",
+    "mikestead.dotenv"
   ],
-  "unwantedRecommendations": [
-    "dbaeumer.vscode-eslint"
-  ]
+  "unwantedRecommendations": ["dbaeumer.vscode-eslint"]
 }

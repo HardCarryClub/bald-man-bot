@@ -1,0 +1,7 @@
+{
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "[json,jsonc,typescript,javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  }
+}

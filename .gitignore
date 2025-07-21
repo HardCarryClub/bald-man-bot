@@ -1,11 +1,6 @@
 node_modules/
-
-# env
 .env
 .env.production
-
-# logs
 logs/
 *.log
-npm-debug.log*
 pnpm-debug.log*
