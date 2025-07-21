@@ -1,0 +1,3 @@
+- install cloudflared
+- run concurrently with the start:dev
+- add install and lefthook install to setup.sh
