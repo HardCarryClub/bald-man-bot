@@ -17,5 +17,10 @@
   "cSpell.words": [
     "bunx",
     "lefthook"
-  ]
+  ],
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "Limit to 1 line. Keep it simple stupid, follow that strictly. Use conventional commit message format. Remain consistent across commits no matter what. It doesn't have to be super strict, but it should be clear what the commit is doing. For example, use 'fix: bug in user login' instead of 'fixed a bug'. This helps in understanding the purpose of the commit at a glance. \n\nIf you're not sure about the format, you can check out the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification for more details. For a cheat sheet see [here](https://kapeli.com/cheat_sheets/Conventional_Commits.docset/Contents/Resources/Documents/index). Scopes, while useful, should only be used if needed. Otherwise just use the general commit message format. You will keep it simple and easy to understand. Shorter the better. Stay away from robotic phrases like enhance. You will limit to one line and short messages. \n\nExamples:\n- feat: update account settings\n- feat(auth): add forgot password logic\n- feat(dashboard): implement sku editor\n- style: linting\n- docs: update readme",
+    }
+  ],
 }

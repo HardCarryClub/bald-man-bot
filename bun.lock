@@ -5,12 +5,12 @@
       "name": "bald-man-bot",
       "dependencies": {
         "discord-api-types": "^0.38.16",
-        "discord-fmt": "^1.0.0",
+        "discord-fmt": "^1.0.1",
         "dressed": "1.9.0-rc.1",
       },
       "devDependencies": {
         "@biomejs/biome": "^2.1.2",
-        "@types/bun": "latest",
+        "@types/bun": "^1.2.19",
         "@types/node": "^24.0.15",
         "lefthook": "^1.12.2",
         "tsx": "^4.20.3",
@@ -156,7 +156,7 @@
 
     "discord-api-types": ["discord-api-types@0.38.16", "", {}, "sha512-Cz42dC5WqJD17Yk0bRy7YLTJmh3NKo4FGpxZuA8MHqT0RPxKSrll5YhlODZ2z5DiEV/gpHMeTSrTFTWpSXjT1Q=="],
 
-    "discord-fmt": ["discord-fmt@1.0.0", "", {}, "sha512-2otcbuWs8i3uhIUQGoFQUuD2cc8NDGXo4fX2HkqFmkKpqObXMdBkfbc3gxSpGhDYIKpCVz7jy5rw8zISWwqdfA=="],
+    "discord-fmt": ["discord-fmt@1.0.1", "", {}, "sha512-LsRCmMDH7a1wmd87Cyd6DXaGT/wbqEPnaAMAgyhOun1YDoAgKlnRZZ9ul5GMXZnvDIU9/w2c+ymo6Kuqo4kWDw=="],
 
     "dotenv": ["dotenv@17.2.0", "", {}, "sha512-Q4sgBT60gzd0BB0lSyYD3xM4YxrXA9y4uBDof1JNYGzOXrQdQ6yX+7XIAqoFOGQFOTK1D3Hts5OllpxMDZFONQ=="],
 
