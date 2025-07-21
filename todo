@@ -8,3 +8,12 @@
   - registering
   - global cache
 - add example readme for creating a new command (details collapse)
+
+Commands
+- user note
+- ban
+  - persist on rejoin
+- unban
+- manage lobbies
+- mute all (except staff and captains)
+- unmute all
