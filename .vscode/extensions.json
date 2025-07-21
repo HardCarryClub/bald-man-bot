@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "biomejs.biome",
+    "damms005.devdb",
+    "mikestead.dotenv",
+  ]
+}
