@@ -12,13 +12,14 @@ RUN ln -s /usr/local/bin/bun /usr/local/bin/node
 
 # Install dependencies for cloudflared
 RUN apt-get update && apt-get install -y \
+  git \
   curl \
   gnupg \
   ca-certificates \
   lsb-release
 
 # Add Cloudflare's GPG key and APT repo for Bookworm
-RUN curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | gpg --dearmor -o /usr/share/keyrings/cloudflare-archive-keyring.gpg && \
+RUN curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | gpg --dearmor -o /usr/share/keyrings/cloudflare-main.gpg && \
   echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared bookworm main' | tee /etc/apt/sources.list.d/cloudflared.list
 
 # Install cloudflared
