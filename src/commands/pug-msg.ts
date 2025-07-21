@@ -11,6 +11,7 @@ import {
   createMessage,
   TextDisplay,
 } from "dressed";
+import { PUG_ANNOUNCEMENTS_CHANNEL_ID } from "../utilities/env";
 
 const messages: {
   name: string;
@@ -61,7 +62,7 @@ const messages: {
             "You can participate by joining the Lobby VC, adding the current host of the lobby and joining the custom game through them by going to your friends tap > Right click > Join Game.",
           ),
           TextDisplay(
-            `To check the lobby leader go to ${channel("1309656594388226199")}, where you can see the current host and / or the rank lobby split and which channel you should go to.`,
+            `To check the lobby leader go to ${channel(PUG_ANNOUNCEMENTS_CHANNEL_ID)}, where you can see the current host and / or the rank lobby split and which channel you should go to.`,
           ),
         ),
       ],
@@ -72,8 +73,9 @@ const messages: {
   {
     name: "schedule",
     description: "Schedule (When is PUGs?)",
-    // this is highly dynamic, so we don't hardcode the content here.
-    content: () => ({}),
+    content: () => {
+      return {};
+    },
   },
 ];
 
@@ -118,12 +120,7 @@ export default async function pugMsg(interaction: CommandInteraction) {
   const foundTag = messages.find((msg) => msg.name === tag);
 
   if (foundTag) {
-    if (tag === "schedule") {
-      // do other timestamp shit here.
-      message = foundTag.content();
-    } else {
-      message = foundTag.content();
-    }
+    message = foundTag.content();
   } else {
     return interaction.editReply({
       content: "Invalid tag provided.",
