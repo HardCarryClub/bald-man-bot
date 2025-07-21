@@ -3,16 +3,18 @@
 {
   "name": "Debian",
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-  "image": "mcr.microsoft.com/devcontainers/base:bullseye",
-  "features": {
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "latest",
-      "pnpmVersion": "latest",
-      "nvmVersion": "latest"
-    }
-  },
+  //"image": "mcr.microsoft.com/devcontainers/base:bullseye",
+  "image": "ghcr.io/marcosgomesneto/bun-devcontainers/basic-bun:0.0.6"
 
-  "postStartCommand": "pnpm install --frozen-lockfile && pnpm lefthook install"
+  // "features": {
+  //   "ghcr.io/devcontainers/features/node:1": {
+  //     "version": "latest",
+  //     "pnpmVersion": "latest",
+  //     "nvmVersion": "latest"
+  //   }
+  // },
+
+  // "postStartCommand": "pnpm install --frozen-lockfile && pnpm lefthook install"
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   // "features": {},
