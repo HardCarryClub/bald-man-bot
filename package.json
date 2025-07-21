@@ -2,7 +2,7 @@
   "name": "bald-man-bot",
   "private": true,
   "scripts": {
-    "dev": "bun run build && bun run start",
+    "dev": "bun run build && bun run start:dev",
     "register": "bun run build -r && bun run start:dev",
     "build": "bunx dressed build -i",
     "start:dev": "node .dressed/index.mjs"
@@ -14,15 +14,10 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.1.2",
+    "@types/bun": "latest",
     "@types/node": "^24.0.15",
     "lefthook": "^1.12.2",
-    "tsx": "^4.20.3",
-    "@types/bun": "latest"
+    "tsx": "^4.20.3"
   },
-  "trustedDependencies": ["esbuild", "lefthook"],
-  "module": "index.ts",
-  "type": "module",
-  "peerDependencies": {
-    "typescript": "^5"
-  }
+  "trustedDependencies": ["esbuild", "lefthook"]
 }
