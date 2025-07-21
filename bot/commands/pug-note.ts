@@ -1,5 +1,6 @@
 import { formatISO, getUnixTime } from "date-fns";
 import {
+  type APIGuildMember,
   type APIMessage,
   type APIUser,
   MessageFlags,
@@ -12,6 +13,8 @@ import {
   user as userMention,
 } from "discord-fmt";
 import {
+  ActionRow,
+  Button,
   type CommandConfig,
   type CommandInteraction,
   CommandOption,
@@ -19,6 +22,7 @@ import {
   createMessage,
   editMessage,
   Section,
+  Separator,
   TextDisplay,
   Thumbnail,
 } from "dressed";
@@ -119,7 +123,9 @@ async function add(
   return !!result;
 }
 
-async function refreshUserNotes(user: APIUser): Promise<APIMessage | null> {
+export async function refreshUserNotes(
+  user: APIUser,
+): Promise<APIMessage | null> {
   const discordMessage = await db.query.pugUserNoteDiscordMessages.findFirst({
     where: eq(pugUserNoteDiscordMessages.userId, user.id),
   });
@@ -138,7 +144,7 @@ async function refreshUserNotes(user: APIUser): Promise<APIMessage | null> {
 
       return `${entry.note}\n${attribution}`;
     })
-    .join(`\n${subtext("–")}\n\n`);
+    .join(`\n${subtext("-")}\n`);
 
   const components = [
     Container(
@@ -148,7 +154,15 @@ async function refreshUserNotes(user: APIUser): Promise<APIMessage | null> {
           user.avatar ? avatarUrl(user) : "https://cdn.hardcarry.club/Logo.png",
         ),
       ),
+      Separator(),
       TextDisplay(formattedNotes || "No notes available."),
+    ),
+    ActionRow(
+      Button({
+        custom_id: `pug-note-${user.id}-refresh`,
+        label: "🔄 Refresh",
+        style: "Secondary",
+      }),
     ),
   ];
 

@@ -5,6 +5,8 @@ export const IS_IN_DEV = process.env.NODE_ENV !== "production";
 export const DATABASE_URL = "./data/db.sqlite";
 
 export const GUILD_ID = process.env.GUILD_ID ?? "941819133576765492";
+export const PUG_STAFF_ROLE_ID =
+  process.env.PUG_STAFF_ROLE_ID ?? "1291187493336518749";
 export const PUG_BANNED_ROLE_ID =
   process.env.PUG_BANNED_ROLE_ID ?? "1327429519052640339";
 export const PUG_ANNOUNCEMENTS_CHANNEL_ID =
