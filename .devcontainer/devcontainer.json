@@ -17,7 +17,8 @@
         "qwtel.sqlite-viewer",
         "mikestead.dotenv",
         "streetsidesoftware.code-spell-checker",
-        "meganrogge.template-string-converter"
+        "meganrogge.template-string-converter",
+        "emmanuelbeziat.vscode-great-icons"
       ]
     }
   },
