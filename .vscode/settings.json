@@ -13,5 +13,9 @@
   },
   "[typescript]": {
     "editor.defaultFormatter": "biomejs.biome"
-  }
+  },
+  "cSpell.words": [
+    "bunx",
+    "lefthook"
+  ]
 }
