@@ -4,8 +4,10 @@
     "github.copilot-chat",
     "usernamehw.errorlens",
     "biomejs.biome",
-    "damms005.devdb",
-    "mikestead.dotenv"
+    "qwtel.sqlite-viewer",
+    "mikestead.dotenv",
+    "streetsidesoftware.code-spell-checker",
+    "meganrogge.template-string-converter"
   ],
   "unwantedRecommendations": ["dbaeumer.vscode-eslint"]
 }
