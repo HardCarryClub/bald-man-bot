@@ -1,4 +1,7 @@
-import type { RESTPostAPIChannelMessageJSONBody } from "discord-api-types/v10";
+import {
+  MessageFlags,
+  type RESTPostAPIChannelMessageJSONBody,
+} from "discord-api-types/v10";
 import { channel, h2, subtext, user } from "discord-fmt";
 import {
   type CommandConfig,
@@ -135,7 +138,10 @@ export default async function pugMsg(interaction: CommandInteraction) {
     }
   }
 
-  await createMessage(interaction.channel.id, message);
+  await createMessage(interaction.channel.id, {
+    ...message,
+    flags: MessageFlags.IsComponentsV2,
+  });
 
   return interaction.editReply({
     content: `Message sent successfully!`,
