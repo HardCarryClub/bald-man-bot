@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      discord-api-types:
+        specifier: ^0.38.16
+        version: 0.38.16
+      discord-fmt:
+        specifier: ^1.0.0
+        version: 1.0.0
       dressed:
         specifier: ^1.8.1
         version: 1.8.1(@types/node@24.0.15)
@@ -411,6 +417,10 @@ packages:
 
   discord-api-types@0.38.16:
     resolution: {integrity: sha512-Cz42dC5WqJD17Yk0bRy7YLTJmh3NKo4FGpxZuA8MHqT0RPxKSrll5YhlODZ2z5DiEV/gpHMeTSrTFTWpSXjT1Q==}
+
+  discord-fmt@1.0.0:
+    resolution: {integrity: sha512-2otcbuWs8i3uhIUQGoFQUuD2cc8NDGXo4fX2HkqFmkKpqObXMdBkfbc3gxSpGhDYIKpCVz7jy5rw8zISWwqdfA==}
+    engines: {node: '>= 20'}
 
   dotenv@16.6.1:
     resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
@@ -883,6 +893,8 @@ snapshots:
   commander@14.0.0: {}
 
   discord-api-types@0.38.16: {}
+
+  discord-fmt@1.0.0: {}
 
   dotenv@16.6.1: {}
 
