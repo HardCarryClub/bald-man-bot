@@ -4,7 +4,9 @@
   "scripts": {
     "dev": "bun run build:",
     "build:app": "",
-    "build:bot": "bun run dressed build -R bot"
+    "build:bot": "bun run dressed build -R bot",
+    "generate": "drizzle-kit generate",
+    "migrate": "bun run app/db/migrate.ts"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
