@@ -2,22 +2,21 @@
   "name": "bald-man-bot",
   "private": true,
   "scripts": {
-    "dev": "pnpm build && pnpm start",
-    "register": "pnpm build -r && pnpm start:dev",
-    "build": "dressed build -i",
+    "dev": "bun run build && bun run start",
+    "register": "bun run build -r && bun run start:dev",
+    "build": "bunx dressed build -i",
     "start:dev": "node .dressed/index.mjs"
   },
-  "packageManager": "pnpm@10.13.1",
   "dependencies": {
-    "@dressed/dressed": "jsr:1.9.0-rc.1",
+    "@dressed/dressed": "npm:@jsr/dressed__dressed",
     "discord-api-types": "^0.38.16",
     "discord-fmt": "^1.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.1.2",
     "@types/node": "^24.0.15",
-    "dressed": "^1.8.1",
     "lefthook": "^1.12.2",
     "tsx": "^4.20.3"
-  }
+  },
+  "trustedDependencies": ["esbuild", "lefthook"]
 }
