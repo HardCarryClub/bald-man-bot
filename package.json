@@ -2,9 +2,9 @@
   "name": "bald-man-bot",
   "private": true,
   "scripts": {
-    "dev": "bun run build:",
-    "build:app": "",
-    "build:bot": "bun run dressed build -R bot",
+    "dev": "bun run bot:build && bun run app/index.ts",
+    "bot:build": "bun run dressed build -R bot",
+    "bot:register-commands": "bun run dressed build -r -R bot && bun run .dressed",
     "generate": "drizzle-kit generate",
     "migrate": "bun run app/db/migrate.ts"
   },
