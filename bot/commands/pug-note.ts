@@ -1,0 +1,188 @@
+import { formatISO, getUnixTime } from "date-fns";
+import {
+  type APIMessage,
+  type APIUser,
+  MessageFlags,
+} from "discord-api-types/v10";
+import {
+  h2,
+  subtext,
+  TimestampStyle,
+  timestamp,
+  user as userMention,
+} from "discord-fmt";
+import {
+  type CommandConfig,
+  type CommandInteraction,
+  CommandOption,
+  Container,
+  createMessage,
+  editMessage,
+  Section,
+  TextDisplay,
+  Thumbnail,
+} from "dressed";
+import { asc, desc, eq } from "drizzle-orm";
+import { db } from "../../app/db";
+import { pugUserNoteDiscordMessages, pugUserNotes } from "../../app/db/schema";
+import { avatarUrl } from "../../app/utilities/discord";
+import { PUG_NOTES_CHANNEL_ID } from "../../app/utilities/env";
+import { logger } from "../../app/utilities/logger";
+
+export const config: CommandConfig = {
+  description: "Manage PUG notes.",
+  default_member_permissions: "0",
+  options: [
+    CommandOption({
+      name: "add",
+      description: "Add a note to a user.",
+      type: "Subcommand",
+      options: [
+        CommandOption({
+          name: "user",
+          description: "The user to add a note for.",
+          type: "User",
+          required: true,
+        }),
+        CommandOption({
+          name: "note",
+          description: "The note to add.",
+          type: "String",
+          required: true,
+        }),
+      ],
+    }),
+  ],
+};
+
+export default async function (interaction: CommandInteraction) {
+  await interaction.deferReply({
+    ephemeral: true,
+  });
+
+  const addSubcommand = interaction.getOption("add")?.subcommand();
+
+  // logger.debug(interaction);
+
+  if (addSubcommand) {
+    const user = addSubcommand.getOption("user")?.user();
+    const note = addSubcommand.getOption("note")?.string();
+    const success = await add(interaction, user as APIUser, note as string);
+
+    if (!user || !note) {
+      logger.error("User or note is missing in pug-note command.");
+      await interaction.editReply({
+        content: "Please provide both a user and a note.",
+      });
+      return;
+    }
+
+    if (success) {
+      await interaction.editReply({
+        content: `Note added for ${userMention(user.id)}.`,
+      });
+      await refreshUserNotes(user as APIUser);
+    } else {
+      logger.error("Failed to add note for user:", user.id);
+      await interaction.editReply({
+        content: "Failed to add note. Please try again later.",
+      });
+    }
+
+    return;
+  }
+
+  logger.error("No subcommand provided for pug-note command.");
+
+  await interaction.editReply({
+    content: "Please provide a valid subcommand.",
+  });
+}
+
+async function add(
+  interaction: CommandInteraction,
+  user: APIUser,
+  note: string,
+) {
+  await db
+    .insert(pugUserNotes)
+    .values({
+      userId: user.id,
+      note: note,
+      createdAt: formatISO(new Date()),
+      createdBy: interaction.user.id,
+    })
+    .returning();
+
+  const result = await refreshUserNotes(user);
+
+  return !!result;
+}
+
+async function refreshUserNotes(user: APIUser): Promise<APIMessage | null> {
+  const discordMessage = await db.query.pugUserNoteDiscordMessages.findFirst({
+    where: eq(pugUserNoteDiscordMessages.userId, user.id),
+  });
+
+  const notes = await db.query.pugUserNotes.findMany({
+    where: eq(pugUserNotes.userId, user.id),
+    orderBy: [asc(pugUserNotes.createdAt)],
+  });
+
+  const formattedNotes = notes
+    .map((entry) => {
+      const createdAt = getUnixTime(entry.createdAt).toString();
+      const attribution = subtext(
+        `by ${userMention(entry.createdBy)} at ${timestamp(createdAt, TimestampStyle.ShortDate)}`,
+      );
+
+      return `${entry.note}\n${attribution}`;
+    })
+    .join(`\n${subtext("–")}\n\n`);
+
+  const components = [
+    Container(
+      Section(
+        [h2(userMention(user.id)), `Total notes: ${notes.length}`],
+        Thumbnail(
+          user.avatar ? avatarUrl(user) : "https://cdn.hardcarry.club/Logo.png",
+        ),
+      ),
+      TextDisplay(formattedNotes || "No notes available."),
+    ),
+  ];
+
+  let message: APIMessage | null = null;
+
+  if (discordMessage) {
+    message = await editMessage(
+      discordMessage.channelId,
+      discordMessage.messageId,
+      {
+        components,
+        flags: MessageFlags.IsComponentsV2,
+      },
+    );
+
+    if (!message) {
+      logger.error(
+        `Failed to edit message for user ${user.id} in channel ${discordMessage.channelId}.`,
+      );
+
+      return null;
+    }
+  } else {
+    message = await createMessage(PUG_NOTES_CHANNEL_ID, {
+      components,
+      flags: MessageFlags.IsComponentsV2,
+    });
+
+    await db.insert(pugUserNoteDiscordMessages).values({
+      channelId: message.channel_id,
+      messageId: message.id,
+      userId: user.id,
+    });
+  }
+
+  return message;
+}
