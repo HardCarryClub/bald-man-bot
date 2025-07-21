@@ -4,3 +4,4 @@ node_modules/
 logs/
 *.log
 pnpm-debug.log*
+bot.gen.ts
