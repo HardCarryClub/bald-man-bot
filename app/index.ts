@@ -1,6 +1,5 @@
 import { createServer } from "dressed/server";
 import { commands, components, config, events } from "../.dressed";
-import { db } from "./db";
 import { logger } from "./utilities/logger";
 
 logger.info("Starting Dressed server");

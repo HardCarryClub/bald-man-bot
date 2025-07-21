@@ -1,5 +1,4 @@
-import type { APIUser } from "discord-api-types/v10";
-import { getMember, getUser, type MessageComponentInteraction } from "dressed";
+import { getMember, type MessageComponentInteraction } from "dressed";
 import { GUILD_ID } from "../../../app/utilities/env";
 import { refreshUserNotes } from "../../commands/pug-note";
 

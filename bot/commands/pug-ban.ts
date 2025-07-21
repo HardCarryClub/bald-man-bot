@@ -3,7 +3,6 @@ import {
   type CommandConfig,
   type CommandInteraction,
   CommandOption,
-  editMessage,
 } from "dressed";
 import { eq } from "drizzle-orm";
 import { db } from "../../app/db";

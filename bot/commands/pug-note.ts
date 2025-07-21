@@ -1,6 +1,5 @@
 import { formatISO, getUnixTime } from "date-fns";
 import {
-  type APIGuildMember,
   type APIMessage,
   type APIUser,
   MessageFlags,
@@ -26,7 +25,7 @@ import {
   TextDisplay,
   Thumbnail,
 } from "dressed";
-import { asc, desc, eq } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 import { db } from "../../app/db";
 import { pugUserNoteDiscordMessages, pugUserNotes } from "../../app/db/schema";
 import { avatarUrl } from "../../app/utilities/discord";
