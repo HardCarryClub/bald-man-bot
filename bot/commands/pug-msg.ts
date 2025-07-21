@@ -22,8 +22,8 @@ import {
   Separator,
   TextDisplay,
 } from "dressed";
-import { PUG_ANNOUNCEMENTS_CHANNEL_ID } from "../utilities/env";
-import { getNextEpoch } from "../utilities/time";
+import { PUG_ANNOUNCEMENTS_CHANNEL_ID } from "../../app/utilities/env";
+import { getNextEpoch } from "../../app/utilities/time";
 
 const messages: {
   tag: string;
