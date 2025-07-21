@@ -1,10 +1,14 @@
 import {
+  addMemberRole,
   type CommandConfig,
   type CommandInteraction,
   CommandOption,
+  editMessage,
 } from "dressed";
-import { database } from "../../app/db";
+import { eq } from "drizzle-orm";
+import { db } from "../../app/db";
 import { pugBans } from "../../app/db/schema";
+import { GUILD_ID, PUG_BANNED_ROLE_ID } from "../../app/utilities/env";
 
 export const config: CommandConfig = {
   description: "Ban a user from PUGs.",
@@ -16,10 +20,16 @@ export const config: CommandConfig = {
       type: "User",
       required: true,
     }),
+    CommandOption({
+      name: "reason",
+      description: "The reason for banning the user from PUGs.",
+      type: "String",
+      required: false,
+    }),
   ],
 };
 
-export default async function pugBan(interaction: CommandInteraction) {
+export default async function (interaction: CommandInteraction) {
   await interaction.deferReply({
     ephemeral: true,
   });
@@ -32,7 +42,20 @@ export default async function pugBan(interaction: CommandInteraction) {
     });
   }
 
-  const r = await database.select().from(pugBans);
+  const existingBan = await db
+    .select()
+    .from(pugBans)
+    .where(eq(pugBans.userId, userToBan.id));
 
-  console.log("Current PUG bans:", r);
+  if (existingBan.length > 0) {
+    await addMemberRole(
+      interaction.guild_id ?? GUILD_ID,
+      userToBan.id,
+      PUG_BANNED_ROLE_ID,
+    );
+
+    return interaction.editReply({
+      content: `${userToBan.username} is already banned from PUGs.`,
+    });
+  }
 }

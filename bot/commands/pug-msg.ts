@@ -171,7 +171,7 @@ export const config: CommandConfig = {
   ],
 };
 
-export default async function pugMsg(interaction: CommandInteraction) {
+export default async function (interaction: CommandInteraction) {
   await interaction.deferReply({
     ephemeral: true,
   });
