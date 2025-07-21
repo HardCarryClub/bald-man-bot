@@ -1,3 +1,10 @@
-- install cloudflared
-- run concurrently with the start:dev
-- add install and lefthook install to setup.sh
+- update readme for setup script
+- add information for development
+  - discord applications
+  - tokens
+  - port forwarding
+  - make public
+  - running
+  - registering
+  - global cache
+- add example readme for creating a new command (details collapse)
