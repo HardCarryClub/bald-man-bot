@@ -56,8 +56,27 @@ check_data_dir() {
   fi
 }
 
+check_sqlite_db() {
+  local db_file="${1:-data/db.sqlite}"
+
+  if [ -f "$db_file" ]; then
+    echo "✅ SQLite database file '$db_file' already exists."
+  else
+    echo "📁 SQLite database file '$db_file' not found. Creating it..."
+    touch "$db_file"
+
+    if [ $? -eq 0 ]; then
+      echo "✅ Created '$db_file' successfully."
+    else
+      echo "❌ Failed to create '$db_file'. Check permissions."
+      return 1
+    fi
+  fi
+}
+
 check_env
 check_data_dir
+check_sqlite_db
 
 echo "Installing dependencies..."
 bun install
