@@ -4,7 +4,7 @@ import { DATABASE_URL } from "../utilities/env";
 import * as schema from "./schema";
 
 const sqlite = new Database(DATABASE_URL);
-export const database = drizzle({
+export const db = drizzle({
   client: sqlite,
   schema,
 });
