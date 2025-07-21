@@ -3,5 +3,8 @@
     "biomejs.biome",
     "damms005.devdb",
     "mikestead.dotenv",
+  ],
+  "unwantedRecommendations": [
+    "dbaeumer.vscode-eslint"
   ]
 }
