@@ -36,13 +36,13 @@ import { PUG_ANNOUNCEMENTS_CHANNEL_ID } from "../utilities/env";
 import { getNextEpoch } from "../utilities/time";
 
 const messages: {
-  name: string;
+  tag: string;
   description: string;
   content: () => RESTPostAPIChannelMessageJSONBody;
 }[] = [
   // What is PUGs?
   {
-    name: "define",
+    tag: "define",
     description: "Define (What is PUGs?)",
     content: () => ({
       components: [
@@ -58,7 +58,7 @@ const messages: {
 
   // Is there room in PUGs?
   {
-    name: "is-there-room",
+    tag: "is-there-room",
     description: "Room (Is there room?)",
     content: () => ({
       components: [
@@ -74,7 +74,7 @@ const messages: {
 
   // How to join PUGs
   {
-    name: "how-join",
+    tag: "how-join",
     description: "How Join (How do I join?)",
     content: () => ({
       components: [
@@ -93,7 +93,7 @@ const messages: {
 
   // PUG Schedule
   {
-    name: "schedule",
+    tag: "schedule",
     description: "Schedule (When is PUGs?)",
     content: () => {
       const euZone = "Europe/Berlin";
@@ -168,8 +168,8 @@ export const config: CommandConfig = {
       type: "String",
       required: true,
       choices: messages.map((msg) => ({
-        name: msg.name,
-        value: msg.name,
+        name: msg.description,
+        value: msg.tag,
       })),
     }),
     CommandOption({
@@ -196,7 +196,7 @@ export default async function pugMsg(interaction: CommandInteraction) {
   }
 
   let message: RESTPostAPIChannelMessageJSONBody = {};
-  const foundTag = messages.find((msg) => msg.name === tag);
+  const foundTag = messages.find((msg) => msg.tag === tag);
 
   if (foundTag) {
     message = foundTag.content();
