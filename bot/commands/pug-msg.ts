@@ -1,18 +1,6 @@
 import { nextFriday, nextSaturday, nextSunday } from "date-fns";
-import {
-  MessageFlags,
-  type RESTPostAPIChannelMessageJSONBody,
-} from "discord-api-types/v10";
-import {
-  bold,
-  channel,
-  h1,
-  h2,
-  subtext,
-  TimestampStyle,
-  timestamp,
-  user,
-} from "discord-fmt";
+import { MessageFlags, type RESTPostAPIChannelMessageJSONBody } from "discord-api-types/v10";
+import { bold, channel, h1, h2, subtext, TimestampStyle, timestamp, user } from "discord-fmt";
 import {
   type CommandConfig,
   type CommandInteraction,

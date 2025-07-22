@@ -1,17 +1,6 @@
 import { formatISO, getUnixTime } from "date-fns";
-import {
-  type APIMessage,
-  type APIUser,
-  MessageFlags,
-} from "discord-api-types/v10";
-import {
-  code,
-  h2,
-  subtext,
-  TimestampStyle,
-  timestamp,
-  user as userMention,
-} from "discord-fmt";
+import { type APIMessage, type APIUser, MessageFlags } from "discord-api-types/v10";
+import { code, h2, subtext, TimestampStyle, timestamp, user as userMention } from "discord-fmt";
 import {
   ActionRow,
   Button,
@@ -119,13 +108,7 @@ export default async function (interaction: CommandInteraction) {
   } else if (removeSubcommand) {
     const noteId = Number(removeSubcommand.getOption("id")?.string());
 
-    if (
-      !noteId ||
-      typeof noteId !== "number" ||
-      noteId <= 0 ||
-      Number.isNaN(noteId) ||
-      !Number.isInteger(noteId)
-    ) {
+    if (!noteId || typeof noteId !== "number" || noteId <= 0 || Number.isNaN(noteId) || !Number.isInteger(noteId)) {
       await interaction.editReply({
         content: "Please provide a note ID to remove.",
       });
@@ -171,11 +154,7 @@ export default async function (interaction: CommandInteraction) {
   });
 }
 
-async function add(
-  interaction: CommandInteraction,
-  user: APIUser,
-  note: string,
-) {
+async function add(interaction: CommandInteraction, user: APIUser, note: string) {
   await db
     .insert(pugUserNotes)
     .values({
@@ -191,9 +170,7 @@ async function add(
   return !!result;
 }
 
-export async function refreshUserNotes(
-  user: APIUser | { id: string; avatar?: string },
-): Promise<APIMessage | null> {
+export async function refreshUserNotes(user: APIUser | { id: string; avatar?: string }): Promise<APIMessage | null> {
   const discordMessage = await db.query.pugUserNoteDiscordMessages.findFirst({
     where: eq(pugUserNoteDiscordMessages.userId, user.id),
   });
@@ -218,11 +195,7 @@ export async function refreshUserNotes(
     Container(
       Section(
         [h2(userMention(user.id)), `Total notes: ${notes.length}`],
-        Thumbnail(
-          user.avatar
-            ? avatarUrl(user.id, user.avatar)
-            : "https://cdn.hardcarry.club/Logo.png",
-        ),
+        Thumbnail(user.avatar ? avatarUrl(user.id, user.avatar) : "https://cdn.hardcarry.club/Logo.png"),
       ),
       Separator(),
       TextDisplay(formattedNotes || "No notes available."),
@@ -239,19 +212,13 @@ export async function refreshUserNotes(
   let message: APIMessage | null = null;
 
   if (discordMessage) {
-    message = await editMessage(
-      discordMessage.channelId,
-      discordMessage.messageId,
-      {
-        components,
-        flags: MessageFlags.IsComponentsV2,
-      },
-    );
+    message = await editMessage(discordMessage.channelId, discordMessage.messageId, {
+      components,
+      flags: MessageFlags.IsComponentsV2,
+    });
 
     if (!message) {
-      logger.error(
-        `Failed to edit message for user ${user.id} in channel ${discordMessage.channelId}.`,
-      );
+      logger.error(`Failed to edit message for user ${user.id} in channel ${discordMessage.channelId}.`);
 
       return null;
     }

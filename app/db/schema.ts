@@ -20,12 +20,9 @@ export const pugUserNotes = sqliteTable("pug_user_notes", {
   deletedBy: text("deleted_by"),
 });
 
-export const pugUserNoteDiscordMessages = sqliteTable(
-  "pug_user_note_discord_messages",
-  {
-    id: integer("id").primaryKey(),
-    userId: text("user_id").notNull(),
-    channelId: text("channel_id").notNull(),
-    messageId: text("message_id").notNull(),
-  },
-);
+export const pugUserNoteDiscordMessages = sqliteTable("pug_user_note_discord_messages", {
+  id: integer("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  channelId: text("channel_id").notNull(),
+  messageId: text("message_id").notNull(),
+});

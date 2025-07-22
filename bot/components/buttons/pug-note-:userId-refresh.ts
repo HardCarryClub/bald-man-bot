@@ -3,10 +3,7 @@ import { GUILD_ID } from "../../../app/utilities/env";
 import { refreshUserNotes } from "../../commands/pug-note";
 import { isStaff } from "../../utilities/auth";
 
-export default async function (
-  interaction: MessageComponentInteraction,
-  args: { userId: string },
-) {
+export default async function (interaction: MessageComponentInteraction, args: { userId: string }) {
   await interaction.deferReply({
     ephemeral: true,
   });

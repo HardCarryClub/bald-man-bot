@@ -10,9 +10,7 @@ import { getMember } from "dressed";
 import { GUILD_ID, PUG_STAFF_ROLE_ID } from "../../app/utilities/env";
 import { logger } from "../../app/utilities/logger";
 
-export async function isStaff(
-  user: APIUser | APIGuildMember,
-): Promise<boolean> {
+export async function isStaff(user: APIUser | APIGuildMember): Promise<boolean> {
   if (!PUG_STAFF_ROLE_ID) {
     return false;
   }
