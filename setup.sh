@@ -9,6 +9,10 @@ check_env() {
     "DISCORD_TOKEN"
     "DISCORD_APP_ID"
     "DISCORD_PUBLIC_KEY"
+    "GUILD_ID"
+    "PUG_STAFF_ROLE_ID"
+    "PUG_BANNED_ROLE_ID"
+    "PUG_NOTES_CHANNEL_ID"
   )
 
   local keys_added=()
