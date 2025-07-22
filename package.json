@@ -9,6 +9,7 @@
     "migrate": "bun run app/db/migrate.ts"
   },
   "dependencies": {
+    "await-to-js": "^3.0.0",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "discord-api-types": "^0.38.16",
