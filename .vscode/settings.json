@@ -9,7 +9,6 @@
   },
   "git.confirmSync": false,
   "git.autofetch": true,
-  "workbench.iconTheme": "vscode-great-icons",
   "biome.suggestInstallingGlobally": false,
   "[json]": {
     "editor.defaultFormatter": "biomejs.biome"
