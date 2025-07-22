@@ -5,6 +5,7 @@ import {
   MessageFlags,
 } from "discord-api-types/v10";
 import {
+  code,
   h2,
   subtext,
   TimestampStyle,
@@ -31,6 +32,7 @@ import { pugUserNoteDiscordMessages, pugUserNotes } from "../../app/db/schema";
 import { avatarUrl } from "../../app/utilities/discord";
 import { PUG_NOTES_CHANNEL_ID } from "../../app/utilities/env";
 import { logger } from "../../app/utilities/logger";
+import { isStaff } from "../utilities/auth";
 
 export const config: CommandConfig = {
   description: "Manage PUG notes.",
@@ -55,6 +57,19 @@ export const config: CommandConfig = {
         }),
       ],
     }),
+    CommandOption({
+      name: "remove",
+      type: "Subcommand",
+      description: "Remove a note from a user.",
+      options: [
+        CommandOption({
+          name: "id",
+          description: "The ID of the note to remove.",
+          type: "Integer",
+          required: true,
+        }),
+      ],
+    }),
   ],
 };
 
@@ -63,14 +78,20 @@ export default async function (interaction: CommandInteraction) {
     ephemeral: true,
   });
 
-  const addSubcommand = interaction.getOption("add")?.subcommand();
+  if (!(await isStaff(interaction.member ?? interaction.user))) {
+    await interaction.editReply({
+      content: "You do not have permission to use this command.",
+    });
 
-  // logger.debug(interaction);
+    return;
+  }
+
+  const addSubcommand = interaction.getOption("add")?.subcommand();
+  const removeSubcommand = interaction.getOption("remove")?.subcommand();
 
   if (addSubcommand) {
     const user = addSubcommand.getOption("user")?.user();
     const note = addSubcommand.getOption("note")?.string();
-    const success = await add(interaction, user as APIUser, note as string);
 
     if (!user || !note) {
       logger.error("User or note is missing in pug-note command.");
@@ -79,6 +100,8 @@ export default async function (interaction: CommandInteraction) {
       });
       return;
     }
+
+    const success = await add(interaction, user as APIUser, note as string);
 
     if (success) {
       await interaction.editReply({
@@ -91,6 +114,52 @@ export default async function (interaction: CommandInteraction) {
         content: "Failed to add note. Please try again later.",
       });
     }
+
+    return;
+  } else if (removeSubcommand) {
+    const noteId = Number(removeSubcommand.getOption("id")?.string());
+
+    if (
+      !noteId ||
+      typeof noteId !== "number" ||
+      noteId <= 0 ||
+      Number.isNaN(noteId) ||
+      !Number.isInteger(noteId)
+    ) {
+      await interaction.editReply({
+        content: "Please provide a note ID to remove.",
+      });
+
+      return;
+    }
+
+    const noteToRemove = await db.query.pugUserNotes.findFirst({
+      where: eq(pugUserNotes.id, noteId),
+    });
+
+    if (!noteToRemove) {
+      await interaction.editReply({
+        content: "Note not found.",
+      });
+      return;
+    }
+
+    if (noteToRemove.createdBy !== interaction.user.id) {
+      await interaction.editReply({
+        content: "You can only remove your own notes.",
+      });
+      return;
+    }
+
+    await db.delete(pugUserNotes).where(eq(pugUserNotes.id, noteId));
+
+    await interaction.editReply({
+      content: `Note with ID ${code(noteId.toString())} has been removed.`,
+    });
+
+    await refreshUserNotes({
+      id: noteToRemove.userId,
+    });
 
     return;
   }
@@ -123,7 +192,7 @@ async function add(
 }
 
 export async function refreshUserNotes(
-  user: APIUser,
+  user: APIUser | { id: string; avatar?: string },
 ): Promise<APIMessage | null> {
   const discordMessage = await db.query.pugUserNoteDiscordMessages.findFirst({
     where: eq(pugUserNoteDiscordMessages.userId, user.id),
@@ -138,7 +207,7 @@ export async function refreshUserNotes(
     .map((entry) => {
       const createdAt = getUnixTime(entry.createdAt).toString();
       const attribution = subtext(
-        `by ${userMention(entry.createdBy)} at ${timestamp(createdAt, TimestampStyle.ShortDate)}`,
+        `by ${userMention(entry.createdBy)} at ${timestamp(createdAt, TimestampStyle.ShortDate)} (ID ${code(entry.id.toString())})`,
       );
 
       return `${entry.note}\n${attribution}`;
@@ -150,7 +219,9 @@ export async function refreshUserNotes(
       Section(
         [h2(userMention(user.id)), `Total notes: ${notes.length}`],
         Thumbnail(
-          user.avatar ? avatarUrl(user) : "https://cdn.hardcarry.club/Logo.png",
+          user.avatar
+            ? avatarUrl(user.id, user.avatar)
+            : "https://cdn.hardcarry.club/Logo.png",
         ),
       ),
       Separator(),

@@ -1,6 +1,7 @@
 import { getMember, type MessageComponentInteraction } from "dressed";
 import { GUILD_ID } from "../../../app/utilities/env";
 import { refreshUserNotes } from "../../commands/pug-note";
+import { isStaff } from "../../utilities/auth";
 
 export default async function (
   interaction: MessageComponentInteraction,
@@ -9,6 +10,14 @@ export default async function (
   await interaction.deferReply({
     ephemeral: true,
   });
+
+  if (!(await isStaff(interaction.member ?? interaction.user))) {
+    await interaction.editReply({
+      content: "You do not have permission to use this command.",
+    });
+
+    return;
+  }
 
   const userId = args.userId;
 
