@@ -1,5 +1,11 @@
 - add await to js for simple error handling
-
+- update to dressed rc.2 and handle install in guild
+- prior to prod release, delete all Commands
+- prod checklist
+ - build a proper dockerfile
+ - github action to register Commands
+ - github action to call the deploy on release
+ - release please?
 
 - update readme for setup script
 - add information for development

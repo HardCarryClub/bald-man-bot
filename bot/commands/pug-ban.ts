@@ -18,6 +18,7 @@ import { db } from "../../app/db";
 import { pugBans, pugUserNoteDiscordMessages } from "../../app/db/schema";
 import { GUILD_ID, PUG_BANNED_ROLE_ID } from "../../app/utilities/env";
 import { logger } from "../../app/utilities/logger";
+import { isStaff } from "../utilities/auth";
 
 export const config: CommandConfig = {
   description: "Ban a user from PUGs.",
@@ -42,6 +43,14 @@ export default async function (interaction: CommandInteraction) {
   await interaction.deferReply({
     ephemeral: true,
   });
+
+  if (!(await isStaff(interaction.member ?? interaction.user))) {
+    await interaction.editReply({
+      content: "You do not have permission to use this command.",
+    });
+
+    return;
+  }
 
   const userToBan = interaction.getOption("user", true).user();
 
