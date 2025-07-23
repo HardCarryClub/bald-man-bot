@@ -1,5 +1,14 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
+export const pugLobbies = sqliteTable("pug_lobbies", {
+  id: integer("id").primaryKey(),
+  categoryId: text("category_id").notNull(),
+  createdAt: text("created_at").notNull(),
+  createdBy: text("created_by").notNull(),
+  deletedAt: text("deleted_at"),
+  deletedBy: text("deleted_by"),
+});
+
 export const pugBans = sqliteTable("pug_bans", {
   id: integer("id").primaryKey(),
   userId: text("user_id").notNull(),
