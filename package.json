@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "bun run --bun bot:build && bun run --bun app/index.ts",
+    "dev": "bun run --bun bot:build && bun run --bun start",
+    "start": "bun run --bun app/index.ts",
     "bot:build": "bun run --bun dressed build -R bot",
     "bot:register-commands": "bun run --bun dressed build -r -R bot && bun run --bun .dressed",
     "generate": "drizzle-kit generate",
