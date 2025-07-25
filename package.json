@@ -15,7 +15,7 @@
     "date-fns-tz": "^3.2.0",
     "discord-api-types": "^0.38.16",
     "discord-fmt": "^1.0.1",
-    "dressed": "1.9.0-rc.1",
+    "dressed": "1.9.0-rc.2",
     "drizzle-orm": "^0.44.3",
     "pino": "^9.7.0"
   },
