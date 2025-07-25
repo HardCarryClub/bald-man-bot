@@ -1,0 +1,29 @@
+- add await to js for simple error handling
+- update to dressed rc.2 and handle install in guild
+- prior to prod release, delete all Commands
+- prod checklist
+ - build a proper dockerfile
+ - github action to register Commands
+ - github action to call the deploy on release
+ - release please?
+
+- update readme for setup script
+- add information for development
+  - discord applications
+  - tokens
+  - port forwarding
+  - make public
+  - running
+  - registering
+  - global cache
+- add example readme for creating a new command (details collapse)
+
+Commands
+- ban
+  - persist on rejoin
+- unban
+
+
+Cant do the following without raw events because you can't get the users in the VC with a single call
+- mute all (except staff and captains)
+- unmute all

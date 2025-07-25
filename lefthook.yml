@@ -1,0 +1,7 @@
+pre-commit:
+  parallel: true
+  commands:
+    check-and-lint:
+      glob: "src/**/*.{json,js,md,ts}"
+      run: bun biome check --write --unsafe {staged_files}
+      stage_fixed: true

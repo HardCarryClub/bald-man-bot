@@ -1,0 +1,6 @@
+.git
+.dressed
+node_modules
+*.log
+.vscode
+.env

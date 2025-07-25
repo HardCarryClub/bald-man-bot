@@ -1,0 +1,26 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/marcosgomesneto/bun-devcontainers/tree/main/src/basic-bun
+{
+  "name": "Bun",
+  "dockerFile": "Dockerfile",
+  // Configure tool-specific properties.
+  "customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      // Add the IDs of extensions you want installed when the container is created.
+      "extensions": [
+        "oven.bun-vscode",
+        "github.copilot",
+        "github.copilot-chat",
+        "usernamehw.errorlens",
+        "biomejs.biome",
+        "qwtel.sqlite-viewer",
+        "mikestead.dotenv",
+        "streetsidesoftware.code-spell-checker",
+        "meganrogge.template-string-converter",
+        "emmanuelbeziat.vscode-great-icons"
+      ]
+    }
+  },
+  "postStartCommand": "./setup.sh"
+}
