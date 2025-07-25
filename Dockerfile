@@ -6,4 +6,4 @@ RUN bun install --frozen-lockfile
 COPY . /app
 EXPOSE 8000
 
-CMD bash -c "bun run migrate --cwd /app && bun run dev --cwd /app"
+CMD bash -c "bun run migrate && bun run start"
