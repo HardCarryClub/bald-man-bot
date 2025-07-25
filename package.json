@@ -1,6 +1,6 @@
 {
   "name": "bald-man-bot",
-  "version": "2.0.0-beta",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "bun run --bun bot:build && bun run --bun app/index.ts",
