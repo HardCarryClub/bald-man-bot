@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/HardCarryClub/bald-man-bot/compare/v1.0.0...v2.0.0) (2025-07-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* forcing v2 release
+
+### Bug Fixes
+
+* forcing v2 release ([258c346](https://github.com/HardCarryClub/bald-man-bot/commit/258c346db1335ce87f6262f5b779bb45030078f0))
+
 ## 1.0.0 (2025-07-26)
 
 
