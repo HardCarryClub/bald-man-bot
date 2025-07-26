@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://github.com/HardCarryClub/bald-man-bot/compare/v2.3.0...v2.4.0) (2025-07-26)
+
+
+### Features
+
+* **time:** add thisOrNext function for scheduling ([3b1d793](https://github.com/HardCarryClub/bald-man-bot/commit/3b1d79312d52136193c751ae1637ab7f18e4d0bd))
+
 ## [2.3.0](https://github.com/HardCarryClub/bald-man-bot/compare/v2.2.0...v2.3.0) (2025-07-26)
 
 
