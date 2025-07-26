@@ -1,4 +1,4 @@
-import { nextFriday, nextSaturday, nextSunday } from "date-fns";
+import { isFriday, isSaturday, isSunday, nextFriday, nextSaturday, nextSunday } from "date-fns";
 import { MessageFlags, type RESTPostAPIChannelMessageJSONBody } from "discord-api-types/v10";
 import { bold, channel, h1, h2, subtext, TimestampStyle, timestamp, user } from "discord-fmt";
 import {
@@ -13,7 +13,7 @@ import {
   TextDisplay,
 } from "dressed";
 import { PUG_ANNOUNCEMENTS_CHANNEL_ID } from "../../app/utilities/env";
-import { getNextEpoch } from "../../app/utilities/time";
+import { thisOrNext } from "../../app/utilities/time";
 
 const messages: {
   tag: string;
@@ -83,14 +83,14 @@ const messages: {
       const euZone = "Europe/Berlin";
       const naZone = "America/New_York";
 
-      const owFridayEu = getNextEpoch(nextFriday, euZone, 21, 30);
-      const owFridayNa = getNextEpoch(nextFriday, naZone, 20, 0);
+      const owFridayEu = thisOrNext(isFriday, nextFriday, euZone, 21, 30);
+      const owFridayNa = thisOrNext(isFriday, nextFriday, naZone, 20, 0);
 
-      const mrSaturdayEu = getNextEpoch(nextSaturday, euZone, 21, 30);
-      const mrSaturdayNa = getNextEpoch(nextSaturday, naZone, 20, 0);
+      const mrSaturdayEu = thisOrNext(isSaturday, nextSaturday, euZone, 21, 30);
+      const mrSaturdayNa = thisOrNext(isSaturday, nextSaturday, naZone, 20, 0);
 
-      const mrSundayEu = getNextEpoch(nextSunday, euZone, 20, 30);
-      const mrSundayNa = getNextEpoch(nextSunday, naZone, 18, 30);
+      const mrSundayEu = thisOrNext(isSunday, nextSunday, euZone, 20, 30);
+      const mrSundayNa = thisOrNext(isSunday, nextSunday, naZone, 18, 30);
 
       return {
         components: [
