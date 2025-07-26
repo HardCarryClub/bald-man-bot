@@ -7,6 +7,8 @@ import {
   CommandOption,
   Container,
   createMessage,
+  MediaGallery,
+  MediaGalleryItem,
   Separator,
   TextDisplay,
 } from "dressed";
@@ -137,6 +139,19 @@ const messages: {
         ],
       };
     },
+  },
+
+  {
+    tag: "roles",
+    description: "Roles (Image of PUGs roles)",
+    content: () => ({
+      components: [
+        Container(
+          TextDisplay(h1("Overwatch Roles")),
+          MediaGallery(MediaGalleryItem("https://cdn.hardcarry.club/PUG_pug-roles-final.png")),
+        ),
+      ],
+    }),
   },
 ];
 
