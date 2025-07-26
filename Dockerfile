@@ -6,4 +6,6 @@ RUN bun install --frozen-lockfile
 COPY . /app
 EXPOSE 8000
 
+VOLUME ["/app/data"] 
+
 CMD bash -c "cd /app && bun run migrate && bun run bot:generate && bun run start"
