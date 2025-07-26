@@ -56,13 +56,17 @@ const messages: {
     description: "How Join (How do I join?)",
     content: () => ({
       components: [
+        TextDisplay(h1("How do I join? / How do I participate?")),
         Container(
-          TextDisplay(h2("How do I join?")),
+          TextDisplay(h2("Overwatch")),
           TextDisplay(
-            "You can participate by joining the Lobby VC, adding the current host of the lobby and joining the custom game through them by going to your friends tap > Right click > Join Game.",
+            `You can participate by joining the Lobby VC, adding the current host of the lobby and joining the custom game through them by going to your friends tap > Right click > Join Game.\nTo check the lobby leader go to ${channel(PUG_ANNOUNCEMENTS_CHANNEL_ID)}, where you can see the current host and / or the rank lobby split and which channel you should go to.`,
           ),
+        ),
+        Container(
+          TextDisplay(h2("Marvel Rivals")),
           TextDisplay(
-            `To check the lobby leader go to ${channel(PUG_ANNOUNCEMENTS_CHANNEL_ID)}, where you can see the current host and / or the rank lobby split and which channel you should go to.`,
+            `You can participate by joining the Lobby VC, Joining the custom game under "hcc pugs a" depending on lobby split.\nTo check the lobby go to ${channel(PUG_ANNOUNCEMENTS_CHANNEL_ID)}, where you can see the current lobbies, password and / or the rank lobby split and which channel you should go to.`,
           ),
         ),
       ],
