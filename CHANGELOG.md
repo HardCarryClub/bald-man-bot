@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.0](https://github.com/HardCarryClub/bald-man-bot/compare/v2.0.0...v2.1.0) (2025-07-26)
+
+
+### Features
+
+* add deployment step to Coolify in release workflow ([433e2f1](https://github.com/HardCarryClub/bald-man-bot/commit/433e2f194ebad72586d7a2b2dc93a6db637095dd))
+* update the join message ([725274f](https://github.com/HardCarryClub/bald-man-bot/commit/725274f27fb0f151b7b14231ef1a17b173b6cb73))
+
 ## [2.0.0](https://github.com/HardCarryClub/bald-man-bot/compare/v1.0.0...v2.0.0) (2025-07-26)
 
 ### ⚠ BREAKING CHANGES
