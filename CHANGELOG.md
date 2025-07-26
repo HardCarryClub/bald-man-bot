@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/HardCarryClub/bald-man-bot/compare/v2.1.1...v2.2.0) (2025-07-26)
+
+
+### Features
+
+* **pug-msg:** add roles message with image display ([bfc90e5](https://github.com/HardCarryClub/bald-man-bot/commit/bfc90e51f03f36f2b83d0f74bbf3c556a814a970))
+
 ## [2.1.1](https://github.com/HardCarryClub/bald-man-bot/compare/v2.1.0...v2.1.1) (2025-07-26)
 
 
