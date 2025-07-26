@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://github.com/HardCarryClub/bald-man-bot/compare/v2.2.0...v2.3.0) (2025-07-26)
+
+
+### Features
+
+* **procinfo:** add process info command ([fa3e102](https://github.com/HardCarryClub/bald-man-bot/commit/fa3e1023efd92a12de9ac74bfad09d50a35d5751))
+
 ## [2.2.0](https://github.com/HardCarryClub/bald-man-bot/compare/v2.1.1...v2.2.0) (2025-07-26)
 
 
