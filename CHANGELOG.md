@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/HardCarryClub/bald-man-bot/compare/v2.1.0...v2.1.1) (2025-07-26)
+
+
+### Bug Fixes
+
+* correct header flag in Coolify deployment step ([d6de256](https://github.com/HardCarryClub/bald-man-bot/commit/d6de256f80d181e1035cd5839d18e68e364fc25b))
+
 ## [2.1.0](https://github.com/HardCarryClub/bald-man-bot/compare/v2.0.0...v2.1.0) (2025-07-26)
 
 
