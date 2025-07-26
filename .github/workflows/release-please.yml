@@ -30,4 +30,4 @@ jobs:
       - name: Deploy on Coolify
         if: ${{ steps.release.outputs.release_created }}
         run: |
-          curl "https://app.coolify.io/api/v1/deploy?uuid=${{ secrets.COOLIFY_UUID }}&force=false" --headers "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}"
+          curl "https://app.coolify.io/api/v1/deploy?uuid=${{ secrets.COOLIFY_UUID }}&force=false" --header "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}"
