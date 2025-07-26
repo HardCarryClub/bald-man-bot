@@ -2,21 +2,15 @@
 
 ## [2.0.0](https://github.com/HardCarryClub/bald-man-bot/compare/v1.0.0...v2.0.0) (2025-07-26)
 
-
 ### ⚠ BREAKING CHANGES
 
-* forcing v2 release
+* **rewrite:** full rewrite to the bun and v2 ([#28](https://github.com/HardCarryClub/bald-man-bot/issues/28))
 
 ### Bug Fixes
 
 * forcing v2 release ([258c346](https://github.com/HardCarryClub/bald-man-bot/commit/258c346db1335ce87f6262f5b779bb45030078f0))
 
-## 1.0.0 (2025-07-26)
-
-
-### ⚠ BREAKING CHANGES
-
-* **rewrite:** full rewrite to the bun and v2 ([#28](https://github.com/HardCarryClub/bald-man-bot/issues/28))
+## 1.0.0
 
 ### Features
 
@@ -59,8 +53,3 @@
 * update Dockerfile and package.json scripts for migration and development ([320bbc6](https://github.com/HardCarryClub/bald-man-bot/commit/320bbc63a5dfd90d28d36cc54abe6810662889ff))
 * update manifest-file in release-please workflow ([1ef9a91](https://github.com/HardCarryClub/bald-man-bot/commit/1ef9a91e45b489c0382659a5a5d36ada770847f9))
 * update release-please action configuration ([18be9da](https://github.com/HardCarryClub/bald-man-bot/commit/18be9dad767f12568e3ee34b84992e2421be74a9))
-
-
-### Miscellaneous Chores
-
-* release 1.0.0 ([a62dc9a](https://github.com/HardCarryClub/bald-man-bot/commit/a62dc9a1cdbdd65b4736cc83ede9705c49359cc2))
