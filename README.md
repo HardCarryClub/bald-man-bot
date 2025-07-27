@@ -1,5 +1,5 @@
 # Bald Man Bot
-We want custom commands, so the Bald Man runs custom commands. It's hella scuffed.
+A custom Discord bot for the Hard Carry Club, built with Bun, Dressed, and TypeScript.
 
 ## Development
 It should be as easy as opening a new Codespace on GitHub. It's also setup as a dev container so if you have VS Code locally you should be able to open it in a dev container there.
@@ -12,18 +12,18 @@ If you don't want to use Codespaces then using [Dev Containers](https://code.vis
 - [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) VSCode extensions
 
 ### Setting Up
-The dev container, either locally or in Codespaces, should take care of install Bun as well as all the recommended extensions to make development easier for you which includes:
+The dev container, either locally or in Codespaces, should take care of installing Bun as well as all the recommended extensions to make development easier for you which includes:
 - SQLite viewer so you can double click `db.sqlite` and view the database
 - Copilot (if you use it)
-- Biome for automatic formatting
+- Biome for automatic formatting and linting
 - as well as some icons, spell check, and inline error viewing
 
-It should also run a setup script that takes care of your `.env` placeholders and ensures everything is ready to go. If you can't run the setup script run the following for basic install:
+It should also run a setup script that takes care of creating a `.env` file and installing dependencies. If you need to run the setup manually, or if the setup script fails, run the following for a basic install:
 ```sh
 bun install && bun run lefthook install
 ```
 
-If you notice any issues or after you re-fetch the source code you should always run:
+If you notice any issues or after you pull down new changes, you should always run:
 ```sh
 bun install
 ```
@@ -50,15 +50,15 @@ You should always register the commands first:
 bun run bot:register-commands
 ```
 
-If you add new commands or change any config for commands, you must rerun the command. When you're ready to start the bot just run:
+If you add new commands or change any of their configuration, you must rerun the command above. When you're ready to start the bot just run:
 ```sh
 bun run dev
 ```
 
-You will need also [forward a port](https://code.visualstudio.com/docs/debugtest/port-forwarding). You must change the visibility right-clicking on the port and selecting **Port Visibility > Public**. Public ports don't require sign in and this is required for Discord to work. Copy the URL and put it in the `Interactions Endpoint URL` in your new application configuration. Your bot *must* be running for this to save as Discord will test the endpoint to ensure it works.
+You will also need to [forward a port](https://code.visualstudio.com/docs/debugtest/port-forwarding). You must change the visibility by right-clicking on the port and selecting **Port Visibility > Public**. Public ports don't require sign-in, which is required for Discord to work. Copy the URL and put it in the `Interactions Endpoint URL` in your new application configuration. Your bot *must* be running for this to save, as Discord will test the endpoint to ensure it works.
 
 ### Dressed
-To keep things simple, I migrated from using a custom server to using [Dressed](https://github.com/Inbestigator/dressed). You can see the [Dressed documentation](https://dressed.builders) for more information on how to use it.
+To keep things simple, this project uses [Dressed](https://github.com/Inbestigator/dressed). You can see the [Dressed documentation](https://dressed.builders) for more information on how to use it.
 
 The best resource, in my opinion, is the [examples repo](https://github.com/Inbestigator/dressed-examples/tree/main/node)
 
@@ -81,4 +81,4 @@ sendMessage(bold("sh*t")) // **sh\*t**
 They're spicy and fun to use. You can use [this site](https://discord.builders/dressed-typescript-code-generator) to get an idea.
 
 ### Formatting & Linting
-We use Biome and Lefthook should automatically run the formatters and linters on commit. It should also run all the actions as you save.
+We use Biome for formatting and linting. Lefthook is configured to automatically run the formatter and linter on commit. Your editor should also be configured to format on save if you have the recommended extensions installed.
