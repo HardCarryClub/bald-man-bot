@@ -3,6 +3,8 @@ import { GUILD_ID } from "../../../app/utilities/env";
 import { refreshUserNotes } from "../../commands/pug-note";
 import { isStaff } from "../../utilities/auth";
 
+export const pattern = "pug-note-:userId-refresh";
+
 export default async function (interaction: MessageComponentInteraction, args: { userId: string }) {
   await interaction.deferReply({
     ephemeral: true,
