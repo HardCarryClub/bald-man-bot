@@ -75,6 +75,13 @@ bun install
    - Paste into `Interactions Endpoint URL` in your Discord application settings
    - **Note**: The bot must be running when you save this setting as Discord will validate it's working correctly
 
+
+## Committing Code
+
+When making commits you should always follow [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/#summary) format. If you wanna quick cheat sheet [checkout this post](https://gist.github.com/Zekfad/f51cb06ac76e2457f11c80ed705c95a3). There will be a check automatically ran as you stage and commit code to GitHub to ensure it follows this format.
+
+If you use Copilot you can autogenerate a commit and it should follow this standard as well.
+
 ## Development Tools
 
 ### Included Extensions
