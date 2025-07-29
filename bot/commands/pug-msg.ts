@@ -157,7 +157,7 @@ const messages: {
 
 export const config: CommandConfig = {
   description: "Send a message from a bucket to the current channel.",
-  default_member_permissions: "0",
+  default_member_permissions: ["Administrator"],
   options: [
     CommandOption({
       name: "tag",

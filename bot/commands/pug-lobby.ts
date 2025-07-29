@@ -17,7 +17,7 @@ import { isStaff } from "../utilities/auth";
 
 export const config: CommandConfig = {
   description: "Manage PUG lobbies",
-  default_member_permissions: "0",
+  default_member_permissions: ["Administrator"],
   options: [
     CommandOption({
       name: "create",
