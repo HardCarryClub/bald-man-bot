@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.4.1](https://github.com/HardCarryClub/bald-man-bot/compare/v2.4.0...v2.4.1) (2025-08-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency dressed to v1.9.0 ([#37](https://github.com/HardCarryClub/bald-man-bot/issues/37)) ([9316401](https://github.com/HardCarryClub/bald-man-bot/commit/931640180c6c2d52ecb39704088c4eb696b941b5))
+* support windows devs ([072978c](https://github.com/HardCarryClub/bald-man-bot/commit/072978c9e41d049f054e25e82dc683749bc650e0))
+
 ## [2.4.0](https://github.com/HardCarryClub/bald-man-bot/compare/v2.3.0...v2.4.0) (2025-07-26)
 
 
