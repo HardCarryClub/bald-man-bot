@@ -2,7 +2,6 @@ import { isFriday, isSaturday, isSunday, nextFriday, nextSaturday, nextSunday } 
 import {
   type APIMessageTopLevelComponent,
   MessageFlags,
-  type RESTPostAPIChannelMessageJSONBody,
 } from "discord-api-types/v10";
 import { bold, channel, h1, h2, subtext, TimestampStyle, timestamp, user } from "discord-fmt";
 import {
