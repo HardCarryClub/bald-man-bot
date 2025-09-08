@@ -1,8 +1,5 @@
 import { isFriday, isSaturday, isSunday, nextFriday, nextSaturday, nextSunday } from "date-fns";
-import {
-  type APIMessageTopLevelComponent,
-  MessageFlags,
-} from "discord-api-types/v10";
+import { type APIMessageTopLevelComponent, MessageFlags } from "discord-api-types/v10";
 import { bold, channel, h1, h2, subtext, TimestampStyle, timestamp, user } from "discord-fmt";
 import {
   type CommandConfig,
@@ -15,7 +12,7 @@ import {
   Separator,
   TextDisplay,
 } from "dressed";
-import { PUG_ANNOUNCEMENTS_CHANNEL_ID } from "../../app/utilities/env";
+import { GUILD_ID, PUG_ANNOUNCEMENTS_CHANNEL_ID } from "../../app/utilities/env";
 import { thisOrNext } from "../../app/utilities/time";
 
 const messages: {
@@ -151,7 +148,7 @@ const messages: {
 export const config: CommandConfig = {
   description: "Send a message from a bucket to the current channel.",
   default_member_permissions: ["Administrator"],
-  guilds: [process.env.GUILD_ID],
+  guilds: [GUILD_ID],
   options: [
     CommandOption({
       name: "tag",

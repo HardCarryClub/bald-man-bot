@@ -2,13 +2,14 @@ import { formatDistanceToNow } from "date-fns";
 import { MessageFlags } from "discord-api-types/v10";
 import { h1, h2, link } from "discord-fmt";
 import { type CommandConfig, type CommandInteraction, Container, TextDisplay } from "dressed";
+import { GUILD_ID } from "../../app/utilities/env";
 import * as pkg from "../../package.json";
 import { isStaff } from "../utilities/auth";
 
 export const config: CommandConfig = {
   description: "Displays the bot's process info.",
   default_member_permissions: ["Administrator"],
-  guilds: [process.env.GUILD_ID],
+  guilds: [GUILD_ID],
 };
 
 export default async function (interaction: CommandInteraction) {

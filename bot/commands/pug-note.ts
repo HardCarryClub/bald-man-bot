@@ -19,14 +19,14 @@ import { asc, eq } from "drizzle-orm";
 import { db } from "../../app/db";
 import { pugUserNoteDiscordMessages, pugUserNotes } from "../../app/db/schema";
 import { avatarUrl } from "../../app/utilities/discord";
-import { PUG_NOTES_CHANNEL_ID } from "../../app/utilities/env";
+import { GUILD_ID, PUG_NOTES_CHANNEL_ID } from "../../app/utilities/env";
 import { logger } from "../../app/utilities/logger";
 import { isStaff } from "../utilities/auth";
 
 export const config: CommandConfig = {
   description: "Manage PUG notes.",
   default_member_permissions: ["Administrator"],
-  guilds: [process.env.GUILD_ID],
+  guilds: [GUILD_ID],
   options: [
     CommandOption({
       name: "add",

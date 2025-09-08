@@ -18,7 +18,7 @@ import { isStaff } from "../utilities/auth";
 export const config: CommandConfig = {
   description: "Manage PUG lobbies",
   default_member_permissions: ["Administrator"],
-  guilds: [process.env.GUILD_ID],
+  guilds: [GUILD_ID],
   options: [
     CommandOption({
       name: "create",
