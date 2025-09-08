@@ -11,6 +11,7 @@
     "migrate": "bun run --bun app/db/migrate.ts"
   },
   "dependencies": {
+    "@dressed/ws": "^0.4.4",
     "await-to-js": "^3.0.0",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",

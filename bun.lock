@@ -4,6 +4,7 @@
     "": {
       "name": "bald-man-bot",
       "dependencies": {
+        "@dressed/ws": "^0.4.4",
         "await-to-js": "^3.0.0",
         "date-fns": "^4.1.0",
         "date-fns-tz": "^3.2.0",
@@ -47,6 +48,8 @@
     "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@2.2.3", "", { "os": "win32", "cpu": "x64" }, "sha512-gvCpewE7mBwBIpqk1YrUqNR4mCiyJm6UI3YWQQXkedSSEwzRdodRpaKhbdbHw1/hmTWOVXQ+Eih5Qctf4TCVOQ=="],
 
     "@dressed/matcher": ["@dressed/matcher@1.4.0", "", {}, "sha512-hAM5KaaGrhmMFr1Fd+KCQep6VnODcxInnIXATAbyJo64XN56pM20UvccWVhrIR6Hk2fFZUI69eJ0ehzK4rKxnw=="],
+
+    "@dressed/ws": ["@dressed/ws@0.4.4", "", { "dependencies": { "discord-api-types": "^0.38.22" }, "peerDependencies": { "dressed": "^1.9.0" } }, "sha512-ifTlzVzAV9pTS3xOFMmFPApOu9h3YslC6hQvWHPm37C7IRMj8NjEdEUryQOu38W4iS3HIiUgk2RF99WgTVaSVw=="],
 
     "@drizzle-team/brocli": ["@drizzle-team/brocli@0.10.2", "", {}, "sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w=="],
 
