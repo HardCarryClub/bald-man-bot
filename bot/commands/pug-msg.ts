@@ -12,7 +12,7 @@ import {
   Separator,
   TextDisplay,
 } from "dressed";
-import { GUILD_ID, PUG_ANNOUNCEMENTS_CHANNEL_ID } from "../../app/utilities/env";
+import { GUILD_ID, PUG_ANNOUNCEMENTS_CHANNEL_ID } from "../../app/utilities/config";
 import { thisOrNext } from "../../app/utilities/time";
 
 const messages: {

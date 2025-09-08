@@ -4,7 +4,7 @@ import { addMemberRole } from "dressed";
 import { createServer } from "dressed/server";
 import { commands, components, config, events } from "../.dressed";
 import { db } from "./db";
-import { GUILD_ID, PUG_BANNED_ROLE_ID } from "./utilities/env";
+import { GUILD_ID, PUG_BANNED_ROLE_ID } from "./utilities/config";
 import { logger } from "./utilities/logger";
 
 logger.info("Starting Dressed server");

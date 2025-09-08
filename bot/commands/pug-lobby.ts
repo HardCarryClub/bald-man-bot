@@ -11,7 +11,7 @@ import {
 import { eq } from "drizzle-orm";
 import { db } from "../../app/db";
 import { pugLobbies } from "../../app/db/schema";
-import { GUILD_ID } from "../../app/utilities/env";
+import { GUILD_ID } from "../../app/utilities/config";
 import { logger } from "../../app/utilities/logger";
 import { isStaff } from "../utilities/auth";
 

@@ -2,7 +2,7 @@ import { formatDistanceToNow } from "date-fns";
 import { MessageFlags } from "discord-api-types/v10";
 import { h1, h2, link } from "discord-fmt";
 import { type CommandConfig, type CommandInteraction, Container, TextDisplay } from "dressed";
-import { GUILD_ID } from "../../app/utilities/env";
+import { GUILD_ID } from "../../app/utilities/config";
 import * as pkg from "../../package.json";
 import { isStaff } from "../utilities/auth";
 

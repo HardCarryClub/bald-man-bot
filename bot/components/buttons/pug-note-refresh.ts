@@ -1,5 +1,5 @@
 import { getMember, type MessageComponentInteraction } from "dressed";
-import { GUILD_ID } from "../../../app/utilities/env";
+import { GUILD_ID } from "../../../app/utilities/config";
 import { refreshUserNotes } from "../../commands/pug-note";
 import { isStaff } from "../../utilities/auth";
 
