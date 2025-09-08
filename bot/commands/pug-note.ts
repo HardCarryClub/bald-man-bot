@@ -26,6 +26,7 @@ import { isStaff } from "../utilities/auth";
 export const config: CommandConfig = {
   description: "Manage PUG notes.",
   default_member_permissions: ["Administrator"],
+  guilds: [process.env.GUILD_ID],
   options: [
     CommandOption({
       name: "add",
@@ -98,7 +99,7 @@ export default async function (interaction: CommandInteraction) {
       });
       await refreshUserNotes(user as APIUser);
     } else {
-      logger.error("Failed to add note for user:", user.id);
+      logger.error(`Failed to add note for user: ${user.id}`);
       await interaction.editReply({
         content: "Failed to add note. Please try again later.",
       });

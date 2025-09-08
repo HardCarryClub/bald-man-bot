@@ -23,6 +23,7 @@ import { isStaff } from "../utilities/auth";
 export const config: CommandConfig = {
   description: "Ban a user from PUGs.",
   default_member_permissions: ["Administrator"],
+  guilds: [process.env.GUILD_ID],
   options: [
     CommandOption({
       name: "user",

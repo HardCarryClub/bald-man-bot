@@ -8,6 +8,7 @@ import { isStaff } from "../utilities/auth";
 export const config: CommandConfig = {
   description: "Displays the bot's process info.",
   default_member_permissions: ["Administrator"],
+  guilds: [process.env.GUILD_ID],
 };
 
 export default async function (interaction: CommandInteraction) {
