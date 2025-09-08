@@ -9,10 +9,12 @@ A custom Discord bot for the Hard Carry Club, built with Bun, Dressed, and TypeS
 You'll need one of the following development environments:
 
 **Option 1: GitHub Codespaces (Recommended)**
+
 - No local setup required
 - Review the [Codespaces billing documentation](https://docs.github.com/en/billing/managing-billing-for-your-products/about-billing-for-github-codespaces) first
 
 **Option 2: Local Dev Containers**
+
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - [VS Code](https://code.visualstudio.com/)
 - [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
@@ -34,8 +36,6 @@ It should be automatically created but you should have a `.env` that looks simil
 
 ```env
 DISCORD_TOKEN="your_bot_token_here"
-DISCORD_APP_ID="your_app_id_here"
-DISCORD_PUBLIC_KEY="your_public_key_here"
 
 GUILD_ID="your_test_server_id"
 PUG_BANNED_ROLE_ID="banned_role_id"
@@ -52,6 +52,7 @@ bun install && bun run lefthook install
 ```
 
 After pulling new changes, always run:
+
 ```sh
 bun install
 ```
@@ -59,11 +60,13 @@ bun install
 ### Running the Bot
 
 1. **Register Discord commands** (required for new/changed commands):
+
    ```sh
    bun run bot:register-commands
    ```
 
 2. **Start the development server**:
+
    ```sh
    bun run dev
    ```
@@ -74,7 +77,6 @@ bun install
    - Copy the public URL
    - Paste into `Interactions Endpoint URL` in your Discord application settings
    - **Note**: The bot must be running when you save this setting as Discord will validate it's working correctly
-
 
 ## Committing Code
 
@@ -87,6 +89,7 @@ If you use Copilot you can autogenerate a commit and it should follow this stand
 ### Included Extensions
 
 The dev container includes these helpful extensions:
+
 - **SQLite Viewer** - Double-click `db.sqlite` to view the database
 - **GitHub Copilot** - AI code assistance (if you have access)
 - **Biome** - Automatic formatting and linting
@@ -95,24 +98,28 @@ The dev container includes these helpful extensions:
 ### Frameworks & Libraries
 
 **Dressed Framework**
+
 - [Documentation](https://dressed.vercel.app/docs)
 - [Examples Repository](https://github.com/Inbestigator/dressed-examples/)
 - [Code Generator](https://discord.builders/dressed-typescript-code-generator)
 
 **Discord Formatting**
+
 - Uses [`discord-fmt`](https://www.npmjs.com/package/discord-fmt) package
 - Example usage:
+
   ```typescript
-  import { bold, h1 } from "discord-fmt"
-  
-  sendMessage(bold("this is bold")) // **this is bold**
-  sendMessage(h1("Header")) // # Header
-  sendMessage(bold("sh*t")) // **sh\*t**
+  import { bold, h1 } from "discord-fmt";
+
+  sendMessage(bold("this is bold")); // **this is bold**
+  sendMessage(h1("Header")); // # Header
+  sendMessage(bold("sh*t")); // **sh\*t**
   ```
 
 ### Code Quality
 
 **Formatting & Linting**
+
 - **Biome** handles formatting and linting
 - **Lefthook** runs checks automatically on commit
 - Format on save enabled if you're using Codespaces or VSCode
@@ -124,6 +131,7 @@ If you want to include images, it's highly recommended to upload them to somethi
 ## Troubleshooting
 
 **Common Issues:**
+
 - **Commands not updating**: Run `bun run bot:register-commands` after changes
 - **Webhook errors**: Ensure port is public and bot is running when configuring Discord
 - **Permission errors**: Check bot permissions in your test server

@@ -7,8 +7,6 @@ check_env() {
   
   local keys=(
     "DISCORD_TOKEN"
-    "DISCORD_APP_ID"
-    "DISCORD_PUBLIC_KEY"
     "GUILD_ID"
     "PUG_STAFF_ROLE_ID"
     "PUG_BANNED_ROLE_ID"
