@@ -1,3 +1,9 @@
+import { db } from "@app/db";
+import { pugUserNote, pugUserNoteDiscordMessage, type SelectUserNoteDiscordMessage } from "@app/db/schema";
+import { GUILD_ID, getAvailableGames, getGameConfig } from "@app/utilities/config";
+import { avatarUrl } from "@app/utilities/discord";
+import { logger } from "@app/utilities/logger";
+import { isStaff } from "@bot/utilities/auth";
 import { formatISO, getUnixTime } from "date-fns";
 import { type APIMessage, type APIUser, MessageFlags } from "discord-api-types/v10";
 import { code, h2, subtext, TimestampStyle, timestamp, user as userMention } from "discord-fmt";
@@ -16,12 +22,6 @@ import {
   Thumbnail,
 } from "dressed";
 import { asc, eq } from "drizzle-orm";
-import { db } from "../../app/db";
-import { pugUserNoteDiscordMessages, pugUserNotes } from "../../app/db/schema";
-import { avatarUrl } from "../../app/utilities/discord";
-import { GUILD_ID, PUG_NOTES_CHANNEL_ID } from "../../app/utilities/env";
-import { logger } from "../../app/utilities/logger";
-import { isStaff } from "../utilities/auth";
 
 export const config: CommandConfig = {
   description: "Manage PUG notes.",
@@ -33,6 +33,22 @@ export const config: CommandConfig = {
       description: "Add a note to a user.",
       type: "Subcommand",
       options: [
+        CommandOption({
+          name: "game",
+          description: "The game the note is for.",
+          type: "String",
+          choices: [
+            {
+              name: "Overwatch",
+              value: "overwatch",
+            },
+            {
+              name: "Marvel Rivals",
+              value: "rivals",
+            },
+          ],
+          required: true,
+        }),
         CommandOption({
           name: "user",
           description: "The user to add a note for.",
@@ -82,8 +98,9 @@ export default async function (interaction: CommandInteraction) {
   if (addSubcommand) {
     const user = addSubcommand.getOption("user")?.user();
     const note = addSubcommand.getOption("note")?.string();
+    const game = addSubcommand.getOption("game")?.string();
 
-    if (!user || !note) {
+    if (!user || !note || !game) {
       logger.error("User or note is missing in pug-note command.");
       await interaction.editReply({
         content: "Please provide both a user and a note.",
@@ -91,13 +108,20 @@ export default async function (interaction: CommandInteraction) {
       return;
     }
 
-    const success = await add(interaction, user as APIUser, note as string);
+    if (!getAvailableGames().includes(game)) {
+      await interaction.editReply({
+        content: `Invalid game provided. Available games are: ${getAvailableGames().join(", ")}`,
+      });
+      return;
+    }
+
+    const success = await add(interaction, user, note, game);
 
     if (success) {
       await interaction.editReply({
         content: `Note added for ${userMention(user.id)}.`,
       });
-      await refreshUserNotes(user as APIUser);
+      await refreshUserNotes(user as APIUser, game);
     } else {
       logger.error(`Failed to add note for user: ${user.id}`);
       await interaction.editReply({
@@ -117,8 +141,8 @@ export default async function (interaction: CommandInteraction) {
       return;
     }
 
-    const noteToRemove = await db.query.pugUserNotes.findFirst({
-      where: eq(pugUserNotes.id, noteId),
+    const noteToRemove = await db.query.pugUserNote.findFirst({
+      where: eq(pugUserNote.id, noteId),
     });
 
     if (!noteToRemove) {
@@ -135,15 +159,18 @@ export default async function (interaction: CommandInteraction) {
       return;
     }
 
-    await db.delete(pugUserNotes).where(eq(pugUserNotes.id, noteId));
+    await db.delete(pugUserNote).where(eq(pugUserNote.id, noteId));
 
     await interaction.editReply({
       content: `Note with ID ${code(noteId.toString())} has been removed.`,
     });
 
-    await refreshUserNotes({
-      id: noteToRemove.userId,
-    });
+    await refreshUserNotes(
+      {
+        id: noteToRemove.userId,
+      },
+      noteToRemove.game,
+    );
 
     return;
   }
@@ -155,30 +182,37 @@ export default async function (interaction: CommandInteraction) {
   });
 }
 
-async function add(interaction: CommandInteraction, user: APIUser, note: string) {
+async function add(interaction: CommandInteraction, user: APIUser, note: string, game: string): Promise<boolean> {
   await db
-    .insert(pugUserNotes)
+    .insert(pugUserNote)
     .values({
       userId: user.id,
       note: note,
+      game: game,
       createdAt: formatISO(new Date()),
       createdBy: interaction.user.id,
     })
     .returning();
 
-  const result = await refreshUserNotes(user);
+  const result = await refreshUserNotes(user, game);
 
   return !!result;
 }
 
-export async function refreshUserNotes(user: APIUser | { id: string; avatar?: string }): Promise<APIMessage | null> {
-  const discordMessage = await db.query.pugUserNoteDiscordMessages.findFirst({
-    where: eq(pugUserNoteDiscordMessages.userId, user.id),
-  });
+export async function refreshUserNotes(
+  user: APIUser | { id: string; avatar?: string },
+  game: string,
+  discordMessage?: SelectUserNoteDiscordMessage,
+): Promise<APIMessage | null> {
+  if (!discordMessage) {
+    discordMessage = await db.query.pugUserNoteDiscordMessage.findFirst({
+      where: eq(pugUserNoteDiscordMessage.userId, user.id),
+    });
+  }
 
-  const notes = await db.query.pugUserNotes.findMany({
-    where: eq(pugUserNotes.userId, user.id),
-    orderBy: [asc(pugUserNotes.createdAt)],
+  const notes = await db.query.pugUserNote.findMany({
+    where: (table, { and, eq }) => and(eq(table.userId, user.id), eq(table.game, game)),
+    orderBy: [asc(pugUserNote.createdAt)],
   });
 
   const formattedNotes = notes
@@ -224,15 +258,23 @@ export async function refreshUserNotes(user: APIUser | { id: string; avatar?: st
       return null;
     }
   } else {
-    message = await createMessage(PUG_NOTES_CHANNEL_ID, {
+    const gameConfig = getGameConfig(game);
+
+    if (!gameConfig) {
+      logger.error(`No game config found for game: ${game}`);
+      return null;
+    }
+
+    message = await createMessage(gameConfig.notesChannelId, {
       components,
       flags: MessageFlags.IsComponentsV2,
     });
 
-    await db.insert(pugUserNoteDiscordMessages).values({
+    await db.insert(pugUserNoteDiscordMessage).values({
       channelId: message.channel_id,
       messageId: message.id,
       userId: user.id,
+      game: game,
     });
   }
 

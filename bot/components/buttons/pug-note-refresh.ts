@@ -1,7 +1,8 @@
+import { db } from "@app/db";
+import { GUILD_ID } from "@app/utilities/config";
+import { refreshUserNotes } from "@bot/commands/pug-note";
+import { isStaff } from "@bot/utilities/auth";
 import { getMember, type MessageComponentInteraction } from "dressed";
-import { GUILD_ID } from "../../../app/utilities/config";
-import { refreshUserNotes } from "../../commands/pug-note";
-import { isStaff } from "../../utilities/auth";
 
 export const pattern = "pug-note-:userId-refresh";
 
@@ -37,7 +38,20 @@ export default async function (interaction: MessageComponentInteraction, args: {
     return;
   }
 
-  await refreshUserNotes(guildMember.user);
+  const dbResult = await db.query.pugUserNoteDiscordMessage.findFirst({
+    where: (notes, { and, eq }) => and(eq(notes.userId, userId), eq(notes.channelId, interaction.channel.id)),
+  });
+
+  if (!dbResult) {
+    await interaction.editReply({
+      content: "No notes found for this user in this channel.",
+    });
+    return;
+  }
+
+  const game = dbResult.game;
+
+  await refreshUserNotes(guildMember.user, game, dbResult);
 
   await interaction.editReply({
     content: `Notes for user <@${userId}> have been refreshed.`,

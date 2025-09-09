@@ -27,6 +27,10 @@ export function getGameConfig(game: string) {
   return config.pugs.games.find((g) => g.name === game);
 }
 
+export function getAvailableGames() {
+  return config.pugs.games.map((g) => g.name);
+}
+
 export function getStaffRoleIds() {
   return config.pugs.games.map((g) => g.staffRoleId);
 }
