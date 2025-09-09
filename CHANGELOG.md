@@ -1,5 +1,37 @@
 # Changelog
 
+## [2.5.0](https://github.com/HardCarryClub/bald-man-bot/compare/v2.4.0...v2.5.0) (2025-09-09)
+
+
+### Features
+
+* add base ws and also persisting PUG ban on rejoin (closes [#25](https://github.com/HardCarryClub/bald-man-bot/issues/25)) ([3734d01](https://github.com/HardCarryClub/bald-man-bot/commit/3734d0158cadc229839bde94df82e192b91028e5))
+* add config.yaml.example template and update .gitignore ([ff0dc71](https://github.com/HardCarryClub/bald-man-bot/commit/ff0dc71813fc3246cb771bb5c9cb6fc83a70d5fb))
+* add game column to user notes and discord messages tables, refactor table names ([3a520e4](https://github.com/HardCarryClub/bald-man-bot/commit/3a520e4add25a2c5eab516fc34f73beac4fbe282))
+* add game to pug lobby ([b732ec7](https://github.com/HardCarryClub/bald-man-bot/commit/b732ec7bc4da258c020f5014faad360c01469f0c))
+* add guilds configuration to command settings (closes [#41](https://github.com/HardCarryClub/bald-man-bot/issues/41)) ([e64c974](https://github.com/HardCarryClub/bald-man-bot/commit/e64c974ea5aa6e947befeb02db64f131f06f4194))
+* disable mentions ([0899b81](https://github.com/HardCarryClub/bald-man-bot/commit/0899b81b5c3ea56eab9e90b8471c2243e0e1ffb0))
+* extract command option to const ([62837c1](https://github.com/HardCarryClub/bald-man-bot/commit/62837c1c35321c2d517235439833e33b22f84fcb))
+* support multi-game PUG Lobbies ([e93c796](https://github.com/HardCarryClub/bald-man-bot/commit/e93c796bd9c0d1ca7cf832157f0532d87604ae85))
+* switch to yaml config ([8e0c34e](https://github.com/HardCarryClub/bald-man-bot/commit/8e0c34ed5d1fe4e8de1bcc820113434e897c93fc))
+
+
+### Bug Fixes
+
+* add the column after the user_id ([9f51b7f](https://github.com/HardCarryClub/bald-man-bot/commit/9f51b7f28315bfc71f834d4622da1ab1a06aec2a))
+* correct query for existing PUG lobby in removeLobby function ([40762be](https://github.com/HardCarryClub/bald-man-bot/commit/40762bea9ca599236fe9fa3e7eebd431bd5d88e3))
+* **deps:** update dependency dressed to v1.9.0 ([#37](https://github.com/HardCarryClub/bald-man-bot/issues/37)) ([9316401](https://github.com/HardCarryClub/bald-man-bot/commit/931640180c6c2d52ecb39704088c4eb696b941b5))
+* **deps:** update dependency dressed to v1.9.1 ([#51](https://github.com/HardCarryClub/bald-man-bot/issues/51)) ([199e9e1](https://github.com/HardCarryClub/bald-man-bot/commit/199e9e146a81f4822ad5d6f1b68d8a30dda5b481))
+* handle errors when refreshing user notes ([d2cf29f](https://github.com/HardCarryClub/bald-man-bot/commit/d2cf29f0276b1c08fc184a7b03889a080605a5dd))
+* move guild ID to env ([d1ebd95](https://github.com/HardCarryClub/bald-man-bot/commit/d1ebd95180d8e2a5f58c0a4b7f1f27890d420071))
+* reference env through util ([c1fc1ae](https://github.com/HardCarryClub/bald-man-bot/commit/c1fc1ae91cd29407cf9ccb491fd42e455f1d822c))
+* remove unused dependencies from package.json ([7e59bc4](https://github.com/HardCarryClub/bald-man-bot/commit/7e59bc43fad6616124f933f08789767680a2d9ba))
+* support multi-game in discord message query ([d7b0f22](https://github.com/HardCarryClub/bald-man-bot/commit/d7b0f22216687faaa49dff3f47c343b22b05a826))
+* support windows devs ([072978c](https://github.com/HardCarryClub/bald-man-bot/commit/072978c9e41d049f054e25e82dc683749bc650e0))
+* typing mismatch ([aa0c2d1](https://github.com/HardCarryClub/bald-man-bot/commit/aa0c2d1580001314c49589fd37b44b44835e2994))
+* update imports to use config instead of env ([e2b4e9a](https://github.com/HardCarryClub/bald-man-bot/commit/e2b4e9a150c93c9cf43f2376d7967ba134de4c4f))
+* use integer instead of number for pug note remove ([ee23ec2](https://github.com/HardCarryClub/bald-man-bot/commit/ee23ec27ccc164b88af4f5505261a41b7a3bb397))
+
 ## [2.4.0](https://github.com/HardCarryClub/bald-man-bot/compare/v2.3.0...v2.4.0) (2025-07-26)
 
 
