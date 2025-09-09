@@ -132,7 +132,7 @@ export default async function (interaction: CommandInteraction) {
 
     return;
   } else if (removeSubcommand) {
-    const noteId = Number(removeSubcommand.getOption("id")?.string());
+    const noteId = removeSubcommand.getOption("id")?.integer();
 
     if (!noteId || typeof noteId !== "number" || noteId <= 0 || Number.isNaN(noteId) || !Number.isInteger(noteId)) {
       await interaction.editReply({
