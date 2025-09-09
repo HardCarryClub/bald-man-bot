@@ -1,7 +1,8 @@
 import { db } from "@app/db";
 import { pugLobby } from "@app/db/schema";
-import { GUILD_ID } from "@app/utilities/config";
+import { GUILD_ID, getGameConfig, PUG_BANNED_ROLE_ID } from "@app/utilities/config";
 import { logger } from "@app/utilities/logger";
+import { multiGameOption } from "@bot/utilities";
 import { isStaff } from "@bot/utilities/auth";
 import { formatISO } from "date-fns";
 import { type APIGuildChannel, type APIUser, ChannelType } from "discord-api-types/v10";
@@ -25,6 +26,7 @@ export const config: CommandConfig = {
       description: "Create a new PUG lobby",
       type: "Subcommand",
       options: [
+        multiGameOption,
         CommandOption({
           name: "name",
           description: "Name of the PUG lobby",

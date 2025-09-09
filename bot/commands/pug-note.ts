@@ -3,6 +3,7 @@ import { pugUserNote, pugUserNoteDiscordMessage, type SelectUserNoteDiscordMessa
 import { GUILD_ID, getAvailableGames, getGameConfig } from "@app/utilities/config";
 import { avatarUrl } from "@app/utilities/discord";
 import { logger } from "@app/utilities/logger";
+import { multiGameOption } from "@bot/utilities";
 import { isStaff } from "@bot/utilities/auth";
 import to from "await-to-js";
 import { formatISO, getUnixTime } from "date-fns";
@@ -34,22 +35,7 @@ export const config: CommandConfig = {
       description: "Add a note to a user.",
       type: "Subcommand",
       options: [
-        CommandOption({
-          name: "game",
-          description: "The game the note is for.",
-          type: "String",
-          choices: [
-            {
-              name: "Overwatch",
-              value: "overwatch",
-            },
-            {
-              name: "Marvel Rivals",
-              value: "rivals",
-            },
-          ],
-          required: true,
-        }),
+        multiGameOption,
         CommandOption({
           name: "user",
           description: "The user to add a note for.",
