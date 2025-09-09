@@ -77,6 +77,15 @@ export default async function (interaction: CommandInteraction) {
 
   if (createCommand) {
     const name = createCommand.getOption("name")?.string();
+    const game = createCommand.getOption("game")?.string();
+
+    if (!game) {
+      await interaction.editReply({
+        content: "Please provide a game for the PUG lobby.",
+      });
+
+      return;
+    }
 
     if (!name) {
       await interaction.editReply({
@@ -86,7 +95,7 @@ export default async function (interaction: CommandInteraction) {
       return;
     }
 
-    const success = await createLobby(interaction.guild_id || GUILD_ID, name, interaction.user);
+    const success = await createLobby(interaction.guild_id || GUILD_ID, name, interaction.user, game);
 
     if (success) {
       await interaction.editReply({
@@ -161,50 +170,21 @@ async function removeLobby(guildId: string, categoryId: string, user: APIUser): 
   }
 }
 
-async function createLobby(guildId: string, name: string, user: APIUser): Promise<boolean> {
+async function createLobby(guildId: string, name: string, user: APIUser, game: string): Promise<boolean> {
   try {
+    const meta = channelMeta(game);
+
+    if (!meta) {
+      logger.warn(`No channel metadata found for game: ${game}`);
+      return false;
+    }
+
     const newCategory = await createChannel(guildId, {
-      name: `${name} Lobby`,
+      name: `${meta.prefix} - ${name} Lobby`,
       type: ChannelType.GuildCategory,
-      position: 18,
-      permission_overwrites: [
-        {
-          id: GUILD_ID,
-          type: 0,
-          allow: "0",
-          deny: "1024",
-        },
-        {
-          id: "1291187493336518749",
-          type: 0,
-          allow: "281492455434000",
-          deny: "0",
-        },
-        {
-          id: "1304158945811759218",
-          type: 0,
-          allow: "1536",
-          deny: "2048",
-        },
-        {
-          id: "1327429519052640339",
-          type: 0,
-          allow: "1024",
-          deny: "3146240",
-        },
-        {
-          id: "1300959426718466121",
-          type: 0,
-          allow: "0",
-          deny: "377957125121",
-        },
-        {
-          id: "1335709977956061234",
-          type: 0,
-          allow: "1536",
-          deny: "2048",
-        },
-      ],
+
+      position: meta.position,
+      permission_overwrites: meta.permissions,
     });
 
     await createChannel(guildId, {
@@ -235,6 +215,7 @@ async function createLobby(guildId: string, name: string, user: APIUser): Promis
 
     await db.insert(pugLobby).values({
       categoryId: newCategory.id,
+      game,
       createdAt: formatISO(new Date()),
       createdBy: user.id,
     });
@@ -245,4 +226,54 @@ async function createLobby(guildId: string, name: string, user: APIUser): Promis
 
     return false;
   }
+}
+
+function channelMeta(game: string): {
+  prefix: string;
+  position: number;
+  permissions: { id: string; type: 0; allow: string; deny: string }[];
+} | null {
+  const config = getGameConfig(game);
+
+  if (!config) {
+    return null;
+  }
+
+  return {
+    prefix: config.lobbyPrefix,
+    position: config.lobbyChannelPosition,
+    permissions: [
+      {
+        // Quarantine role, leave this hardcoded.
+        id: "1300959426718466121",
+        type: 0,
+        allow: "0",
+        deny: "377957125121",
+      },
+      {
+        id: config.staffRoleId,
+        type: 0,
+        allow: "281475007128832",
+        deny: "0",
+      },
+      {
+        id: PUG_BANNED_ROLE_ID,
+        type: 0,
+        allow: "0",
+        deny: "274881055296",
+      },
+      {
+        id: GUILD_ID,
+        type: 0,
+        allow: "0",
+        deny: "1049600",
+      },
+      {
+        id: config.memberRoleId,
+        type: 0,
+        allow: "1049600",
+        deny: "2048",
+      },
+    ],
+  };
 }

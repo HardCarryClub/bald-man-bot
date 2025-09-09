@@ -7,7 +7,10 @@ type Config = {
     announcementsChannelId: string;
     games: {
       name: string;
+      lobbyPrefix: string;
+      lobbyChannelPosition: number;
       staffRoleId: string;
+      memberRoleId: string;
       notesChannelId: string;
     }[];
   };
