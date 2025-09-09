@@ -15,7 +15,7 @@ type Config = {
 
 const config: Config = rawConfig as Config;
 
-export const GUILD_ID = config.guildId;
+export const GUILD_ID = process.env.GUILD_ID;
 export const IS_IN_DEV = process.env.NODE_ENV !== "production";
 export const BOT_TOKEN = process.env.DISCORD_TOKEN;
 export const DATABASE_URL = "./data/db.sqlite";

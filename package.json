@@ -7,7 +7,7 @@
     "dev": "bun run bot:generate && bun run start",
     "start": "bun run app/index.ts",
     "bot:generate": "bun run --bun dressed build -R bot",
-    "bot:register-commands": "bun run --bun dressed build -r -R bot && bun run --bun .dressed",
+    "bot:register-commands": "bun run --bun dressed build -r -R bot && bun run .dressed",
     "generate": "drizzle-kit generate",
     "migrate": "bun run --bun app/db/migrate.ts"
   },
