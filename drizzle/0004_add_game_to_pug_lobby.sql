@@ -1,0 +1,1 @@
+ALTER TABLE `pug_lobby` ADD `game` text NOT NULL;

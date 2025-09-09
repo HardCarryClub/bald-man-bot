@@ -29,6 +29,13 @@
       "when": 1757399459181,
       "tag": "0003_refactor_table_names",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1757454208555,
+      "tag": "0004_add_game_to_pug_lobby",
+      "breakpoints": true
     }
   ]
 }
