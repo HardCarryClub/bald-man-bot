@@ -126,7 +126,7 @@ export default async function (interaction: CommandInteraction) {
 
 async function removeLobby(guildId: string, categoryId: string, user: APIUser): Promise<boolean> {
   try {
-    const existingLobbyDb = await db.query.pugLobbies.findFirst({
+    const existingLobbyDb = await db.query.pugLobby.findFirst({
       where: eq(pugLobby.categoryId, categoryId),
     });
 
