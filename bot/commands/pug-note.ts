@@ -195,7 +195,14 @@ async function add(interaction: CommandInteraction, user: APIUser, note: string,
     })
     .returning();
 
-  const result = await refreshUserNotes(user, game);
+  const [err, result] = await to(refreshUserNotes(user, game));
+
+  if (err) {
+    logger.error(err, `Failed to refresh notes after adding a new one for user ${user.id}`);
+    return false;
+  }
+
+  logger.debug(`result of refreshUserNotes: ${result}`);
 
   return !!result;
 }
@@ -247,7 +254,8 @@ export async function refreshUserNotes(
     ),
   ];
 
-  let message: APIMessage | null = null;
+  let err: Error | null = null;
+  let message: APIMessage | null | undefined = null;
 
   if (discordMessage) {
     message = await editMessage(discordMessage.channelId, discordMessage.messageId, {
@@ -261,6 +269,7 @@ export async function refreshUserNotes(
       return null;
     }
   } else {
+    logger.debug(`No existing message found for user ${user.id}, creating a new one.`);
     const gameConfig = getGameConfig(game);
 
     if (!gameConfig) {
@@ -268,7 +277,9 @@ export async function refreshUserNotes(
       return null;
     }
 
-    const [err, message] = await to(
+    logger.debug(`Using notes channel ID: ${gameConfig.notesChannelId} for game: ${game}`);
+
+    [err, message] = await to(
       createMessage(gameConfig.notesChannelId, {
         components,
         flags: MessageFlags.IsComponentsV2,
@@ -281,6 +292,8 @@ export async function refreshUserNotes(
       );
       return null;
     }
+
+    logger.debug(`Created message ${message.id} for user ${user.id} in channel ${gameConfig.notesChannelId}.`);
 
     await db.insert(pugUserNoteDiscordMessage).values({
       channelId: message.channel_id,
