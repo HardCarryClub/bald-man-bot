@@ -1,3 +1,8 @@
+import { db } from "@app/db";
+import { pugLobby } from "@app/db/schema";
+import { GUILD_ID } from "@app/utilities/config";
+import { logger } from "@app/utilities/logger";
+import { isStaff } from "@bot/utilities/auth";
 import { formatISO } from "date-fns";
 import { type APIGuildChannel, type APIUser, ChannelType } from "discord-api-types/v10";
 import {
@@ -9,11 +14,6 @@ import {
   listChannels,
 } from "dressed";
 import { eq } from "drizzle-orm";
-import { db } from "../../app/db";
-import { pugLobby } from "../../app/db/schema";
-import { GUILD_ID } from "../../app/utilities/config";
-import { logger } from "../../app/utilities/logger";
-import { isStaff } from "../utilities/auth";
 
 export const config: CommandConfig = {
   description: "Manage PUG lobbies",

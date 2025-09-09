@@ -1,11 +1,11 @@
+import { db } from "@app/db";
+import { GUILD_ID, PUG_BANNED_ROLE_ID } from "@app/utilities/config";
+import { logger } from "@app/utilities/logger";
 import { createConnection } from "@dressed/ws";
 import to from "await-to-js";
 import { addMemberRole } from "dressed";
 import { createServer } from "dressed/server";
 import { commands, components, config, events } from "../.dressed";
-import { db } from "./db";
-import { GUILD_ID, PUG_BANNED_ROLE_ID } from "./utilities/config";
-import { logger } from "./utilities/logger";
 
 logger.info("Starting Dressed server");
 createServer(commands, components, events, config);
@@ -31,7 +31,7 @@ connection.onGuildMemberAdd(async (data) => {
   const userId = data.user.id;
 
   const [err, dbResult] = await to(
-    db.query.pugBans.findFirst({
+    db.query.pugBan.findFirst({
       where: (table, { eq }) => eq(table.userId, userId),
     }),
   );

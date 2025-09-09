@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@app/*": ["./app/*"],
+      "@bot/*": ["./bot/*"],
+      "@data/*": ["./data/*"],
+    },
     "lib": ["ESNext"],
     "target": "ESNext",
     "module": "Preserve",

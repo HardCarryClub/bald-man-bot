@@ -1,3 +1,8 @@
+import { db } from "@app/db";
+import { pugBan, pugUserNoteDiscordMessage } from "@app/db/schema";
+import { GUILD_ID, PUG_BANNED_ROLE_ID } from "@app/utilities/config";
+import { logger } from "@app/utilities/logger";
+import { isStaff } from "@bot/utilities/auth";
 import { formatISO } from "date-fns";
 import { MessageFlags } from "discord-api-types/v10";
 import { channel, h1, subtext, user } from "discord-fmt";
@@ -14,11 +19,6 @@ import {
   TextDisplay,
 } from "dressed";
 import { eq } from "drizzle-orm";
-import { db } from "../../app/db";
-import { pugBan, pugUserNoteDiscordMessage } from "../../app/db/schema";
-import { GUILD_ID, PUG_BANNED_ROLE_ID } from "../../app/utilities/config";
-import { logger } from "../../app/utilities/logger";
-import { isStaff } from "../utilities/auth";
 
 export const config: CommandConfig = {
   description: "Ban a user from PUGs.",

@@ -1,3 +1,5 @@
+import { GUILD_ID, PUG_ANNOUNCEMENTS_CHANNEL_ID } from "@app/utilities/config";
+import { thisOrNext } from "@app/utilities/time";
 import { isFriday, isSaturday, isSunday, nextFriday, nextSaturday, nextSunday } from "date-fns";
 import { type APIMessageTopLevelComponent, MessageFlags } from "discord-api-types/v10";
 import { bold, channel, h1, h2, subtext, TimestampStyle, timestamp, user } from "discord-fmt";
@@ -12,8 +14,6 @@ import {
   Separator,
   TextDisplay,
 } from "dressed";
-import { GUILD_ID, PUG_ANNOUNCEMENTS_CHANNEL_ID } from "../../app/utilities/config";
-import { thisOrNext } from "../../app/utilities/time";
 
 const messages: {
   tag: string;
