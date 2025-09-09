@@ -10,7 +10,7 @@ import {
 } from "dressed";
 import { eq } from "drizzle-orm";
 import { db } from "../../app/db";
-import { pugLobbies } from "../../app/db/schema";
+import { pugLobby } from "../../app/db/schema";
 import { GUILD_ID } from "../../app/utilities/config";
 import { logger } from "../../app/utilities/logger";
 import { isStaff } from "../utilities/auth";
@@ -127,7 +127,7 @@ export default async function (interaction: CommandInteraction) {
 async function removeLobby(guildId: string, categoryId: string, user: APIUser): Promise<boolean> {
   try {
     const existingLobbyDb = await db.query.pugLobbies.findFirst({
-      where: eq(pugLobbies.categoryId, categoryId),
+      where: eq(pugLobby.categoryId, categoryId),
     });
 
     if (!existingLobbyDb) {
@@ -145,12 +145,12 @@ async function removeLobby(guildId: string, categoryId: string, user: APIUser): 
     await deleteChannel(categoryId);
 
     await db
-      .update(pugLobbies)
+      .update(pugLobby)
       .set({
         deletedAt: formatISO(new Date()),
         deletedBy: user.id,
       })
-      .where(eq(pugLobbies.categoryId, categoryId));
+      .where(eq(pugLobby.categoryId, categoryId));
 
     return true;
   } catch (error) {
@@ -231,7 +231,7 @@ async function createLobby(guildId: string, name: string, user: APIUser): Promis
 
     logger.info(`PUG lobby "${name}" created successfully with category ID: ${newCategory.id}`);
 
-    await db.insert(pugLobbies).values({
+    await db.insert(pugLobby).values({
       categoryId: newCategory.id,
       createdAt: formatISO(new Date()),
       createdBy: user.id,

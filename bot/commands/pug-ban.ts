@@ -15,7 +15,7 @@ import {
 } from "dressed";
 import { eq } from "drizzle-orm";
 import { db } from "../../app/db";
-import { pugBans, pugUserNoteDiscordMessages } from "../../app/db/schema";
+import { pugBan, pugUserNoteDiscordMessage } from "../../app/db/schema";
 import { GUILD_ID, PUG_BANNED_ROLE_ID } from "../../app/utilities/config";
 import { logger } from "../../app/utilities/logger";
 import { isStaff } from "../utilities/auth";
@@ -61,7 +61,7 @@ export default async function (interaction: CommandInteraction) {
     });
   }
 
-  const existingBan = await db.select().from(pugBans).where(eq(pugBans.userId, userToBan.id));
+  const existingBan = await db.select().from(pugBan).where(eq(pugBan.userId, userToBan.id));
 
   await addMemberRole(interaction.guild_id ?? GUILD_ID, userToBan.id, PUG_BANNED_ROLE_ID);
 
@@ -75,7 +75,7 @@ export default async function (interaction: CommandInteraction) {
 
   const reason = interaction.getOption("reason", false)?.string() || "No reason provided";
 
-  await db.insert(pugBans).values({
+  await db.insert(pugBan).values({
     userId: userToBan.id,
     reason,
     createdAt: formatISO(new Date()),
@@ -84,15 +84,15 @@ export default async function (interaction: CommandInteraction) {
 
   let messageContent = `${user(userToBan.id)} has been banned from PUGs.\nReason: ${reason}`;
 
-  const noteMessageDbResult = await db.query.pugUserNoteDiscordMessages.findFirst({
-    where: eq(pugUserNoteDiscordMessages.userId, userToBan.id),
+  const noteMessageDbResult = await db.query.pugUserNoteDiscordMessage.findFirst({
+    where: eq(pugUserNoteDiscordMessage.userId, userToBan.id),
   });
 
   if (noteMessageDbResult) {
     await deleteMessage(noteMessageDbResult.channelId, noteMessageDbResult.messageId);
     messageContent += `\nThe user's note has been deleted from ${channel(noteMessageDbResult.channelId)}.`;
 
-    await db.delete(pugUserNoteDiscordMessages).where(eq(pugUserNoteDiscordMessages.id, noteMessageDbResult.id));
+    await db.delete(pugUserNoteDiscordMessage).where(eq(pugUserNoteDiscordMessage.id, noteMessageDbResult.id));
   }
 
   try {
