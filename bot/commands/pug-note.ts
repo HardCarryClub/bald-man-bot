@@ -283,6 +283,9 @@ export async function refreshUserNotes(
       createMessage(gameConfig.notesChannelId, {
         components,
         flags: MessageFlags.IsComponentsV2,
+        allowed_mentions: {
+          users: [],
+        },
       }),
     );
 
