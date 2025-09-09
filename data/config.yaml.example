@@ -1,0 +1,10 @@
+general:
+  guildId: ""
+
+pugs:
+  bannedRoleId: ""
+  announcementsChannelId: ""
+  games:
+    - name: gamename
+      staffRoleId: ""
+      notesChannelId: ""
