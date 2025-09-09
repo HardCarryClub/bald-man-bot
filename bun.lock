@@ -10,7 +10,7 @@
         "date-fns-tz": "^3.2.0",
         "discord-api-types": "0.38.23",
         "discord-fmt": "^1.0.1",
-        "dressed": "1.10.0-canary.5.5",
+        "dressed": "1.10.0-canary.5.6",
         "drizzle-orm": "^0.44.5",
         "pino": "^9.9.4",
       },
@@ -192,7 +192,7 @@
 
     "dotenv": ["dotenv@17.2.2", "", {}, "sha512-Sf2LSQP+bOlhKWWyhFsn0UsfdK/kCWRv1iuA2gXAwt3dyNabr6QSj00I2V10pidqz69soatm9ZwZvpQMTIOd5Q=="],
 
-    "dressed": ["dressed@1.10.0-canary.5.5", "", { "dependencies": { "@dressed/matcher": "^1.4.0", "@inquirer/prompts": "^7.8.4", "commander": "^14.0.0", "discord-api-types": "^0.38.23", "dotenv": "^17.2.2", "esbuild": "^0.25.9", "ora": "^8.2.0", "tweetnacl": "^1.0.3", "walk-it": "^6.0.1" }, "bin": { "dressed": "dist/bin/dressed.js" } }, "sha512-nnErYlZNfWZO+XhtWll1vuEYXrgRcxTaM1S2SNRY7W9OYwmaA9XxPM7a9p87BXRzYiG6km8KZOZHoU+n2DJ1Hg=="],
+    "dressed": ["dressed@1.10.0-canary.5.6", "", { "dependencies": { "@dressed/matcher": "^1.4.0", "@inquirer/prompts": "^7.8.4", "commander": "^14.0.0", "discord-api-types": "^0.38.23", "dotenv": "^17.2.2", "esbuild": "^0.25.9", "ora": "^8.2.0", "tweetnacl": "^1.0.3", "walk-it": "^6.0.1" }, "bin": { "dressed": "dist/bin/dressed.js" } }, "sha512-EDCAH3Gbfvf7E12Wz0IuCumkg3EMH13dnI7IY5+8gA7LLWE9wiY/in0ENmoM0sASxpmPFhXzHfy9dV2Cilyx3w=="],
 
     "drizzle-kit": ["drizzle-kit@0.31.4", "", { "dependencies": { "@drizzle-team/brocli": "^0.10.2", "@esbuild-kit/esm-loader": "^2.5.5", "esbuild": "^0.25.4", "esbuild-register": "^3.5.0" }, "bin": { "drizzle-kit": "bin.cjs" } }, "sha512-tCPWVZWZqWVx2XUsVpJRnH9Mx0ClVOf5YUHerZ5so1OKSlqww4zy1R5ksEdGRcO3tM3zj0PYN6V48TbQCL1RfA=="],
 
