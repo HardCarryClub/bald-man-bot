@@ -4,6 +4,7 @@ import { GUILD_ID, getAvailableGames, getGameConfig } from "@app/utilities/confi
 import { avatarUrl } from "@app/utilities/discord";
 import { logger } from "@app/utilities/logger";
 import { isStaff } from "@bot/utilities/auth";
+import to from "await-to-js";
 import { formatISO, getUnixTime } from "date-fns";
 import { type APIMessage, type APIUser, MessageFlags } from "discord-api-types/v10";
 import { code, h2, subtext, TimestampStyle, timestamp, user as userMention } from "discord-fmt";
@@ -204,9 +205,11 @@ export async function refreshUserNotes(
   game: string,
   discordMessage?: SelectUserNoteDiscordMessage,
 ): Promise<APIMessage | null> {
+  logger.debug(`Refreshing PUG notes for user ${user.id} and game ${game}.`);
+
   if (!discordMessage) {
     discordMessage = await db.query.pugUserNoteDiscordMessage.findFirst({
-      where: eq(pugUserNoteDiscordMessage.userId, user.id),
+      where: (table, { and, eq }) => and(eq(table.userId, user.id), eq(table.game, game)),
     });
   }
 
@@ -265,10 +268,19 @@ export async function refreshUserNotes(
       return null;
     }
 
-    message = await createMessage(gameConfig.notesChannelId, {
-      components,
-      flags: MessageFlags.IsComponentsV2,
-    });
+    const [err, message] = await to(
+      createMessage(gameConfig.notesChannelId, {
+        components,
+        flags: MessageFlags.IsComponentsV2,
+      }),
+    );
+
+    if (err || !message) {
+      logger.error(
+        `Failed to create message for user ${user.id} in channel ${gameConfig.notesChannelId}. Error: ${err?.message}`,
+      );
+      return null;
+    }
 
     await db.insert(pugUserNoteDiscordMessage).values({
       channelId: message.channel_id,
