@@ -11,6 +11,9 @@ import { commands, components, config } from "../.dressed";
 logger.info("Starting Dressed WS server");
 const connection = createConnection({
   intents: ["GuildMembers"],
+  shards: {
+    reshardInterval: -1,
+  },
 });
 
 connection.onReady((data) => {
