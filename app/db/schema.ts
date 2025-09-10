@@ -58,3 +58,9 @@ export type SelectUserNoteDiscordMessage = typeof pugUserNoteDiscordMessage.$inf
 export type InsertUserNoteDiscordMessage = typeof pugUserNoteDiscordMessage.$inferInsert;
 
 export const pugLobbyHostSignup = sqliteTable("pug_lobby_host_signup", {
+  id: integer("id").primaryKey(),
+  data: text("data").notNull(),
+  ...timestamps.created,
+});
+export type SelectPugLobbyHostSignup = typeof pugLobbyHostSignup.$inferSelect;
+export type InsertPugLobbyHostSignup = typeof pugLobbyHostSignup.$inferInsert;

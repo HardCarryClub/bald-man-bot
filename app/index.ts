@@ -16,6 +16,8 @@ const connection = createConnection({
   },
 });
 
+connection.shards.reshard(1);
+
 connection.onReady((data) => {
   logger.info(`Connected as ${data.user.global_name || data.user.username}`);
 });

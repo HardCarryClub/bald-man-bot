@@ -10,6 +10,7 @@ type Config = {
     announcementsChannelId: string;
     games: {
       name: string;
+      label: string;
       lobbyPrefix: string;
       lobbyChannelPosition: number;
       staffRoleId: string;
