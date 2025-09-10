@@ -1,5 +1,5 @@
 import { GUILD_ID } from "@app/utilities/config";
-import { isStaff } from "@bot/utilities/auth";
+import { isStaff } from "@bot/utilities/authz.ts";
 import { formatDistanceToNow } from "date-fns";
 import { MessageFlags } from "discord-api-types/v10";
 import { h1, h2, link } from "discord-fmt";
