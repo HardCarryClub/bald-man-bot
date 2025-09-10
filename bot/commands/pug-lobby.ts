@@ -3,6 +3,7 @@ import { pugLobby } from "@app/db/schema";
 import { GUILD_ID, getGameConfig, PUG_BANNED_ROLE_ID } from "@app/utilities/config";
 import { logger } from "@app/utilities/logger";
 import { multiGameOption } from "@bot/utilities";
+import { audit } from "@bot/utilities/audit";
 import { isStaff } from "@bot/utilities/auth";
 import { formatISO } from "date-fns";
 import { type APIGuildChannel, type APIUser, ChannelType } from "discord-api-types/v10";
@@ -15,6 +16,8 @@ import {
   listChannels,
 } from "dressed";
 import { eq } from "drizzle-orm";
+
+const MODULE_NAME = "PUG Lobby";
 
 export const config: CommandConfig = {
   description: "Manage PUG lobbies",
@@ -101,10 +104,14 @@ export default async function (interaction: CommandInteraction) {
       await interaction.editReply({
         content: `PUG lobby "${name}" created successfully.`,
       });
+
+      audit(MODULE_NAME, `${interaction.user.username} created PUG lobby "${name}" for game "${game}".`);
     } else {
       await interaction.editReply({
         content: "Failed to create PUG lobby. Please try again later.",
       });
+
+      audit(MODULE_NAME, `${interaction.user.username} failed to create PUG lobby "${name}" for game "${game}".`);
     }
 
     return;
@@ -125,10 +132,14 @@ export default async function (interaction: CommandInteraction) {
       await interaction.editReply({
         content: `PUG lobby "${category.name}" removed successfully.`,
       });
+
+      audit(MODULE_NAME, `${interaction.user.username} removed PUG lobby "${category.name}".`);
     } else {
       await interaction.editReply({
         content: "Failed to remove PUG lobby, it may not be managed by me or may already be marked as deleted.",
       });
+
+      audit(MODULE_NAME, `${interaction.user.username} failed to remove PUG lobby "${category.name}".`);
     }
 
     return;

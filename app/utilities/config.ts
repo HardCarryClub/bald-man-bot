@@ -1,7 +1,10 @@
 import rawConfig from "../../data/config.yaml";
 
 type Config = {
-  guildId: string;
+  auditLogWebhook: {
+    id: string;
+    token: string;
+  };
   pugs: {
     bannedRoleId: string;
     announcementsChannelId: string;
@@ -16,7 +19,7 @@ type Config = {
   };
 };
 
-const config: Config = rawConfig as Config;
+export const config: Config = rawConfig as Config;
 
 export const GUILD_ID = process.env.GUILD_ID;
 export const IS_IN_DEV = process.env.NODE_ENV !== "production";

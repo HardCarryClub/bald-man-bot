@@ -4,6 +4,7 @@ import { GUILD_ID, getAvailableGames, getGameConfig } from "@app/utilities/confi
 import { avatarUrl } from "@app/utilities/discord";
 import { logger } from "@app/utilities/logger";
 import { multiGameOption } from "@bot/utilities";
+import { audit } from "@bot/utilities/audit";
 import { isStaff } from "@bot/utilities/auth";
 import to from "await-to-js";
 import { formatISO, getUnixTime } from "date-fns";
@@ -24,6 +25,8 @@ import {
   Thumbnail,
 } from "dressed";
 import { asc, eq } from "drizzle-orm";
+
+const MODULE_NAME = "PUG Note";
 
 export const config: CommandConfig = {
   description: "Manage PUG notes.",
@@ -109,11 +112,21 @@ export default async function (interaction: CommandInteraction) {
         content: `Note added for ${userMention(user.id)}.`,
       });
       await refreshUserNotes(user as APIUser, game);
+
+      audit(
+        MODULE_NAME,
+        `${interaction.user.username} added a note for ${user.username} in game "${game}" with the note of "${note}".`,
+      );
     } else {
       logger.error(`Failed to add note for user: ${user.id}`);
       await interaction.editReply({
         content: "Failed to add note. Please try again later.",
       });
+
+      audit(
+        MODULE_NAME,
+        `${interaction.user.username} failed to add a note for ${user.username} in game "${game}" with the note of "${note}".`,
+      );
     }
 
     return;
@@ -143,6 +156,9 @@ export default async function (interaction: CommandInteraction) {
       await interaction.editReply({
         content: "You can only remove your own notes.",
       });
+
+      audit(MODULE_NAME, `${interaction.user.username} attempted to remove note ID ${noteId} but did not create it.`);
+
       return;
     }
 
@@ -151,6 +167,8 @@ export default async function (interaction: CommandInteraction) {
     await interaction.editReply({
       content: `Note with ID ${code(noteId.toString())} has been removed.`,
     });
+
+    audit(MODULE_NAME, `${interaction.user.username} removed note ID ${noteId}.`);
 
     await refreshUserNotes(
       {

@@ -2,6 +2,7 @@ import { db } from "@app/db";
 import { pugBan, pugUserNoteDiscordMessage } from "@app/db/schema";
 import { GUILD_ID, PUG_BANNED_ROLE_ID } from "@app/utilities/config";
 import { logger } from "@app/utilities/logger";
+import { audit } from "@bot/utilities/audit";
 import { isStaff } from "@bot/utilities/auth";
 import { formatISO } from "date-fns";
 import { MessageFlags } from "discord-api-types/v10";
@@ -19,6 +20,8 @@ import {
   TextDisplay,
 } from "dressed";
 import { eq } from "drizzle-orm";
+
+const MODULE_NAME = "PUG Ban";
 
 export const config: CommandConfig = {
   description: "Ban a user from PUGs.",
@@ -70,6 +73,11 @@ export default async function (interaction: CommandInteraction) {
       content: `${userToBan.username} is already banned from PUGs.`,
     });
 
+    audit(
+      MODULE_NAME,
+      `${interaction.user.username} attempted to ban ${userToBan.username}, but they are already banned.`,
+    );
+
     return;
   }
 
@@ -83,6 +91,7 @@ export default async function (interaction: CommandInteraction) {
   });
 
   let messageContent = `${user(userToBan.id)} has been banned from PUGs.\nReason: ${reason}`;
+  await audit(MODULE_NAME, `${interaction.user.username} banned ${userToBan.username} from PUGs. Reason: ${reason}`);
 
   const noteMessageDbResult = await db.query.pugUserNoteDiscordMessage.findFirst({
     where: eq(pugUserNoteDiscordMessage.userId, userToBan.id),

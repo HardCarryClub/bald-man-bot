@@ -1,6 +1,7 @@
 import { db } from "@app/db";
 import { GUILD_ID, PUG_BANNED_ROLE_ID } from "@app/utilities/config";
 import { logger } from "@app/utilities/logger";
+import { audit } from "@bot/utilities/audit";
 import { createConnection } from "@dressed/ws";
 import to from "await-to-js";
 import { addMemberRole } from "dressed";
@@ -44,5 +45,7 @@ connection.onGuildMemberAdd(async (data) => {
   if (dbResult) {
     logger.info("User was previously PUG banned, reapplying ban");
     await addMemberRole(data.guild_id ?? GUILD_ID, userId, PUG_BANNED_ROLE_ID);
+
+    audit("PUG Ban", `Re-applied PUG ban to ${data.user.username} upon re-joining the server.`);
   }
 });
