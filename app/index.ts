@@ -5,23 +5,27 @@ import { audit } from "@bot/utilities/audit";
 import { createConnection } from "@dressed/ws";
 import to from "await-to-js";
 import { addMemberRole } from "dressed";
-import { createServer } from "dressed/server";
-import { commands, components, config, events } from "../.dressed";
-
-logger.info("Starting Dressed server");
-createServer(commands, components, events, config);
+import { createInteraction, handleInteraction } from "dressed/server";
+import { commands, components, config } from "../.dressed";
 
 logger.info("Starting Dressed WS server");
 const connection = createConnection({
   intents: ["GuildMembers"],
+  shards: {
+    reshardInterval: -1,
+  },
 });
 
 connection.onReady((data) => {
   logger.info(`Connected as ${data.user.global_name || data.user.username}`);
 });
 
+connection.onInteractionCreate((data) => {
+  const interaction = createInteraction(data);
+  handleInteraction(commands, components, interaction, config.middleware);
+});
+
 connection.onGuildMemberAdd(async (data) => {
-  // logger.info(`New member joined: ${data.user.tag}`);
   logger.info(
     {
       ...data.user,
