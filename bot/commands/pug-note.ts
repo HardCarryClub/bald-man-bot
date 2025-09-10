@@ -5,7 +5,7 @@ import { avatarUrl } from "@app/utilities/discord";
 import { logger } from "@app/utilities/logger";
 import { multiGameOption } from "@bot/utilities";
 import { audit } from "@bot/utilities/audit";
-import { isStaff } from "@bot/utilities/auth";
+import { isStaff } from "@bot/utilities/authz.ts";
 import to from "await-to-js";
 import { formatISO, getUnixTime } from "date-fns";
 import { type APIMessage, type APIUser, MessageFlags } from "discord-api-types/v10";

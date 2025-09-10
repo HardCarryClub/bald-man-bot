@@ -1,7 +1,7 @@
 import { db } from "@app/db";
 import { GUILD_ID } from "@app/utilities/config";
 import { refreshUserNotes } from "@bot/commands/pug-note";
-import { isStaff } from "@bot/utilities/auth";
+import { isStaff } from "@bot/utilities/authz.ts";
 import { getMember, type MessageComponentInteraction } from "dressed";
 
 export const pattern = "pug-note-:userId-refresh";

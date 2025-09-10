@@ -4,7 +4,7 @@ import { GUILD_ID, getGameConfig, PUG_BANNED_ROLE_ID } from "@app/utilities/conf
 import { logger } from "@app/utilities/logger";
 import { multiGameOption } from "@bot/utilities";
 import { audit } from "@bot/utilities/audit";
-import { isStaff } from "@bot/utilities/auth";
+import { isStaff } from "@bot/utilities/authz.ts";
 import { formatISO } from "date-fns";
 import { type APIGuildChannel, type APIUser, ChannelType } from "discord-api-types/v10";
 import {

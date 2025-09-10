@@ -3,7 +3,7 @@ import { pugBan, pugUserNoteDiscordMessage } from "@app/db/schema";
 import { GUILD_ID, PUG_BANNED_ROLE_ID } from "@app/utilities/config";
 import { logger } from "@app/utilities/logger";
 import { audit } from "@bot/utilities/audit";
-import { isStaff } from "@bot/utilities/auth";
+import { isStaff } from "@bot/utilities/authz.ts";
 import { formatISO } from "date-fns";
 import { MessageFlags } from "discord-api-types/v10";
 import { channel, h1, subtext, user } from "discord-fmt";
