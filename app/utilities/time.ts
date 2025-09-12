@@ -23,5 +23,5 @@ export function getNextEpoch(dayFn: (date: Date) => Date, tz: string, hour: numb
   const today = startOfDay(toZonedTime(new Date(), tz));
   const targetDay = dayFn(today);
   const targetTime = setSeconds(setMinutes(setHours(targetDay, hour), minute), 0);
-  return getUnixTime(fromZonedTime(targetTime, tz)).toString();
+  return getUnixTime(fromZonedTime(targetTime, tz));
 }
