@@ -46,14 +46,12 @@ export default async function (
     return interaction.editReply({ content: "Signup record is missing channelId or messageId." });
   }
 
-  const day = record.data.find((days) => days.dayLabel === args.day);
-
-  if (!day) {
+  if (!record.data) {
     logger.error({ args, user: interaction.user.id }, "No day found in signup record");
     return interaction.editReply({ content: "No day found in signup record." });
   }
 
-  const block = day.blocks.find((blocks) => {
+  const block = record.data.blocks.find((blocks) => {
     const startTime = Number(args.startTime);
 
     return blocks.startTime === startTime;
@@ -68,12 +66,10 @@ export default async function (
   block.responses.cannotHost = block.responses.cannotHost.filter((entry) => entry.userId !== interaction.user.id);
   block.responses.unavailable = block.responses.unavailable.filter((entry) => entry.userId !== interaction.user.id);
 
-  const newDay = {
-    ...day,
-    blocks: day.blocks.map((b) => (b === block ? block : b)),
+  const newData = {
+    ...record.data,
+    blocks: record.data.blocks.map((b) => (b === block ? block : b)),
   };
-
-  const newData = record.data.map((d) => (d.dayLabel === day.dayLabel ? newDay : d));
 
   const [updateErr] = await to(
     db

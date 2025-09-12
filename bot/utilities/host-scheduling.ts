@@ -1,10 +1,22 @@
+import { db } from "@app/db";
+import { pugLobbyHostSignup } from "@app/db/schema";
 import { getGameConfig } from "@app/utilities/config";
 import { logger } from "@app/utilities/logger";
 import { thisOrNext } from "@app/utilities/time";
+import to from "await-to-js";
 import { isFriday, isSaturday, nextFriday, nextSaturday } from "date-fns";
-import type { APIComponentInContainer, APIMessageTopLevelComponent } from "discord-api-types/v10";
-import { h1, h2, h3, TimestampStyle, timestamp } from "discord-fmt";
-import { ActionRow, Button, Container, Separator, TextDisplay } from "dressed";
+import { type APIComponentInContainer, type APIMessageTopLevelComponent, MessageFlags } from "discord-api-types/v10";
+import { h1, h2, h3, role, TimestampStyle, timestamp, user } from "discord-fmt";
+import {
+  ActionRow,
+  Button,
+  Container,
+  createMessage,
+  deleteMessage,
+  editMessage,
+  Separator,
+  TextDisplay,
+} from "dressed";
 
 export type HostSignup = {
   id: number;
@@ -136,7 +148,11 @@ export function signupComponents(signup: HostSignup): APIMessageTopLevelComponen
   }
 
   const components: APIMessageTopLevelComponent[] = [];
-  components.push(TextDisplay(h1(`${gameConfig.label} Host Signup - ${signup.data.dayLabel}`)));
+  components.push(
+    TextDisplay(
+      `${h1(`${gameConfig.label} Host Signup - ${signup.data.dayLabel}`)}\nSchedule your hosting availability for upcoming PUGs!\n${role(gameConfig.staffRoleId)}`,
+    ),
+  );
 
   for (const block of signup.data.blocks) {
     const items: APIComponentInContainer[] = [];
@@ -152,9 +168,9 @@ export function signupComponents(signup: HostSignup): APIMessageTopLevelComponen
           )}`,
         )}\n
 ${h3("Quick Glance")}\n${block.responses.canHost.length} available • ${block.responses.cannotHost.length} can't host • ${block.responses.unavailable.length} unavailable\n
-${h3("Available to Host")}\n${block.responses.canHost.length ? block.responses.canHost.map((u) => `<@${u}>`).join(", ") : "No one yet."}\n
-${h3("Playing, Can't Host")}\n${block.responses.cannotHost.length ? block.responses.cannotHost.map((u) => `<@${u}>`).join(", ") : "No one yet."}\n
-${h3("Unavailable")}\n${block.responses.unavailable.length ? block.responses.unavailable.map((u) => `<@${u}>`).join(", ") : "No one yet."}`,
+${h3("Available to Host")}\n${block.responses.canHost.length ? block.responses.canHost.map((u) => user(u.userId)).join(", ") : "No one yet."}\n
+${h3("Playing, Can't Host")}\n${block.responses.cannotHost.length ? block.responses.cannotHost.map((u) => user(u.userId)).join(", ") : "No one yet."}\n
+${h3("Unavailable")}\n${block.responses.unavailable.length ? block.responses.unavailable.map((u) => user(u.userId)).join(", ") : "No one yet."}`,
       ),
     );
 
@@ -190,4 +206,86 @@ ${h3("Unavailable")}\n${block.responses.unavailable.length ? block.responses.una
   }
 
   return components;
+}
+
+export async function sendHostSignupMessages(game: string) {
+  const gameConfig = getGameConfig(game);
+
+  if (!gameConfig) {
+    logger.error(`No game config found for ${game} when running host signup creation job`);
+    return;
+  }
+
+  logger.debug({ game, gameConfig }, "Starting host signup creation job");
+
+  const records = createSignupRecords(game);
+
+  if (!records) {
+    logger.error(`Failed to create signup records for ${game}`);
+    return;
+  }
+
+  const channelId = gameConfig.hostScheduleChannelId;
+
+  if (!channelId) {
+    logger.error(`No host schedule channel ID configured for ${game}`);
+    return;
+  }
+
+  for (const record of records) {
+    const message = await createMessage(channelId, {
+      components: [TextDisplay("Setting up host signup...")],
+      flags: MessageFlags.IsComponentsV2,
+    });
+
+    const [err, results] = await to(
+      db
+        .insert(pugLobbyHostSignup)
+        .values({
+          game,
+          channelId: message.channel_id,
+          messageId: message.id,
+          data: JSON.stringify(record),
+          createdAt: new Date().toISOString(),
+          createdBy: "host-scheduler",
+        })
+        .returning({ id: pugLobbyHostSignup.id }),
+    );
+
+    if (err || results.length === 0) {
+      logger.error({ err, results }, `Error inserting new ${game} host signup record into database`);
+      await deleteMessage(message.channel_id, message.id);
+      continue;
+    }
+
+    const result = results[0];
+
+    if (!result || !result.id) {
+      logger.error({ results }, `No ID returned after inserting new ${game} host signup record into database`);
+      await deleteMessage(message.channel_id, message.id);
+      continue;
+    }
+
+    const signup: HostSignup = {
+      id: result.id,
+      game,
+      channelId: message.channel_id,
+      messageId: message.id,
+      data: record,
+    };
+
+    const components = signupComponents(signup);
+
+    if (!components) {
+      return logger.error(`Failed to create signup components for ${game} host signup message`);
+    }
+
+    await editMessage(message.channel_id, message.id, {
+      components,
+      flags: MessageFlags.IsComponentsV2,
+      allowed_mentions: {
+        roles: [gameConfig.staffRoleId],
+      },
+    });
+  }
 }
