@@ -1,19 +1,12 @@
 import { db } from "@app/db";
-import { pugLobbyHostSignup } from "@app/db/schema";
-import { GUILD_ID, getGameConfig, PUG_BANNED_ROLE_ID } from "@app/utilities/config";
+import { GUILD_ID, PUG_BANNED_ROLE_ID } from "@app/utilities/config";
 import { logger } from "@app/utilities/logger";
 import { audit } from "@bot/utilities/audit";
-import {
-  createSignupRecords,
-  type HostSignup,
-  sendHostSignupMessages,
-  signupComponents,
-} from "@bot/utilities/host-scheduling";
+import { sendHostSignupMessages } from "@bot/utilities/host-scheduling";
 import { createConnection } from "@dressed/ws";
 import to from "await-to-js";
 import { Cron } from "croner";
-import { MessageFlags } from "discord-api-types/v10";
-import { addMemberRole, createMessage, deleteMessage, editMessage, TextDisplay } from "dressed";
+import { addMemberRole } from "dressed";
 import { createInteraction, handleInteraction } from "dressed/server";
 import { commands, components, config } from "../.dressed";
 
