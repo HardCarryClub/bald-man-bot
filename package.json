@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "bun run bot:generate && bun run start",
-    "start": "bun run app/index.ts",
-    "bot:generate": "bun run dressed build -R bot",
-    "bot:register-commands": "bun run dressed build -r -R bot && bun run .dressed",
+    "start": "bun run --bun app/index.ts",
+    "bot:generate": "bun run --bun dressed build -R bot",
+    "bot:register-commands": "bun run --bun dressed build -r -R bot && bun run .dressed",
     "generate": "drizzle-kit generate",
     "migrate": "bun run --bun app/db/migrate.ts"
   },
