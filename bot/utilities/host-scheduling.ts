@@ -1,58 +1,41 @@
 import { getGameConfig } from "@app/utilities/config";
 import { logger } from "@app/utilities/logger";
-import { isFriday, isSaturday } from "date-fns";
+import { thisOrNext } from "@app/utilities/time";
+import { isFriday, isSaturday, nextFriday, nextSaturday } from "date-fns";
 import type { APIComponentInContainer, APIMessageTopLevelComponent } from "discord-api-types/v10";
-import { h1 } from 'discord-fmt';
-import { Container, Separator, TextDisplay } from "dressed";
+import { h1, h2, h3, TimestampStyle, timestamp } from "discord-fmt";
+import { ActionRow, Button, Container, Separator, TextDisplay } from "dressed";
 
-type HostSignup = {
-  blocks: {
-    startTime: number;
-    responses: {
-      canHost: string[];
-      cannotHost: string[];
-      unavailable: string[];
-    };
-    assignments: {
-      userId: string;
-      primary: boolean;
-      secondary: boolean;
-      note: string | null;
+export type HostSignup = {
+  id: number;
+  game: string;
+  channelId: string | null;
+  messageId: string | null;
+  data: {
+    dayLabel: string;
+    blocks: {
+      startTime: number;
+      endTime: number;
+      responses: {
+        canHost: string[];
+        cannotHost: string[];
+        unavailable: string[];
+      };
+      assignments: {
+        userId: string;
+        primary: boolean;
+        secondary: boolean;
+        note: string | null;
+      }[];
     }[];
   }[];
 };
 
-export function signupMessageComponents(game: string): APIMessageTopLevelComponent[] | null {
-  const gameConfig = getGameConfig(game);
-
-  if (!gameConfig) {
-    logger.error({ game }, `No game config found for game when generating signup message components`);
-    return null;
-  }
-
-  const times = timeBlocks[game];
-
-  if (!times) {
-    logger.error({ game }, `No time blocks found for game when generating signup message components`);
-    return null;
-  }
-
-  const components = times.map((day, index) => {
-    const comps: APIComponentInContainer[] = [TextDisplay("Test")];
-
-    if (index < times.length - 1) {
-      comps.push(Separator());
-    }
-
-    return Container(...comps);
-  });
-
-  return [TextDisplay(h1(`${gameConfig.label} Host Signup`)), ...components];
-}
-
 export const timeBlocks: {
   [key: string]: {
-    dayCheck: unknown; // TODO: need to type this like typeof isFriday
+    dayLabel: string;
+    dayCheck: (date: Date) => boolean; // Matches the type of isFriday
+    nextFn: (date: Date) => Date; // Matches the type of nextFriday
     blocks: {
       startTime: { hour: number; minute: number };
       endTime: { hour: number; minute: number };
@@ -61,7 +44,9 @@ export const timeBlocks: {
 } = {
   overwatch: [
     {
+      dayLabel: "Friday",
       dayCheck: isFriday,
+      nextFn: nextFriday,
       blocks: [
         { startTime: { hour: 16, minute: 0 }, endTime: { hour: 18, minute: 0 } },
         { startTime: { hour: 18, minute: 0 }, endTime: { hour: 20, minute: 0 } },
@@ -71,7 +56,9 @@ export const timeBlocks: {
   ],
   rivals: [
     {
+      dayLabel: "Saturday",
       dayCheck: isSaturday,
+      nextFn: nextSaturday,
       blocks: [
         { startTime: { hour: 16, minute: 0 }, endTime: { hour: 18, minute: 0 } },
         { startTime: { hour: 18, minute: 0 }, endTime: { hour: 20, minute: 0 } },
@@ -80,3 +67,145 @@ export const timeBlocks: {
     },
   ],
 };
+
+export function createSignupRecord(game: string): HostSignup["data"] | null {
+  const gameConfig = getGameConfig(game);
+
+  if (!gameConfig) {
+    logger.error({ game }, `No game config found for game when creating signup record`);
+    return null;
+  }
+
+  const times = timeBlocks[game];
+
+  if (!times) {
+    logger.error({ game }, `No time blocks found for game when creating signup record`);
+    return null;
+  }
+
+  return times.map((day) => {
+    return {
+      dayLabel: day.dayLabel,
+      blocks: day.blocks.map((block) => {
+        const startTime = thisOrNext(
+          day.dayCheck,
+          day.nextFn,
+          "America/New_York",
+          block.startTime.hour,
+          block.startTime.minute,
+        );
+
+        const endTime = thisOrNext(
+          day.dayCheck,
+          day.nextFn,
+          "America/New_York",
+          block.endTime.hour,
+          block.endTime.minute,
+        );
+
+        return {
+          startTime,
+          endTime,
+          responses: {
+            canHost: [],
+            cannotHost: [],
+            unavailable: [],
+          },
+          assignments: [],
+        };
+      }),
+    };
+  });
+}
+
+export function signupComponents(signup: HostSignup): APIMessageTopLevelComponent[] | null {
+  const gameConfig = getGameConfig(signup.game);
+
+  if (!gameConfig) {
+    logger.error({ game: signup.game }, `No game config found for game when generating signup message components`);
+    return null;
+  }
+
+  const components: APIMessageTopLevelComponent[] = [];
+  components.push(TextDisplay(h1(`${gameConfig.label} Host Signup`)));
+
+  for (const day of signup.data) {
+    const items: APIComponentInContainer[] = [];
+
+    items.push(TextDisplay(h1(day.dayLabel)));
+
+    day.blocks.forEach((block, index) => {
+      const id = `pug-host-signup-${signup.id}-${day.dayLabel}-${block.startTime}`;
+
+      items.push(
+        TextDisplay(
+          h2(
+            `${timestamp(block.startTime.toString(), TimestampStyle.ShortTime)} - ${timestamp(
+              block.endTime.toString(),
+              TimestampStyle.ShortTime,
+            )}`,
+          ),
+        ),
+      );
+
+      items.push(
+        TextDisplay(
+          `${h3("Quick Glance")}\n${block.responses.canHost.length} available • ${block.responses.cannotHost.length} can't host • ${block.responses.unavailable.length} unavailable`,
+        ),
+      );
+
+      items.push(
+        TextDisplay(
+          `${h3("Available to Host")}\n${block.responses.canHost.length ? block.responses.canHost.map((u) => `<@${u}>`).join(", ") : "No one yet."}`,
+        ),
+      );
+
+      items.push(
+        TextDisplay(
+          `${h3("Playing, Can't Host")}\n${block.responses.cannotHost.length ? block.responses.cannotHost.map((u) => `<@${u}>`).join(", ") : "No one yet."}`,
+        ),
+      );
+
+      items.push(
+        TextDisplay(
+          `${h3("Unavailable")}\n${block.responses.unavailable.length ? block.responses.unavailable.map((u) => `<@${u}>`).join(", ") : "No one yet."}`,
+        ),
+      );
+
+      items.push(
+        ActionRow(
+          Button({
+            style: "Success",
+            label: "Available to Host",
+            custom_id: `${id}-can-host`,
+          }),
+          Button({
+            style: "Primary",
+            label: "Playing, Can't Host",
+            custom_id: `${id}-cannot-host`,
+          }),
+          Button({
+            style: "Secondary",
+            label: "Unavailable",
+            custom_id: `${id}-unavailable`,
+          }),
+        ),
+        ActionRow(
+          Button({
+            style: "Secondary",
+            label: "Remove My Response",
+            custom_id: `${id}-remove-response`,
+          }),
+        ),
+      );
+
+      if (index < day.blocks.length - 1) {
+        items.push(Separator({ spacing: "Large" }));
+      }
+    });
+
+    components.push(Container(...items));
+  }
+
+  return components;
+}
