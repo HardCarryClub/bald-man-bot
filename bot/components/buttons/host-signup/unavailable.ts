@@ -8,7 +8,7 @@ import { MessageFlags } from "discord-api-types/v10";
 import { editMessage, type MessageComponentInteraction } from "dressed";
 import { eq } from "drizzle-orm";
 
-export const pattern = `${PATTERN_BASE}-can-host`;
+export const pattern = `${PATTERN_BASE}-unavailable`;
 
 export default async function (
   interaction: MessageComponentInteraction,
@@ -64,13 +64,13 @@ export default async function (
     return interaction.editReply({ content: "No time block found in signup record." });
   }
 
-  if (block.responses.canHost.find((entry) => entry.userId === interaction.user.id)) {
-    return interaction.editReply({ content: "You have already marked yourself as can host for this time block." });
+  if (block.responses.unavailable.find((entry) => entry.userId === interaction.user.id)) {
+    return interaction.editReply({ content: "You have already marked yourself as unavailable for this time block." });
   }
 
-  block.responses.canHost.push({ userId: interaction.user.id, note: null });
+  block.responses.unavailable.push({ userId: interaction.user.id, note: null });
+  block.responses.canHost = block.responses.canHost.filter((entry) => entry.userId !== interaction.user.id);
   block.responses.cannotHost = block.responses.cannotHost.filter((entry) => entry.userId !== interaction.user.id);
-  block.responses.unavailable = block.responses.unavailable.filter((entry) => entry.userId !== interaction.user.id);
 
   const newDay = {
     ...day,

@@ -17,9 +17,18 @@ export type HostSignup = {
       startTime: number;
       endTime: number;
       responses: {
-        canHost: string[];
-        cannotHost: string[];
-        unavailable: string[];
+        canHost: {
+          userId: string;
+          note: string | null;
+        }[];
+        cannotHost: {
+          userId: string;
+          note: string | null;
+        }[];
+        unavailable: {
+          userId: string;
+          note: string | null;
+        }[];
       };
       assignments: {
         userId: string;
@@ -28,7 +37,7 @@ export type HostSignup = {
         note: string | null;
       }[];
     }[];
-  }[];
+  };
 };
 
 export const timeBlocks: {
@@ -68,7 +77,7 @@ export const timeBlocks: {
   ],
 };
 
-export function createSignupRecord(game: string): HostSignup["data"] | null {
+export function createSignupRecords(game: string): HostSignup["data"][] | null {
   const gameConfig = getGameConfig(game);
 
   if (!gameConfig) {
@@ -127,82 +136,55 @@ export function signupComponents(signup: HostSignup): APIMessageTopLevelComponen
   }
 
   const components: APIMessageTopLevelComponent[] = [];
-  components.push(TextDisplay(h1(`${gameConfig.label} Host Signup`)));
+  components.push(TextDisplay(h1(`${gameConfig.label} Host Signup - ${signup.data.dayLabel}`)));
 
-  for (const day of signup.data) {
+  for (const block of signup.data.blocks) {
     const items: APIComponentInContainer[] = [];
 
-    items.push(TextDisplay(h1(day.dayLabel)));
+    const id = `pug-host-signup-${signup.id}-${signup.data.dayLabel}-${block.startTime}`;
 
-    day.blocks.forEach((block, index) => {
-      const id = `pug-host-signup-${signup.id}-${day.dayLabel}-${block.startTime}`;
+    items.push(
+      TextDisplay(
+        `${h2(
+          `${timestamp(block.startTime.toString(), TimestampStyle.ShortTime)} - ${timestamp(
+            block.endTime.toString(),
+            TimestampStyle.ShortTime,
+          )}`,
+        )}\n
+${h3("Quick Glance")}\n${block.responses.canHost.length} available • ${block.responses.cannotHost.length} can't host • ${block.responses.unavailable.length} unavailable\n
+${h3("Available to Host")}\n${block.responses.canHost.length ? block.responses.canHost.map((u) => `<@${u}>`).join(", ") : "No one yet."}\n
+${h3("Playing, Can't Host")}\n${block.responses.cannotHost.length ? block.responses.cannotHost.map((u) => `<@${u}>`).join(", ") : "No one yet."}\n
+${h3("Unavailable")}\n${block.responses.unavailable.length ? block.responses.unavailable.map((u) => `<@${u}>`).join(", ") : "No one yet."}`,
+      ),
+    );
 
-      items.push(
-        TextDisplay(
-          h2(
-            `${timestamp(block.startTime.toString(), TimestampStyle.ShortTime)} - ${timestamp(
-              block.endTime.toString(),
-              TimestampStyle.ShortTime,
-            )}`,
-          ),
-        ),
-      );
-
-      items.push(
-        TextDisplay(
-          `${h3("Quick Glance")}\n${block.responses.canHost.length} available • ${block.responses.cannotHost.length} can't host • ${block.responses.unavailable.length} unavailable`,
-        ),
-      );
-
-      items.push(
-        TextDisplay(
-          `${h3("Available to Host")}\n${block.responses.canHost.length ? block.responses.canHost.map((u) => `<@${u}>`).join(", ") : "No one yet."}`,
-        ),
-      );
-
-      items.push(
-        TextDisplay(
-          `${h3("Playing, Can't Host")}\n${block.responses.cannotHost.length ? block.responses.cannotHost.map((u) => `<@${u}>`).join(", ") : "No one yet."}`,
-        ),
-      );
-
-      items.push(
-        TextDisplay(
-          `${h3("Unavailable")}\n${block.responses.unavailable.length ? block.responses.unavailable.map((u) => `<@${u}>`).join(", ") : "No one yet."}`,
-        ),
-      );
-
-      items.push(
-        ActionRow(
-          Button({
-            style: "Success",
-            label: "Available to Host",
-            custom_id: `${id}-can-host`,
-          }),
-          Button({
-            style: "Primary",
-            label: "Playing, Can't Host",
-            custom_id: `${id}-cannot-host`,
-          }),
-          Button({
-            style: "Secondary",
-            label: "Unavailable",
-            custom_id: `${id}-unavailable`,
-          }),
-        ),
-        ActionRow(
-          Button({
-            style: "Secondary",
-            label: "Remove My Response",
-            custom_id: `${id}-remove-response`,
-          }),
-        ),
-      );
-
-      if (index < day.blocks.length - 1) {
-        items.push(Separator({ spacing: "Large" }));
-      }
-    });
+    items.push(
+      Separator(),
+      ActionRow(
+        Button({
+          style: "Success",
+          label: "Available to Host",
+          custom_id: `${id}-can-host`,
+        }),
+        Button({
+          style: "Primary",
+          label: "Playing, Can't Host",
+          custom_id: `${id}-cannot-host`,
+        }),
+        Button({
+          style: "Secondary",
+          label: "Unavailable",
+          custom_id: `${id}-unavailable`,
+        }),
+      ),
+      ActionRow(
+        Button({
+          style: "Secondary",
+          label: "Remove My Response",
+          custom_id: `${id}-remove-response`,
+        }),
+      ),
+    );
 
     components.push(Container(...items));
   }
