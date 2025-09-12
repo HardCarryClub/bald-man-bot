@@ -36,6 +36,13 @@
       "when": 1757454208555,
       "tag": "0004_add_game_to_pug_lobby",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1757655351816,
+      "tag": "0005_add_host_signup",
+      "breakpoints": true
     }
   ]
 }

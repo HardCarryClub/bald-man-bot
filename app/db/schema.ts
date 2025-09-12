@@ -59,6 +59,9 @@ export type InsertUserNoteDiscordMessage = typeof pugUserNoteDiscordMessage.$inf
 
 export const pugLobbyHostSignup = sqliteTable("pug_lobby_host_signup", {
   id: integer("id").primaryKey(),
+  game: text("game").notNull(),
+  channelId: text("channel_id"),
+  messageId: text("message_id"),
   data: text("data").notNull(),
   ...timestamps.created,
 });
