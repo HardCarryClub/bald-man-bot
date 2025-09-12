@@ -16,6 +16,7 @@ type Config = {
       staffRoleId: string;
       memberRoleId: string;
       notesChannelId: string;
+      hostScheduleChannelId: string;
     }[];
   };
 };
