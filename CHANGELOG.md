@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.6.2](https://github.com/HardCarryClub/bald-man-bot/compare/v2.6.1...v2.6.2) (2025-09-12)
+
+
+### Bug Fixes
+
+* **scripts:** pass --bun flag to bun run invocations ([#72](https://github.com/HardCarryClub/bald-man-bot/issues/72)) ([1d1a645](https://github.com/HardCarryClub/bald-man-bot/commit/1d1a6457cea3aa510779487e0daa9de1cb0433dd))
+
 ## [2.6.1](https://github.com/HardCarryClub/bald-man-bot/compare/v2.6.0...v2.6.1) (2025-09-12)
 
 
