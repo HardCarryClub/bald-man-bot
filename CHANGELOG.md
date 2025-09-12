@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.6.1](https://github.com/HardCarryClub/bald-man-bot/compare/v2.6.0...v2.6.1) (2025-09-12)
+
+
+### Bug Fixes
+
+* package.json ([#67](https://github.com/HardCarryClub/bald-man-bot/issues/67)) ([8789533](https://github.com/HardCarryClub/bald-man-bot/commit/87895334f900f8edfd08c542ef0cbff252ee59cc))
+
 ## [2.6.0](https://github.com/HardCarryClub/bald-man-bot/compare/v2.5.0...v2.6.0) (2025-09-12)
 
 
