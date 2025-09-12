@@ -22,9 +22,7 @@ export async function isStaff(user: APIUser | APIGuildMember): Promise<boolean> 
   }
 
   logger.debug(`Checking the roles: ${user.roles}`);
-  logger.debug(`Checking for role ID: ${rolesIds}`)
-
-
+  logger.debug(`Checking for role ID: ${rolesIds}`);
 
   return user.roles.some((role) => rolesIds.includes(role));
 }
