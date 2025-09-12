@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.6.0](https://github.com/HardCarryClub/bald-man-bot/compare/v2.5.0...v2.6.0) (2025-09-12)
+
+
+### Features
+
+* add audit logging ([c1d78e5](https://github.com/HardCarryClub/bald-man-bot/commit/c1d78e5998c8d849b614aa2d1c6ce5675e39f0a8))
+* add host scheduling and signup ([#65](https://github.com/HardCarryClub/bald-man-bot/issues/65)) ([b40f713](https://github.com/HardCarryClub/bald-man-bot/commit/b40f713e9ba0b7f1fc6ea97d220620576668eae3))
+* move interactions to gateway and disable resharding ([#60](https://github.com/HardCarryClub/bald-man-bot/issues/60)) ([be85c68](https://github.com/HardCarryClub/bald-man-bot/commit/be85c686ba5b8d6f3f9bacfeff2fa6d1f5abb5ee))
+
+
+### Bug Fixes
+
+* **deps:** update dependency discord-api-types to v0.38.24 ([#53](https://github.com/HardCarryClub/bald-man-bot/issues/53)) ([0cbfbbc](https://github.com/HardCarryClub/bald-man-bot/commit/0cbfbbc7ebb1118cd237e601e01fcac48c636bec))
+* **deps:** update dependency dressed to v1.10.0-canary.5.7.3 ([#54](https://github.com/HardCarryClub/bald-man-bot/issues/54)) ([c8bbc0c](https://github.com/HardCarryClub/bald-man-bot/commit/c8bbc0c2cc150bb0a448f6311e58ab6505317583))
+* **deps:** update dependency pino to v9.9.5 ([#63](https://github.com/HardCarryClub/bald-man-bot/issues/63)) ([7f61456](https://github.com/HardCarryClub/bald-man-bot/commit/7f61456de2f16c2cb961b441532d3207d9248b3d))
+
 ## [2.5.0](https://github.com/HardCarryClub/bald-man-bot/compare/v2.4.0...v2.5.0) (2025-09-09)
 
 
