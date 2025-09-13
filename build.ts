@@ -1,63 +1,51 @@
-import { parseCommands } from "./node_modules/dressed/dist/server/build/parsers/commands";
-import { parseComponents } from "./node_modules/dressed/dist/server/build/parsers/components";
-import { parseEvents } from "./node_modules/dressed/dist/server/build/parsers/events";
-import type { WalkEntry } from "./node_modules/dressed/dist/types/walk";
-import { basename, extname, relative, resolve } from "node:path";
-import { existsSync, writeFileSync } from "node:fs";
-import { walkFiles } from "walk-it";
-import { cwd } from "node:process";
-import { hash } from "bun";
-import config from "./dressed.config"
+import { rmSync, writeFileSync } from "node:fs";
+import { build as bunBuild } from "bun";
+import config from "./dressed.config";
+import { resolve } from "node:path";
+import build from "dressed/build";
 
-const files = await Promise.all(
-  ["commands", "components", "events"].map((d) => fetchFiles(config.build?.root??"src", d, ["ts"]))
-);
+const register = process.argv.includes("-r");
 
-for (const group of files) {
-  for (let i = group.length - 1; i >= 0; i--) {
-    const file = group[i]!;
-    const imported = await import(resolve(file.path));
-    if (typeof imported.default !== "function") {
-      group.splice(i, 1);
-      continue;
-    }
-    // @ts-expect-error
-    file.exports = imported;
-  }
+async function bundle(entry: string, outdir: string) {
+  await bunBuild({
+    entrypoints: [entry],
+    outdir,
+    naming: `[dir]/[name].mjs`,
+    minify: true,
+    target: "bun",
+    packages: "external",
+  });
 }
 
-const commands = (await parseCommands(files[0]!))
-const components = (await parseComponents(files[1] as never))
-const events = (await parseEvents(files[2]!))
+const { commands, components, events } = await build(config, { bundle });
 
-const file = `${files.flat().map(f=>`import * as h${f.uid} from "${resolve(f.path)}";`).join("")}
-export const commands = [${commands.map(c=>JSON.stringify(c).replace("null",`h${c.uid}`))}]
-export const components = [${components.map(c=>JSON.stringify(c).replace("null",`h${c.uid}`))}]
-export const events = [${events.map(e=>JSON.stringify(e).replace("null",`h${e.uid}`))}]
-${process.argv.includes("-r") ? "import {installCommands} from \"dressed/server\";\ninstallCommands(commands)" : ""}`
+const outputContent = `
+${register ? `import { ${register ? "installCommands" : ""} } from "dressed/server";` : ""}
+import config from "./dressed.config.mjs";${[commands, components, events]
+  .flat()
+  .map((v) => `\nimport * as h${v.uid} from "${resolve(v.path)}";`)
+  .join("")}
 
-writeFileSync("dressed.gen.ts", file)
+export const commands = [ ${commands.map((c) => JSON.stringify(c).replace("null", `h${c.uid}`))} ];
+export const components = [ ${components.map((c) =>
+  JSON.stringify(c).replace("null", `h${c.uid}`)
+)} ];
+export const events = [ ${events.map((e) => JSON.stringify(e).replace("null", `h${e.uid}`))} ];
+export { config };
+${register ? "\ninstallCommands(commands);" : ""}`.trim();
+const jsContent = `export * from "./index.mjs";`;
+const typeContent = `
+import type { CommandData, ComponentData, EventData, ServerConfig } from "dressed/server";
 
-async function fetchFiles(root: string, dir: string, extensions: string[]): Promise<WalkEntry[]> {
-  const dirPath = resolve(root, dir);
+export declare const commands: CommandData[];
+export declare const components: ComponentData[];
+export declare const events: EventData[];
+export declare const config: ServerConfig;`;
 
-  if (!existsSync(dirPath)) {
-    console.warn(`${dir.slice(0, 1).toUpperCase() + dir.slice(1)} directory not found`);
-    return [];
-  }
+writeFileSync(".dressed/tmp/index.ts", outputContent);
+await bundle(".dressed/tmp/index.ts", ".dressed");
+writeFileSync(".dressed/index.js", jsContent);
+writeFileSync(".dressed/index.d.ts", typeContent);
+rmSync(".dressed/tmp", { recursive: true, force: true });
 
-  const filesArray: WalkEntry[] = [];
-  for await (const file of walkFiles(dirPath, {
-    filterFile: (f) => extensions.includes(extname(f.name).slice(1)),
-  })) {
-    const path = relative(cwd(), file.path);
-    filesArray.push({
-      name: basename(path, extname(path)),
-      uid: hash(path).toString(),
-      path,
-    });
-  }
-
-  return filesArray;
-}
 process.exit(); // Sometimes Bun refuses to exit 🤷‍♂️

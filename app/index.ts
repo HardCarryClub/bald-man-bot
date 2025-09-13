@@ -6,8 +6,7 @@ import { createConnection } from "@dressed/ws";
 import to from "await-to-js";
 import { addMemberRole } from "dressed";
 import { createInteraction, handleInteraction } from "dressed/server";
-import config from "../dressed.config";
-import { commands, components } from "../dressed.gen";
+import { commands, components, config } from "../.dressed";
 
 logger.info("Starting Dressed WS server");
 const connection = createConnection({
