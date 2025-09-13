@@ -33,19 +33,8 @@ export const components = [ ${components.map((c) =>
 export const events = [ ${events.map((e) => JSON.stringify(e).replace("null", `h${e.uid}`))} ];
 export { config };
 ${register ? "\ninstallCommands(commands);" : ""}`.trim();
-const jsContent = `export * from "./index.mjs";`;
-const typeContent = `
-import type { CommandData, ComponentData, EventData, ServerConfig } from "dressed/server";
 
-export declare const commands: CommandData[];
-export declare const components: ComponentData[];
-export declare const events: EventData[];
-export declare const config: ServerConfig;`;
-
-writeFileSync(".dressed/tmp/index.ts", outputContent);
-await bundle(".dressed/tmp/index.ts", ".dressed");
-writeFileSync(".dressed/index.js", jsContent);
-writeFileSync(".dressed/index.d.ts", typeContent);
+writeFileSync(".dressed/index.ts", outputContent);
 rmSync(".dressed/tmp", { recursive: true, force: true });
 
 process.exit(); // Sometimes Bun refuses to exit 🤷‍♂️
