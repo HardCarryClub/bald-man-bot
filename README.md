@@ -99,7 +99,7 @@ The dev container includes these helpful extensions:
 
 **Dressed Framework**
 
-- [Documentation](https://dressed.vercel.app/docs)
+- [Documentation](https://dressed.js.org/docs)
 - [Examples Repository](https://github.com/Inbestigator/dressed-examples/)
 - [Code Generator](https://discord.builders/dressed-typescript-code-generator)
 

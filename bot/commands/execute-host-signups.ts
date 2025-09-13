@@ -1,4 +1,4 @@
-import { signupJobs } from "@app/index";
+import { signupJobs } from "@app/jobs";
 import { GUILD_ID } from "@app/utilities/config";
 import { isStaff } from "@bot/utilities/authz.ts";
 import to from "await-to-js";
