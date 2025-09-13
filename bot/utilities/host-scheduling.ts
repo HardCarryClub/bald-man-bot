@@ -192,11 +192,9 @@ ${h3("Unavailable")}\n${block.responses.unavailable.length ? block.responses.una
           label: "Unavailable",
           custom_id: `${id}-unavailable`,
         }),
-      ),
-      ActionRow(
         Button({
           style: "Secondary",
-          label: "Remove My Response",
+          label: "🗑️",
           custom_id: `${id}-remove-response`,
         }),
       ),
