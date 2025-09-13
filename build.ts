@@ -7,11 +7,11 @@ import { existsSync, writeFileSync } from "node:fs";
 import { walkFiles } from "walk-it";
 import { cwd } from "node:process";
 import { hash } from "bun";
+import config from "./dressed.config"
 
 const files = await Promise.all(
-  ["commands", "components", "events"].map((d) => fetchFiles("bot", d, ["ts"]))
+  ["commands", "components", "events"].map((d) => fetchFiles(config.build?.root??"src", d, ["ts"]))
 );
-
 
 for (const group of files) {
   for (let i = group.length - 1; i >= 0; i--) {
