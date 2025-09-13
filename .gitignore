@@ -7,3 +7,4 @@ pnpm-debug.log*
 bot.gen.ts
 .dressed/
 dist/
+dressed.gen.ts

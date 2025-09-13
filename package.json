@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "bun run bot:generate && bun run start",
     "start": "bun run --bun app/index.ts",
-    "bot:generate": "bun run --bun dressed build -R bot",
-    "bot:register-commands": "bun run --bun dressed build -r -R bot && bun run .dressed",
+    "bot:generate": "bun run --bun build.ts",
+    "bot:register-commands": "bun bot:generate -r && bun run --bun dressed.gen.ts",
     "generate": "drizzle-kit generate",
     "migrate": "bun run --bun app/db/migrate.ts"
   },
@@ -19,7 +19,7 @@
     "date-fns-tz": "3.2.0",
     "discord-api-types": "0.38.24",
     "discord-fmt": "1.0.1",
-    "dressed": "1.10.0-canary.5.7.6",
+    "dressed": "^1.10.0-canary.5.7.8",
     "drizzle-orm": "0.44.5",
     "pino": "9.9.5"
   },
