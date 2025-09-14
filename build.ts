@@ -21,7 +21,7 @@ const { commands, components, events } = await build(config, { bundle });
 
 const categories = [commands, components, events];
 const outputContent = `
-${register ? `import { ${register ? "installCommands" : ""} } from "dressed/server";` : ""}
+${register ? 'import { installCommands } from "dressed/server";' : ""}
 import config from "../dressed.config.ts";
 ${[categories.map((c) => c.map((f) => importString(f).replace("../", ""))), categoryExports(categories, "null")]
   .flat(2)
