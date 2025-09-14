@@ -21,11 +21,10 @@ const { commands, components, events } = await build(config, { bundle });
 
 const outputContent = `
 ${register ? `import { ${register ? "installCommands" : ""} } from "dressed/server";` : ""}
-import config from "./dressed.config.mjs";${[commands, components, events]
+import config from "../dressed.config.ts";${[commands, components, events]
   .flat()
   .map((v) => `\nimport * as h${v.uid} from "${resolve(v.path)}";`)
   .join("")}
-
 export const commands = [ ${commands.map((c) => JSON.stringify(c).replace("null", `h${c.uid}`))} ];
 export const components = [ ${components.map((c) =>
   JSON.stringify(c).replace("null", `h${c.uid}`)
