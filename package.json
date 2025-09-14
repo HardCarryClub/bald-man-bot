@@ -19,7 +19,7 @@
     "date-fns-tz": "3.2.0",
     "discord-api-types": "0.38.24",
     "discord-fmt": "1.0.1",
-    "dressed": "^1.10.0-canary.5.7.11",
+    "dressed": "^1.10.0-canary.5.7.13",
     "drizzle-orm": "0.44.5",
     "pino": "9.9.5"
   },

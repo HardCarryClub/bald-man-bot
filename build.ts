@@ -1,7 +1,7 @@
+import { categoryExports, importString } from "./node_modules/dressed/dist/server/build/build";
 import { rmSync, writeFileSync } from "node:fs";
 import { build as bunBuild } from "bun";
 import config from "./dressed.config";
-import { resolve } from "node:path";
 import build from "dressed/build";
 
 const register = process.argv.includes("-r");
@@ -19,17 +19,13 @@ async function bundle(entry: string, outdir: string) {
 
 const { commands, components, events } = await build(config, { bundle });
 
+const categories = [commands, components, events];
 const outputContent = `
 ${register ? `import { ${register ? "installCommands" : ""} } from "dressed/server";` : ""}
-import config from "../dressed.config.ts";${[commands, components, events]
-  .flat()
-  .map((v) => `\nimport * as h${v.uid} from "${resolve(v.path)}";`)
+import config from "../dressed.config.ts";
+${[categories.map((c) => c.map((f) => importString(f).replace("../", ""))), categoryExports(categories, "null")]
+  .flat(2)
   .join("")}
-export const commands = [ ${commands.map((c) => JSON.stringify(c).replace("null", `h${c.uid}`))} ];
-export const components = [ ${components.map((c) =>
-  JSON.stringify(c).replace("null", `h${c.uid}`)
-)} ];
-export const events = [ ${events.map((e) => JSON.stringify(e).replace("null", `h${e.uid}`))} ];
 export { config };
 ${register ? "\ninstallCommands(commands);" : ""}`.trim();
 
