@@ -2,10 +2,8 @@ import { db } from "@app/db";
 import { GUILD_ID, PUG_BANNED_ROLE_ID } from "@app/utilities/config";
 import { logger } from "@app/utilities/logger";
 import { audit } from "@bot/utilities/audit";
-import { sendHostSignupMessages } from "@bot/utilities/host-scheduling";
 import { createConnection } from "@dressed/ws";
 import to from "await-to-js";
-import { Cron } from "croner";
 import { addMemberRole } from "dressed";
 import { createInteraction, handleInteraction } from "dressed/server";
 import { commands, components, config } from "../.dressed";
@@ -58,33 +56,4 @@ connection.onGuildMemberAdd(async (data) => {
   }
 });
 
-export const signupJobs = {
-  overwatch: new Cron(
-    "0 13 * * 1",
-    {
-      name: "host-scheduler-overwatch",
-      catch: (err) => {
-        logger.error({ err }, "Error running Overwatch host signup creation job");
-      },
-    },
-    async () => {
-      logger.info("Running Overwatch host signup creation job");
-
-      await sendHostSignupMessages("overwatch");
-    },
-  ),
-  rivals: new Cron(
-    "0 13 * * 1",
-    {
-      name: "host-scheduler-rivals",
-      catch: (err) => {
-        logger.error({ err }, "Error running Rivals host signup creation job");
-      },
-    },
-    async () => {
-      logger.info("Running Rivals host signup creation job");
-
-      await sendHostSignupMessages("rivals");
-    },
-  ),
-};
+import "./jobs";
