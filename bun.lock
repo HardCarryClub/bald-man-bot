@@ -9,9 +9,8 @@
         "croner": "9.1.0",
         "date-fns": "4.1.0",
         "date-fns-tz": "3.2.0",
-        "discord-api-types": "0.38.24",
+        "discord-api-types": "0.38.25",
         "discord-fmt": "1.0.1",
-
         "dressed": "1.10.0-canary.5.7.13",
         "drizzle-orm": "0.44.5",
         "pino": "9.9.5",
@@ -190,7 +189,7 @@
 
     "debug": ["debug@4.4.1", "", { "dependencies": { "ms": "^2.1.3" } }, "sha512-KcKCqiftBJcZr++7ykoDIEwSa3XWowTfNPo92BYxjXiyYEVrUQh2aLyhxBCwww+heortUFxEJYcRzosstTEBYQ=="],
 
-    "discord-api-types": ["discord-api-types@0.38.24", "", {}, "sha512-P7/DkcFIiIoaBogStnhhcGRX7KR+gIFp0SpmwsZUIM0bgDkYMEUx+8l+t3quYc/KSgg92wvE9w/4mabO57EMug=="],
+    "discord-api-types": ["discord-api-types@0.38.25", "", {}, "sha512-3edaLHuCdzzfTL1OCpl98G3mrlf+45FpxY+8f+5dRLnZD8R6QzIhapoCefqz6mhaygD+iqTVLtD4u6j57PRiFw=="],
 
     "discord-fmt": ["discord-fmt@1.0.1", "", {}, "sha512-LsRCmMDH7a1wmd87Cyd6DXaGT/wbqEPnaAMAgyhOun1YDoAgKlnRZZ9ul5GMXZnvDIU9/w2c+ymo6Kuqo4kWDw=="],
 
@@ -332,7 +331,11 @@
 
     "yoctocolors-cjs": ["yoctocolors-cjs@2.1.3", "", {}, "sha512-U/PBtDf35ff0D8X8D0jfdzHYEPFxAI7jJlxZXwCSez5M3190m+QobIfh+sWDWSHMCWWJN2AWamkegn6vr6YBTw=="],
 
+    "@dressed/ws/discord-api-types": ["discord-api-types@0.38.24", "", {}, "sha512-P7/DkcFIiIoaBogStnhhcGRX7KR+gIFp0SpmwsZUIM0bgDkYMEUx+8l+t3quYc/KSgg92wvE9w/4mabO57EMug=="],
+
     "@esbuild-kit/core-utils/esbuild": ["esbuild@0.18.20", "", { "optionalDependencies": { "@esbuild/android-arm": "0.18.20", "@esbuild/android-arm64": "0.18.20", "@esbuild/android-x64": "0.18.20", "@esbuild/darwin-arm64": "0.18.20", "@esbuild/darwin-x64": "0.18.20", "@esbuild/freebsd-arm64": "0.18.20", "@esbuild/freebsd-x64": "0.18.20", "@esbuild/linux-arm": "0.18.20", "@esbuild/linux-arm64": "0.18.20", "@esbuild/linux-ia32": "0.18.20", "@esbuild/linux-loong64": "0.18.20", "@esbuild/linux-mips64el": "0.18.20", "@esbuild/linux-ppc64": "0.18.20", "@esbuild/linux-riscv64": "0.18.20", "@esbuild/linux-s390x": "0.18.20", "@esbuild/linux-x64": "0.18.20", "@esbuild/netbsd-x64": "0.18.20", "@esbuild/openbsd-x64": "0.18.20", "@esbuild/sunos-x64": "0.18.20", "@esbuild/win32-arm64": "0.18.20", "@esbuild/win32-ia32": "0.18.20", "@esbuild/win32-x64": "0.18.20" }, "bin": { "esbuild": "bin/esbuild" } }, "sha512-ceqxoedUrcayh7Y7ZX6NdbbDzGROiyVBgC4PriJThBKSVPWnnFHZAkfI1lJT8QFkOwH4qOS2SJkS4wvpGl8BpA=="],
+
+    "dressed/discord-api-types": ["discord-api-types@0.38.24", "", {}, "sha512-P7/DkcFIiIoaBogStnhhcGRX7KR+gIFp0SpmwsZUIM0bgDkYMEUx+8l+t3quYc/KSgg92wvE9w/4mabO57EMug=="],
 
     "log-symbols/is-unicode-supported": ["is-unicode-supported@1.3.0", "", {}, "sha512-43r2mRvz+8JRIKnWJ+3j8JtjRKZ6GmjzfaE/qiBJnikNnYv/6bagRJ1kUhNk8R5EX/GkobD+r+sfxCPJsiKBLQ=="],
 
