@@ -207,7 +207,7 @@ async function createLobby(guildId: string, name: string, user: APIUser, game: s
     });
 
     await createChannel(guildId, {
-      name: `${name} 🔵 Team (Left Side)`,
+      name: `${game === "rivals" ? "Team A" : "🔵 Team"} (Left Side)`,
       type: ChannelType.GuildVoice,
       parent_id: newCategory.id,
       user_limit: 6,
@@ -215,7 +215,7 @@ async function createLobby(guildId: string, name: string, user: APIUser, game: s
     });
 
     await createChannel(guildId, {
-      name: `${name} 🔴 Team (Right Side)`,
+      name: `${game === "rivals" ? "Team B" : "🔴 Team"} (Right Side)`,
       type: ChannelType.GuildVoice,
       parent_id: newCategory.id,
       user_limit: 6,
