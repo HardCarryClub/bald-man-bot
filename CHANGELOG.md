@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.7.0](https://github.com/HardCarryClub/bald-man-bot/compare/v2.6.1...v2.7.0) (2025-09-15)
+
+
+### Features
+
+* custom build and separate jobs ([#75](https://github.com/HardCarryClub/bald-man-bot/issues/75)) ([ca20e7c](https://github.com/HardCarryClub/bald-man-bot/commit/ca20e7c8fd2657d350c763c2b0153e94fdcf2dd1))
+* general improvements ([#79](https://github.com/HardCarryClub/bald-man-bot/issues/79)) ([e40d1c8](https://github.com/HardCarryClub/bald-man-bot/commit/e40d1c8e1f109a657ff49d9389bef888d901ab7f))
+
+
+### Bug Fixes
+
+* **deps:** update dependency discord-api-types to v0.38.25 ([#78](https://github.com/HardCarryClub/bald-man-bot/issues/78)) ([ca743ba](https://github.com/HardCarryClub/bald-man-bot/commit/ca743ba71e73c2fac05a61481f2a9b83f22c098c))
+* **deps:** update dependency dressed to v1.10.0-canary.5.7.13 ([#74](https://github.com/HardCarryClub/bald-man-bot/issues/74)) ([284f53a](https://github.com/HardCarryClub/bald-man-bot/commit/284f53a63e756f5db41174f7cc988bed7e2e6f7e))
+* **scripts:** pass --bun flag to bun run invocations ([#72](https://github.com/HardCarryClub/bald-man-bot/issues/72)) ([1d1a645](https://github.com/HardCarryClub/bald-man-bot/commit/1d1a6457cea3aa510779487e0daa9de1cb0433dd))
+
 ## [2.6.1](https://github.com/HardCarryClub/bald-man-bot/compare/v2.6.0...v2.6.1) (2025-09-12)
 
 
