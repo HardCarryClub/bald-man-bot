@@ -20,7 +20,7 @@
     "discord-api-types": "0.38.25",
     "discord-fmt": "1.0.1",
     "dressed": "1.10.0-canary.5.7.13",
-    "drizzle-orm": "0.44.5",
+    "drizzle-orm": "0.44.6",
     "pino": "9.9.5"
   },
   "devDependencies": {
