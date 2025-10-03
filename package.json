@@ -21,7 +21,7 @@
     "discord-fmt": "1.0.1",
     "dressed": "1.10.0-canary.5.7.13",
     "drizzle-orm": "0.44.5",
-    "pino": "9.9.5"
+    "pino": "9.13.1"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.4",
