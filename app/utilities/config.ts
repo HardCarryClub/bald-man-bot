@@ -14,7 +14,7 @@ type Config = {
       lobbyPrefix: string;
       lobbyChannelPosition: number;
       staffRoleId: string;
-      memberRoleId: string;
+      memberRoleIds: string[];
       notesChannelId: string;
       hostScheduleChannelId: string;
     }[];
