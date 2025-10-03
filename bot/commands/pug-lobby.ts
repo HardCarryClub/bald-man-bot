@@ -250,41 +250,48 @@ function channelMeta(game: string): {
     return null;
   }
 
+  const permissions = [
+    {
+      // Quarantine role, leave this hardcoded.
+      id: "1300959426718466121",
+      type: 0,
+      allow: "0",
+      deny: "377957125121",
+    },
+    {
+      id: config.staffRoleId,
+      type: 0,
+      allow: "281475007128832",
+      deny: "0",
+    },
+    {
+      id: PUG_BANNED_ROLE_ID,
+      type: 0,
+      allow: "0",
+      deny: "274881055296",
+    },
+    {
+      id: GUILD_ID,
+      type: 0,
+      allow: "0",
+      deny: "1049600",
+    },
+  ];
+
+  if (config.memberRoleIds && config.memberRoleIds.length > 0) {
+    for (const roleId of config.memberRoleIds) {
+      permissions.push({
+        id: roleId,
+        type: 0 as const,
+        allow: "1049600",
+        deny: "2048",
+      });
+    }
+  }
+
   return {
     prefix: config.lobbyPrefix,
     position: config.lobbyChannelPosition,
-    permissions: [
-      {
-        // Quarantine role, leave this hardcoded.
-        id: "1300959426718466121",
-        type: 0,
-        allow: "0",
-        deny: "377957125121",
-      },
-      {
-        id: config.staffRoleId,
-        type: 0,
-        allow: "281475007128832",
-        deny: "0",
-      },
-      {
-        id: PUG_BANNED_ROLE_ID,
-        type: 0,
-        allow: "0",
-        deny: "274881055296",
-      },
-      {
-        id: GUILD_ID,
-        type: 0,
-        allow: "0",
-        deny: "1049600",
-      },
-      {
-        id: config.memberRoleId,
-        type: 0,
-        allow: "1049600",
-        deny: "2048",
-      },
-    ],
+    permissions,
   };
 }
