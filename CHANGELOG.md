@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.0](https://github.com/HardCarryClub/bald-man-bot/compare/v2.7.0...v2.8.0) (2025-10-03)
+
+
+### Features
+
+* add support for multiple member roles ([#90](https://github.com/HardCarryClub/bald-man-bot/issues/90)) ([49af0d3](https://github.com/HardCarryClub/bald-man-bot/commit/49af0d305cc1eccf4a012fff6c39fa653f8450f9))
+
 ## [2.7.0](https://github.com/HardCarryClub/bald-man-bot/compare/v2.6.1...v2.7.0) (2025-09-15)
 
 
