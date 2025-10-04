@@ -9,7 +9,7 @@
         "croner": "9.1.0",
         "date-fns": "4.1.0",
         "date-fns-tz": "3.2.0",
-        "discord-api-types": "0.38.25",
+        "discord-api-types": "0.38.28",
         "discord-fmt": "1.0.1",
         "dressed": "1.10.0-canary.5.7.13",
         "drizzle-orm": "0.44.5",
@@ -189,7 +189,7 @@
 
     "debug": ["debug@4.4.1", "", { "dependencies": { "ms": "^2.1.3" } }, "sha512-KcKCqiftBJcZr++7ykoDIEwSa3XWowTfNPo92BYxjXiyYEVrUQh2aLyhxBCwww+heortUFxEJYcRzosstTEBYQ=="],
 
-    "discord-api-types": ["discord-api-types@0.38.25", "", {}, "sha512-3edaLHuCdzzfTL1OCpl98G3mrlf+45FpxY+8f+5dRLnZD8R6QzIhapoCefqz6mhaygD+iqTVLtD4u6j57PRiFw=="],
+    "discord-api-types": ["discord-api-types@0.38.28", "", {}, "sha512-QwgoJb+83O8Cx0bhHdI/Y9cQIHRvzy8lKXzSQOmzHEf8InuJMEWrzYk94f+OncHk3qWOqBdr9i0DjtXp4i+NHg=="],
 
     "discord-fmt": ["discord-fmt@1.0.1", "", {}, "sha512-LsRCmMDH7a1wmd87Cyd6DXaGT/wbqEPnaAMAgyhOun1YDoAgKlnRZZ9ul5GMXZnvDIU9/w2c+ymo6Kuqo4kWDw=="],
 
